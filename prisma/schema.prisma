@@ -2,12 +2,12 @@
 // Ref: docs/DATA_MODEL.md, docs/REGRAS_NEGOCIO_MODULO_PEDAGOGICO.md
 
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 // ========== Existente (expansão para MVP) ==========

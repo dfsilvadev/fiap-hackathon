@@ -26,6 +26,7 @@ export default defineConfig({
       "@application": path.resolve(__dirname, "./src/application"),
       "@infrastructure": path.resolve(__dirname, "./src/infrastructure"),
       "@shared": path.resolve(__dirname, "./src/shared"),
+      "@generated/prisma/client": path.resolve(__dirname, "./src/generated/prisma/client"),
     },
   },
 } as UserConfig);

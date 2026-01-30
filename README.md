@@ -41,17 +41,22 @@ src/
 
    ```bash
    cp .env.example .env
-   # Ajuste DATABASE_URL para seu PostgreSQL local
+   # Ajuste DATABASE_URL e JWT_SECRET
    ```
 
-3. **Prisma (com PostgreSQL rodando localmente):**
+   **DATABASE_URL:** Ao rodar **no seu computador** (prisma:push, prisma:seed, npm run dev), use **`localhost`** no `.env` (ex.: `postgresql://postgres:postgres@localhost:5433/hackathon`). O host `db` só funciona **dentro do Docker**. Use o `.env.example` como base — ele já vem com `localhost:5433` e `PORT=3000`.  
+   **EADDRINUSE (porta em uso):** Se der erro na porta (ex.: 3001), use `PORT=3000` no `.env` ou encerre o processo que está usando a porta.
+
+3. **Prisma 7 (com PostgreSQL rodando localmente):**
+
+   O projeto usa Prisma 7 com driver adapter `@prisma/adapter-pg`. A URL do banco é lida do `.env` (via `prisma.config.ts`). O client é gerado em `src/generated/prisma`.
 
    ```bash
-   npm run db:generate
-   npm run db:migrate   # cria e aplica migrations (na primeira vez use: prisma migrate dev --name init)
-   npm run db:seed      # insere roles e categorias iniciais
+   npm run prisma:generate   # ou db:generate — gera o client (obrigatório após clone)
+   npm run prisma:push       # ou db:push — sincroniza schema com o banco (sem migrations)
+   npm run prisma:seed       # ou db:seed — insere roles, categorias e usuário admin
    ```
-   Alternativa sem histórico de migrations: `npm run db:push` (depois rode o seed).
+   Com migrations: `npm run prisma:migrate` (na primeira vez: `npx prisma migrate dev --name init`).
 
 4. **Rodar em desenvolvimento:**
 

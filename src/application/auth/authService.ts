@@ -1,4 +1,4 @@
-import type { PrismaClient } from "@prisma/client";
+import type { PrismaClient } from "@generated/prisma/client";
 import bcrypt from "bcrypt";
 import { env } from "@shared/config/env.js";
 import { AppError } from "@shared/errors/AppError.js";
