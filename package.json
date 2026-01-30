@@ -11,6 +11,7 @@
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev",
+    "db:seed": "tsx prisma/seed.ts",
     "db:studio": "prisma studio",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -48,6 +49,9 @@
     "vitest": "^2.1.4",
     "@vitest/coverage-v8": "^2.1.4",
     "tsc-alias": "^1.8.10"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   },
   "lint-staged": {
     "src/**/*.ts": [

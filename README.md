@@ -48,9 +48,10 @@ src/
 
    ```bash
    npm run db:generate
-   npm run db:push
-   # ou: npm run db:migrate
+   npm run db:migrate   # cria e aplica migrations (na primeira vez use: prisma migrate dev --name init)
+   npm run db:seed      # insere roles e categorias iniciais
    ```
+   Alternativa sem histórico de migrations: `npm run db:push` (depois rode o seed).
 
 4. **Rodar em desenvolvimento:**
 
@@ -77,6 +78,7 @@ src/
 | `npm run db:generate` | Gera Prisma Client     |
 | `npm run db:push` | Sincroniza schema com o DB   |
 | `npm run db:migrate` | Cria/aplica migrations   |
+| `npm run db:seed` | Insere roles e categorias iniciais |
 | `npm run db:studio` | Abre Prisma Studio        |
 
 ## Docker
