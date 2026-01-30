@@ -5,6 +5,7 @@ import { env } from "@shared/config/env.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import { registerAuthRoutes } from "./routes/authRoutes.js";
 import { registerHealthRoutes } from "./routes/healthRoutes.js";
+import { registerUserRoutes } from "./routes/userRoutes.js";
 
 export function createApp(): express.Application {
   const app = express();
@@ -23,6 +24,7 @@ export function createApp(): express.Application {
   const apiRouter = express.Router();
   registerHealthRoutes(apiRouter);
   registerAuthRoutes(apiRouter);
+  registerUserRoutes(apiRouter);
   app.use("/api", apiRouter);
 
   app.use(errorHandler);

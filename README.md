@@ -75,6 +75,20 @@ src/
 
 Usuário de teste (após `npm run db:seed`): **admin@example.com** / **Admin@123**.
 
+## Usuários (API)
+
+Todas as rotas abaixo exigem `Authorization: Bearer <accessToken>`, exceto onde indicado.
+
+| Método | Rota | Quem | Descrição |
+|--------|------|------|-----------|
+| POST | `/api/users` | Coordenador | Criar aluno (body: name, email, password, role: "student", currentGrade, guardians[]) ou professor (role: "teacher", categoryIds[]). |
+| GET | `/api/users` | Coordenador | Listar usuários; query: role, currentGrade, page, limit. |
+| GET | `/api/users/:id` | Próprio ou coordenador | Obter usuário por id (com role e teacherSubjects se professor). |
+| PATCH | `/api/users/:id` | Próprio ou coordenador | Atualizar: nome, email, dateOfBirth, série, guardians (aluno), categoryIds (professor). |
+| PATCH | `/api/users/:id/active` | Coordenador | Body: `{ isActive }` — desativar/reativar usuário (soft delete). |
+
+Séries válidas: `"6"`, `"7"`, `"8"`, `"9"`, `"1EM"`, `"2EM"`, `"3EM"`. Responsável: `{ name, phone, email, relationship }` (aluno com pelo menos 1).
+
 ## Scripts
 
 | Comando           | Descrição                    |
