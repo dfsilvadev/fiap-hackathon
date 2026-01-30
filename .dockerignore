@@ -1,0 +1,31 @@
+# Dependências e build (serão instalados/gerados no container)
+node_modules
+npm-debug.log
+dist
+coverage
+*.tsbuildinfo
+
+# Documentação e arquivos do projeto (não necessários na imagem)
+docs
+LICENSE
+*.md
+.env
+.env.*
+!.env.example
+
+# Git e IDE
+.git
+.gitignore
+.husky
+.cursor
+.vscode
+.idea
+
+# Testes e ferramentas (não rodam em produção)
+*.spec.ts
+*.test.ts
+.eslintcache
+eslint.config.js
+.prettierrc
+.prettierignore
+vitest.config.ts

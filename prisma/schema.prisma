@@ -1,0 +1,267 @@
+// Prisma schema - Módulo Pedagógico (MVP Hackathon)
+// Ref: docs/DATA_MODEL.md, docs/REGRAS_NEGOCIO_MODULO_PEDAGOGICO.md
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ========== Existente (expansão para MVP) ==========
+model User {
+  id            String   @id @default(uuid())
+  name          String
+  email         String   @unique
+  passwordHash  String   @map("password_hash")
+  phone         String?
+  roleId        String   @map("role_id")
+  dateOfBirth   DateTime? @map("date_of_birth") @db.Date
+  currentGrade  String?  @map("current_grade")  // "6", "7", "8", "9", "1EM", "2EM", "3EM"
+  guardians     Json?    // [{ name, phone, email, relationship }]
+  isActive      Boolean  @default(true) @map("is_active")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  role                   Role                   @relation(fields: [roleId], references: [id])
+  TeacherSubjects       TeacherSubject[]       @relation("TeacherSubjects")
+  ContentCreator        Content[]             @relation("ContentCreator")
+  LearningPathCreator   LearningPath[]        @relation("LearningPathCreator")
+  AssessmentCreator    Assessment[]          @relation("AssessmentCreator")
+  StudentLearningLevels StudentLearningLevel[]
+  StudentAnswers        StudentAnswer[]
+  AssessmentResults     AssessmentResult[]
+  Recommendations       Recommendation[]
+  StudentProgress       StudentProgress[]
+
+  @@map("tb_user")
+}
+
+model Role {
+  id   String @id @default(uuid())
+  name String // coordinator, teacher, student
+  User User[]
+
+  @@map("tb_role")
+}
+
+model Category {
+  id                   String   @id @default(uuid())
+  name                 String   // matéria: Português, Matemática, etc.
+  TeacherSubjects      TeacherSubject[]
+  Contents             Content[]
+  LearningPaths        LearningPath[]
+  StudentLearningLevels StudentLearningLevel[]
+  Assessments          Assessment[]
+
+  @@map("tb_category")
+}
+
+// ========== MVP - Professor-Matéria ==========
+model TeacherSubject {
+  id         String   @id @default(uuid())
+  teacherId String   @map("teacher_id")
+  categoryId String   @map("category_id")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  teacher  User     @relation("TeacherSubjects", fields: [teacherId], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([teacherId, categoryId])
+  @@map("tb_teacher_subject")
+}
+
+// ========== MVP - Conteúdo pedagógico ==========
+model Content {
+  id                   String   @id @default(uuid())
+  title                String
+  contentText          String   @map("content_text")
+  categoryId           String   @map("category_id")
+  grade                String   // "6", "7", ..., "3EM"
+  level                String   // "1", "2", "3", "reforco"
+  userId               String   @map("user_id") // professor criador
+  isActive             Boolean  @default(true) @map("is_active")
+  topics               Json?
+  glossary             Json?
+  accessibilityMetadata Json?   @map("accessibility_metadata")
+  tags                 Json?    // ["frações", "operações básicas"]
+  createdAt            DateTime @default(now()) @map("created_at")
+  updatedAt            DateTime @updatedAt @map("updated_at")
+
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  user     User     @relation("ContentCreator", fields: [userId], references: [id], onDelete: Cascade)
+  learningPathContents LearningPathContent[]
+  studentProgress      StudentProgress[]
+  recommendations      Recommendation[]
+
+  @@map("tb_content")
+}
+
+// ========== MVP - Trilha de aprendizado ==========
+model LearningPath {
+  id          String   @id @default(uuid())
+  name        String
+  categoryId  String   @map("category_id")
+  grade       String
+  isDefault   Boolean  @default(true) @map("is_default")
+  description String?
+  createdBy   String   @map("created_by")
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  creator  User     @relation("LearningPathCreator", fields: [createdBy], references: [id], onDelete: Cascade)
+  contents LearningPathContent[]
+
+  @@map("tb_learning_path")
+}
+
+model LearningPathContent {
+  id             String   @id @default(uuid())
+  learningPathId String   @map("learning_path_id")
+  contentId       String   @map("content_id")
+  orderNumber    Int      @map("order_number")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  learningPath LearningPath @relation(fields: [learningPathId], references: [id], onDelete: Cascade)
+  content      Content      @relation(fields: [contentId], references: [id], onDelete: Cascade)
+
+  @@unique([learningPathId, orderNumber])
+  @@map("tb_learning_path_content")
+}
+
+// ========== MVP - Nível do aluno por matéria ==========
+model StudentLearningLevel {
+  id         String   @id @default(uuid())
+  studentId  String   @map("student_id")
+  categoryId String   @map("category_id")
+  level      String   // "1", "2", "3"
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  student  User     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, categoryId])
+  @@map("tb_student_learning_level")
+}
+
+// ========== MVP - Avaliação e questões ==========
+model Assessment {
+  id          String    @id @default(uuid())
+  title       String
+  description String?
+  categoryId  String    @map("category_id")
+  level       String    // "1", "2", "3"
+  contentId   String?   @map("content_id")
+  teacherId  String    @map("teacher_id")
+  minScore    Decimal   @default(70) @map("min_score")
+  startDate   DateTime  @map("start_date")
+  endDate     DateTime? @map("end_date")
+  isActive    Boolean   @default(true) @map("is_active")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  teacher  User     @relation("AssessmentCreator", fields: [teacherId], references: [id], onDelete: Cascade)
+  questions Question[]
+  assessmentResults AssessmentResult[]
+  studentAnswers    StudentAnswer[]
+
+  @@map("tb_assessment")
+}
+
+model Question {
+  id           String   @id @default(uuid())
+  assessmentId String   @map("assessment_id")
+  questionText String   @map("question_text")
+  questionType String   @map("question_type") // multiple_choice, true_false, text
+  options      Json?
+  correctAnswer String  @map("correct_answer")
+  points       Decimal  @default(1)
+  tags         Json?
+  orderNumber  Int      @map("order_number")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  assessment     Assessment     @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  studentAnswers StudentAnswer[]
+
+  @@map("tb_question")
+}
+
+model StudentAnswer {
+  id           String   @id @default(uuid())
+  studentId    String   @map("student_id")
+  assessmentId String   @map("assessment_id")
+  questionId   String   @map("question_id")
+  answerText   String   @map("answer_text")
+  isCorrect    Boolean  @map("is_correct")
+  pointsEarned Decimal  @default(0) @map("points_earned")
+  answeredAt   DateTime @default(now()) @map("answered_at")
+
+  student    User       @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  assessment Assessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  question   Question   @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, questionId])
+  @@map("tb_student_answer")
+}
+
+model AssessmentResult {
+  id           String   @id @default(uuid())
+  studentId    String   @map("student_id")
+  assessmentId String   @map("assessment_id")
+  totalScore   Decimal  @map("total_score")
+  maxScore     Decimal  @map("max_score")
+  percentage   Decimal
+  levelUpdated Boolean  @default(false) @map("level_updated")
+  completedAt  DateTime @default(now()) @map("completed_at")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  student    User       @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  assessment Assessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, assessmentId])
+  @@map("tb_assessment_result")
+}
+
+// ========== MVP - Recomendação e progresso ==========
+model Recommendation {
+  id        String   @id @default(uuid())
+  studentId String   @map("student_id")
+  contentId String   @map("content_id")
+  reason    String
+  sourceType String  @map("source_type") // assessment, manual, system
+  sourceId   String? @map("source_id")
+  status    String   @default("pending") // pending, completed, dismissed
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  student User    @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  content Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+
+  @@map("tb_recommendation")
+}
+
+model StudentProgress {
+  id         String    @id @default(uuid())
+  studentId  String    @map("student_id")
+  contentId  String    @map("content_id")
+  status     String    @default("not_started") // not_started, in_progress, completed
+  startedAt  DateTime? @map("started_at")
+  completedAt DateTime? @map("completed_at")
+  timeSpent  Int?      @map("time_spent") // minutos
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+
+  student User    @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  content Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, contentId])
+  @@map("tb_student_progress")
+}
