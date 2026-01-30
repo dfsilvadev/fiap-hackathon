@@ -10,6 +10,7 @@ export default defineConfig({
       DATABASE_URL:
         process.env.DATABASE_URL ?? "postgresql://test:test@localhost:5432/test",
       NODE_ENV: "test",
+      JWT_SECRET: process.env.JWT_SECRET ?? "test-jwt-secret",
     },
     include: ["src/**/*.spec.ts", "src/**/*.test.ts"],
     coverage: {

@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
@@ -11,6 +12,9 @@ const CATEGORIES = [
   "História",
   "Geografia",
 ] as const;
+
+const DEFAULT_ADMIN_EMAIL = "admin@example.com";
+const DEFAULT_ADMIN_PASSWORD = "Admin@123";
 
 async function main(): Promise<void> {
   for (const name of ROLES) {
@@ -26,6 +30,29 @@ async function main(): Promise<void> {
     if (!existing) {
       await prisma.category.create({ data: { name } });
       process.stdout.write(`Category created: ${name}\n`);
+    }
+  }
+
+  const coordinator = await prisma.role.findFirst({
+    where: { name: "coordinator" },
+  });
+  if (coordinator) {
+    const existing = await prisma.user.findUnique({
+      where: { email: DEFAULT_ADMIN_EMAIL },
+    });
+    if (!existing) {
+      const passwordHash = await bcrypt.hash(DEFAULT_ADMIN_PASSWORD, 10);
+      await prisma.user.create({
+        data: {
+          name: "Admin",
+          email: DEFAULT_ADMIN_EMAIL,
+          passwordHash,
+          roleId: coordinator.id,
+        },
+      });
+      process.stdout.write(
+        `User created: ${DEFAULT_ADMIN_EMAIL} (password: ${DEFAULT_ADMIN_PASSWORD})\n`
+      );
     }
   }
 }

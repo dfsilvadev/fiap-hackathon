@@ -6,6 +6,9 @@ const envSchema = z.object({
   DATABASE_URL: z.string().min(1, "DATABASE_URL is required"),
   RATE_LIMIT_WINDOW_MS: z.coerce.number().default(15 * 60 * 1000), // 15 min
   RATE_LIMIT_MAX: z.coerce.number().default(100),
+  JWT_SECRET: z.string().min(1, "JWT_SECRET is required"),
+  JWT_ACCESS_EXPIRES_IN: z.string().default("15m"), // e.g. 15m, 1h
+  JWT_REFRESH_EXPIRES_IN: z.string().default("7d"), // e.g. 7d
 });
 
 export type Env = z.infer<typeof envSchema>;

@@ -3,6 +3,7 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import { env } from "@shared/config/env.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
+import { registerAuthRoutes } from "./routes/authRoutes.js";
 import { registerHealthRoutes } from "./routes/healthRoutes.js";
 
 export function createApp(): express.Application {
@@ -21,6 +22,7 @@ export function createApp(): express.Application {
 
   const apiRouter = express.Router();
   registerHealthRoutes(apiRouter);
+  registerAuthRoutes(apiRouter);
   app.use("/api", apiRouter);
 
   app.use(errorHandler);

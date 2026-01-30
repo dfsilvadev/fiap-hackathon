@@ -61,6 +61,20 @@ src/
 
    API em `http://localhost:3000`. Health: `GET /api/health`.
 
+   **Auth:** Defina `JWT_SECRET` no `.env`. Após o seed, login de teste: `admin@example.com` / `Admin@123`.
+
+## Auth (API)
+
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| POST | `/api/auth/login` | Body: `{ email, password }` → retorna `accessToken`, `refreshToken`, `expiresIn`, `tokenType` |
+| POST | `/api/auth/refresh` | Body: `{ refreshToken }` → retorna novo `accessToken` e `refreshToken` (rotação) |
+| POST | `/api/auth/logout` | Body opcional: `{ refreshToken }` → revoga o refresh token (204) |
+| GET | `/api/auth/me` | Header: `Authorization: Bearer <accessToken>` → retorna `{ user: { sub, role } }` |
+| GET | `/api/auth/me/coordinator` | Idem, apenas role `coordinator` (403 para outros) |
+
+Usuário de teste (após `npm run db:seed`): **admin@example.com** / **Admin@123**.
+
 ## Scripts
 
 | Comando           | Descrição                    |
