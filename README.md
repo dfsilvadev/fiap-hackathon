@@ -89,6 +89,13 @@ Todas as rotas abaixo exigem `Authorization: Bearer <accessToken>`, exceto onde 
 
 Séries válidas: `"6"`, `"7"`, `"8"`, `"9"`, `"1EM"`, `"2EM"`, `"3EM"`. Responsável: `{ name, phone, email, relationship }` (aluno com pelo menos 1).
 
+## Testes
+
+- **Unitários (AuthService, UserService):** `src/application/**/*.spec.ts` — rodam sem banco (Prisma mockado).
+- **Integração HTTP (auth + users):** `src/infrastructure/http/api.spec.ts` — usam a API real; para passar, é preciso banco de teste com seed (`DATABASE_URL` de teste e `npm run db:seed`).
+
+Para rodar só os unitários (sem depender do banco): `npm run test -- src/application`.
+
 ## Scripts
 
 | Comando           | Descrição                    |
@@ -99,6 +106,7 @@ Séries válidas: `"6"`, `"7"`, `"8"`, `"9"`, `"1EM"`, `"2EM"`, `"3EM"`. Respons
 | `npm test`        | Testes (Vitest)              |
 | `npm run test:watch` | Testes em watch           |
 | `npm run test:coverage` | Cobertura               |
+| `npm run test -- src/application` | Só testes unitários (sem DB) |
 | `npm run lint`    | ESLint                       |
 | `npm run lint:fix`| ESLint com auto-fix          |
 | `npm run format`  | Prettier (write)             |
