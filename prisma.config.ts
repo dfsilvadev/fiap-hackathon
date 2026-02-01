@@ -1,3 +1,7 @@
+/**
+ * Configuração do Prisma (local e Docker).
+ * No host, "db" na URL vira "localhost" para push/migrate/seed.
+ */
 import { config } from "dotenv";
 import fs from "node:fs";
 import path from "node:path";

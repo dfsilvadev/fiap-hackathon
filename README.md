@@ -122,25 +122,51 @@ Para rodar só os unitários (sem depender do banco): `npm run test -- src/appli
 | `npm run db:seed` | Insere roles e categorias iniciais |
 | `npm run db:studio` | Abre Prisma Studio        |
 
-## Docker
+## Docker (rodar banco + API)
 
-Para subir **API + banco** juntos (ex.: produção ou teste integrado):
+Para subir **PostgreSQL + API** direto no Docker:
 
-```bash
-docker compose up -d
-```
+1. **Crie o `.env` na raiz do projeto:**
 
-- **api** — aplicação Node.js na porta `3000`
-- **db** — PostgreSQL 16 na porta `5433` (host) → `5432` (container)
+   ```bash
+   cp .env.example .env
+   ```
 
-Defina no `.env` (ou exporte) as variáveis usadas pelo compose: `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB`.
+2. **Defina no `.env` pelo menos:**
 
-**Limpar e rodar do zero (containers + volumes + rebuild):**
+   - `JWT_SECRET` — obrigatório (ex.: `sua-chave-secreta-aqui`)
+   - Opcional: `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB`, `POSTGRES_PORT`, `API_PORT` (valores padrão no `.env.example`)
 
-```bash
-docker compose down -v
-docker compose up -d --build
-```
+3. **Suba os serviços:**
+
+   ```bash
+   docker compose up -d --build
+   ```
+
+4. **Acesse:**
+
+   - API: **http://localhost:3001** (ou a porta em `API_PORT`)
+   - Health: **GET http://localhost:3001/api/health**
+   - Login de teste (após seed): `admin@example.com` / `Admin@123`
+
+**O que acontece ao subir:**
+
+- O serviço **db** (PostgreSQL 16) sobe primeiro e fica saudável.
+- O serviço **api** espera o db e, no **entrypoint**, executa `prisma migrate deploy`, depois **`prisma db seed`** (roles, categorias e usuário admin) e em seguida inicia a API.
+- Na primeira subida o seed cria o usuário de teste **admin@example.com** / **Admin@123**; nas seguintes o seed é idempotente (não duplica dados).
+- A API usa a imagem **node:20-bookworm-slim** (Debian) para evitar problemas com bcrypt e addons nativos.
+
+**Por que o Dockerfile tem mais passos que o jwt-auth-service?** Este projeto usa **bcrypt** (addon nativo), **npm** (script `prepare`/husky) e **seed no entrypoint** (tsx + Prisma client em `src/generated`). O jwt-auth usa bcryptjs (JS puro), tsup (bundle) e não roda seed no container, então o Dockerfile deles fica mais enxuto.
+
+**Comandos úteis:**
+
+| Comando | Descrição |
+|---------|-----------|
+| `docker compose up -d --build` | Sobe banco + API (constrói a imagem da API) |
+| `docker compose down` | Para os containers |
+| `docker compose down -v` | Para e remove o volume do banco |
+| `docker compose logs -f api` | Ver logs da API |
+| `docker compose build --no-cache api` | Reconstruir a API sem cache (ex.: após mudar código) |
 
 ## Regras ESLint
 

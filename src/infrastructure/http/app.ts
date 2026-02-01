@@ -21,11 +21,20 @@ export function createApp(): express.Application {
   });
   app.use(limiter);
 
-  const apiRouter = express.Router();
+  const apiRouter = express.Router({ strict: false });
   registerHealthRoutes(apiRouter);
   registerAuthRoutes(apiRouter);
   registerUserRoutes(apiRouter);
   app.use("/api", apiRouter);
+
+  app.use("/api/*", (_req, res) => {
+    res.status(404).json({
+      error: true,
+      message: "Rota não encontrada",
+      path: _req.originalUrl,
+      method: _req.method,
+    });
+  });
 
   app.use(errorHandler);
 

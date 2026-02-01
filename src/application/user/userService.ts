@@ -1,4 +1,4 @@
-import type { PrismaClient } from "@generated/prisma/client";
+import type { PrismaClient } from "../../generated/prisma/client.js";
 import bcrypt from "bcrypt";
 import { AppError } from "@shared/errors/AppError.js";
 import { isGrade } from "@shared/constants/grades.js";
@@ -103,7 +103,7 @@ export class UserService {
       select: { id: true },
     });
     await this.prisma.studentLearningLevel.createMany({
-      data: categories.map((c) => ({
+      data: categories.map((c: { id: string }) => ({
         studentId,
         categoryId: c.id,
         level: "1",
@@ -169,11 +169,15 @@ export class UserService {
       throw new AppError("Forbidden", 403);
     }
 
-    if (input.currentGrade !== undefined && !isGrade(input.currentGrade)) {
+    if (
+      "currentGrade" in input &&
+      input.currentGrade !== undefined &&
+      !isGrade(input.currentGrade)
+    ) {
       throw new AppError("Invalid currentGrade", 400, "VALIDATION_ERROR");
     }
 
-    if (input.guardians !== undefined) {
+    if ("guardians" in input && input.guardians !== undefined) {
       if (
         !Array.isArray(input.guardians) ||
         input.guardians.length < 1 ||
@@ -190,7 +194,7 @@ export class UserService {
       }
     }
 
-    if (input.categoryIds !== undefined) {
+    if ("categoryIds" in input && input.categoryIds !== undefined) {
       if (!Array.isArray(input.categoryIds) || input.categoryIds.length < 1) {
         throw new AppError("Teacher must have at least one subject", 400, "VALIDATION_ERROR");
       }
@@ -205,7 +209,7 @@ export class UserService {
           where: { teacherId: id },
         });
         await this.prisma.teacherSubject.createMany({
-          data: input.categoryIds.map((categoryId) => ({
+          data: input.categoryIds.map((categoryId: string) => ({
             teacherId: id,
             categoryId,
           })),
@@ -230,20 +234,27 @@ export class UserService {
           : new Date(input.dateOfBirth as string)
         : undefined;
 
+    const data: {
+      name?: string;
+      email?: string;
+      currentGrade?: string;
+      guardians?: object;
+      phone?: string | null;
+      dateOfBirth?: Date | null;
+    } = {
+      ...(input.name !== undefined && { name: input.name }),
+      ...(email !== undefined && { email }),
+      ...(dateOfBirth !== undefined && { dateOfBirth }),
+    };
+    if ("currentGrade" in input && input.currentGrade !== undefined)
+      data.currentGrade = input.currentGrade;
+    if ("guardians" in input && input.guardians !== undefined)
+      data.guardians = input.guardians as unknown as object;
+    if ("phone" in input && input.phone !== undefined) data.phone = input.phone;
+
     const updated = await this.prisma.user.update({
       where: { id },
-      data: {
-        ...(input.name !== undefined && { name: input.name }),
-        ...(email !== undefined && { email }),
-        ...(input.currentGrade !== undefined && {
-          currentGrade: input.currentGrade,
-        }),
-        ...(input.guardians !== undefined && {
-          guardians: input.guardians as unknown as object,
-        }),
-        ...(input.phone !== undefined && { phone: input.phone }),
-        ...(dateOfBirth !== undefined && { dateOfBirth }),
-      },
+      data,
     });
 
     return { id: updated.id, email: updated.email };
@@ -281,7 +292,7 @@ export class UserService {
     const roles = await this.prisma.role.findMany({
       where: { id: { in: roleIds } },
     });
-    const roleMap = new Map(roles.map((r) => [r.id, r.name]));
+    const roleMap = new Map(roles.map((r: { id: string; name: string | null }) => [r.id, r.name]));
 
     const teacherIds = users.filter((u) => roleMap.get(u.roleId) === "teacher").map((u) => u.id);
     const teacherSubjects =
@@ -297,8 +308,14 @@ export class UserService {
       const subjects =
         roleName === "teacher"
           ? teacherSubjects
-              .filter((ts) => ts.teacherId === u.id)
-              .map((ts) => ({ id: ts.category.id, name: ts.category.name }))
+              .filter(
+                (ts: { teacherId: string; category: { id: string; name: string } }) =>
+                  ts.teacherId === u.id
+              )
+              .map((ts: { teacherId: string; category: { id: string; name: string } }) => ({
+                id: ts.category.id,
+                name: ts.category.name,
+              }))
           : undefined;
       return {
         ...u,
