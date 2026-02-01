@@ -6,6 +6,7 @@ import { errorHandler } from "./middlewares/errorHandler.js";
 import { registerAuthRoutes } from "./routes/authRoutes.js";
 import { registerHealthRoutes } from "./routes/healthRoutes.js";
 import { registerUserRoutes } from "./routes/userRoutes.js";
+import { registerContentRoutes } from "./routes/contentRoutes.js";
 
 export function createApp(): express.Application {
   const app = express();
@@ -25,6 +26,7 @@ export function createApp(): express.Application {
   registerHealthRoutes(apiRouter);
   registerAuthRoutes(apiRouter);
   registerUserRoutes(apiRouter);
+  registerContentRoutes(apiRouter);
   app.use("/api", apiRouter);
 
   app.use("/api/*", (_req, res) => {
