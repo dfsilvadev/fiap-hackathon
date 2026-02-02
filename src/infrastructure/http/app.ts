@@ -9,6 +9,7 @@ import { registerUserRoutes } from "./routes/userRoutes.js";
 import { registerContentRoutes } from "./routes/contentRoutes.js";
 import { registerLearningPathRoutes } from "./routes/learningPathRoutes.js";
 import { registerProgressRoutes } from "./routes/progressRoutes.js";
+import { registerAssessmentRoutes } from "./routes/assessmentRoutes.js";
 
 export function createApp(): express.Application {
   const app = express();
@@ -31,6 +32,7 @@ export function createApp(): express.Application {
   registerContentRoutes(apiRouter);
   registerLearningPathRoutes(apiRouter);
   registerProgressRoutes(apiRouter);
+  registerAssessmentRoutes(apiRouter);
   app.use("/api", apiRouter);
 
   app.use("/api/*", (_req, res) => {
