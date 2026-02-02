@@ -7,6 +7,7 @@ import { registerAuthRoutes } from "./routes/authRoutes.js";
 import { registerHealthRoutes } from "./routes/healthRoutes.js";
 import { registerUserRoutes } from "./routes/userRoutes.js";
 import { registerContentRoutes } from "./routes/contentRoutes.js";
+import { registerLearningPathRoutes } from "./routes/learningPathRoutes.js";
 
 export function createApp(): express.Application {
   const app = express();
@@ -27,6 +28,7 @@ export function createApp(): express.Application {
   registerAuthRoutes(apiRouter);
   registerUserRoutes(apiRouter);
   registerContentRoutes(apiRouter);
+  registerLearningPathRoutes(apiRouter);
   app.use("/api", apiRouter);
 
   app.use("/api/*", (_req, res) => {
