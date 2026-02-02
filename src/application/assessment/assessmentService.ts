@@ -2,6 +2,7 @@ import type { PrismaClient } from "../../generated/prisma/client.js";
 import { AppError } from "@shared/errors/AppError.js";
 import { isTrilhaLevel } from "@shared/constants/contentLevels.js";
 import { ProgressService } from "@application/progress/progressService.js";
+import { RecommendationService } from "@application/recommendation/recommendationService.js";
 import type {
   CreateAssessmentInput,
   UpdateAssessmentInput,
@@ -26,9 +27,11 @@ function normalizeAnswer(text: string): string {
 
 export class AssessmentService {
   private progressService: ProgressService;
+  private recommendationService: RecommendationService;
 
   constructor(private readonly prisma: PrismaClient) {
     this.progressService = new ProgressService(prisma);
+    this.recommendationService = new RecommendationService(prisma);
   }
 
   private async teacherTeachesCategory(teacherId: string, categoryId: string): Promise<boolean> {
@@ -490,7 +493,7 @@ export class AssessmentService {
       levelUpdated = true;
     }
 
-    await this.prisma.assessmentResult.create({
+    const assessmentResult = await this.prisma.assessmentResult.create({
       data: {
         studentId,
         assessmentId,
@@ -501,7 +504,12 @@ export class AssessmentService {
       },
     });
 
-    await this.generateRecommendationsAfterSubmit(studentId, assessmentId, wrongQuestionIds);
+    await this.generateRecommendationsAfterSubmit(
+      studentId,
+      assessmentId,
+      assessmentResult.id,
+      wrongQuestionIds
+    );
 
     return {
       totalScore,
@@ -577,14 +585,20 @@ export class AssessmentService {
 
   /**
    * Parte 8: geração de recomendações a partir das questões erradas.
-   * Stub até implementar Parte 8.
+   * Delega ao RecommendationService.generateFromWrongQuestions.
    */
   private async generateRecommendationsAfterSubmit(
-    _studentId: string,
-    _assessmentId: string,
-    _wrongQuestionIds: string[]
+    studentId: string,
+    assessmentId: string,
+    assessmentResultId: string,
+    wrongQuestionIds: string[]
   ): Promise<void> {
-    // TODO Parte 8: extrair tags das questões erradas, buscar conteúdos reforço, criar tb_recommendation
+    await this.recommendationService.generateFromWrongQuestions(
+      studentId,
+      assessmentId,
+      assessmentResultId,
+      wrongQuestionIds
+    );
   }
 
   private toAssessmentDto(a: {
