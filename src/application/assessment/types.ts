@@ -10,8 +10,8 @@ export interface CreateAssessmentInput {
   categoryId: string;
   level: AssessmentLevel;
   minScore?: number;
-  startDate: string; // ISO date
-  endDate?: string; // ISO date
+  startDate: string;
+  endDate?: string;
 }
 
 export interface UpdateAssessmentInput {
@@ -33,7 +33,7 @@ export interface ListAssessmentsFilters {
 export interface CreateQuestionInput {
   questionText: string;
   questionType: QuestionType;
-  options?: unknown; // array for multiple_choice
+  options?: unknown;
   correctAnswer: string;
   points?: number;
   tags?: unknown;

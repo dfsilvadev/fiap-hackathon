@@ -1,6 +1,5 @@
 /**
- * Erro de aplicação base (Clean Architecture - camada shared).
- * Permite códigos HTTP e mensagens consistentes.
+ * Base application error (shared layer). Provides consistent HTTP status and messages.
  */
 export class AppError extends Error {
   constructor(

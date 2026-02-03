@@ -2,9 +2,8 @@ import type { PrismaClient } from "../../generated/prisma/client.js";
 import { AppError } from "@shared/errors/AppError.js";
 
 /**
- * Parte 9 — Dashboard do aluno.
- * Agrega trilhas por matéria (com status de cada conteúdo), progresso por matéria
- * e recomendações pendentes em poucas queries para evitar N+1.
+ * Student dashboard. Aggregates paths per subject (with content status),
+ * progress per subject, and pending recommendations in few queries to avoid N+1.
  */
 export class DashboardService {
   constructor(private readonly prisma: PrismaClient) {}
@@ -131,9 +130,8 @@ export class DashboardService {
   }
 
   /**
-   * Parte 10 — Dashboard do professor/coordenador.
-   * Lista alunos com nível por matéria e recomendações pendentes, para plano de ação e equiparação.
-   * Professor: apenas matérias que leciona; coordenador: todas as matérias.
+   * Professor/coordinator dashboard. Lists students with level per subject
+   * and pending recommendations. Teacher: only subjects they teach; coordinator: all.
    */
   async getProfessorStudentsDashboard(
     userId: string,

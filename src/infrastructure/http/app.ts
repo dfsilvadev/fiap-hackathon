@@ -42,7 +42,7 @@ export function createApp(): express.Application {
   app.use("/api/*", (_req, res) => {
     res.status(404).json({
       error: true,
-      message: "Rota não encontrada",
+      message: "Route not found",
       path: _req.originalUrl,
       method: _req.method,
     });

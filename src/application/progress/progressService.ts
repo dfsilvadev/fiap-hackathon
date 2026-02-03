@@ -11,9 +11,8 @@ export class ProgressService {
   constructor(private readonly prisma: PrismaClient) {}
 
   /**
-   * Cria ou atualiza o progresso do aluno em um conteúdo.
-   * Valida: aluno só altera próprio progresso (chamador garante);
-   * conteúdo acessível: mesma série, ativo, e nível <= nível do aluno na matéria.
+   * Creates or updates student progress on a content. Validates: student only updates own progress;
+   * content accessible: same grade, active, and level <= student level in subject.
    */
   async upsert(studentId: string, input: UpsertProgressInput): Promise<unknown> {
     if (!isProgressStatus(input.status)) {
@@ -48,7 +47,6 @@ export class ProgressService {
       const studentLevelNum = parseInt(studentLevel, 10) || 1;
       const contentLevelNum = parseInt(content.level, 10) || 1;
       if (content.level === "reforco") {
-        // Reforço: permitir marcar como acessível (nível do aluno já cobre)
         if (studentLevelNum < 3) {
           throw new AppError(
             "Content level is not yet accessible for your current level",
@@ -112,8 +110,8 @@ export class ProgressService {
   }
 
   /**
-   * Lista o progresso do aluno por matéria: trilha da série com status de cada conteúdo,
-   * percentual concluído e nível atual.
+   * Lists student progress by subject: path for grade with status per content,
+   * completion percentage and current level.
    */
   async listByCategory(studentId: string, categoryId: string): Promise<unknown> {
     const student = await this.prisma.user.findUnique({
@@ -201,9 +199,8 @@ export class ProgressService {
   }
 
   /**
-   * Verifica se a avaliação do nível está disponível: todos os conteúdos desse nível
-   * na trilha (matéria + série do aluno) devem estar com status completed.
-   * Usado na Parte 7 para liberar avaliação.
+   * Checks if assessment for level is available: all contents of that level in the path
+   * (subject + student grade) must be completed.
    */
   async isAssessmentAvailable(
     studentId: string,
@@ -230,7 +227,7 @@ export class ProgressService {
         },
       },
     });
-    if (!path || path.contents.length === 0) return true; // sem conteúdos desse nível → disponível
+    if (!path || path.contents.length === 0) return true;
 
     const contentIds = path.contents.map((c) => c.contentId);
     const completed = await this.prisma.studentProgress.count({

@@ -5,5 +5,5 @@ export type ProgressStatus = (typeof PROGRESS_STATUSES)[number];
 export interface UpsertProgressInput {
   contentId: string;
   status: ProgressStatus;
-  timeSpent?: number; // minutos, opcional; usado ao marcar completed
+  timeSpent?: number;
 }

@@ -2,7 +2,7 @@ import type { Request, Response, NextFunction } from "express";
 import { AppError } from "@shared/errors/AppError.js";
 
 /**
- * Requer que o usuário autenticado seja o próprio recurso (params.id) ou coordenador.
+ * Requires the authenticated user to be the resource owner (params.id) or a coordinator.
  */
 export function requireSelfOrCoordinator(req: Request, _res: Response, next: NextFunction): void {
   if (!req.user) {

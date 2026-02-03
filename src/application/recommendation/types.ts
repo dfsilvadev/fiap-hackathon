@@ -1,7 +1,4 @@
-/**
- * Parte 8 — Recomendações.
- * Status: pending, completed, dismissed.
- */
+/** Recommendation statuses: pending, completed, dismissed. */
 export const RECOMMENDATION_STATUSES = ["pending", "completed", "dismissed"] as const;
 export type RecommendationStatus = (typeof RECOMMENDATION_STATUSES)[number];
 

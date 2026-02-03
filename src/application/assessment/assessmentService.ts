@@ -328,8 +328,8 @@ export class AssessmentService {
   }
 
   /**
-   * Retorna a avaliação com questões para o aluno realizar (sem correctAnswer).
-   * Valida: avaliação disponível para o aluno e ainda não submetida.
+   * Returns assessment with questions for student to take (without correctAnswer).
+   * Validates: assessment available for student and not yet submitted.
    */
   async getAssessmentForStudent(assessmentId: string, studentId: string): Promise<unknown> {
     const student = await this.prisma.user.findUnique({
@@ -520,9 +520,8 @@ export class AssessmentService {
   }
 
   /**
-   * Retorna o resultado detalhado de uma avaliação já submetida pelo aluno:
-   * nota, percentual, se subiu de nível, e por questão: enunciado, resposta do aluno,
-   * resposta correta e se acertou (para o aluno saber o que errou).
+   * Returns detailed result of a submitted assessment: score, percentage, levelUpdated,
+   * and per question: text, student answer, correct answer, isCorrect.
    */
   async getAssessmentResultForStudent(assessmentId: string, studentId: string): Promise<unknown> {
     const result = await this.prisma.assessmentResult.findUnique({
@@ -583,10 +582,7 @@ export class AssessmentService {
     };
   }
 
-  /**
-   * Parte 8: geração de recomendações a partir das questões erradas.
-   * Delega ao RecommendationService.generateFromWrongQuestions.
-   */
+  /** Generates recommendations from wrong questions; delegates to RecommendationService. */
   private async generateRecommendationsAfterSubmit(
     studentId: string,
     assessmentId: string,

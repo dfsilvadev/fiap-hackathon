@@ -7,7 +7,7 @@ function isRecommendationStatus(value: string): value is RecommendationStatus {
   return (RECOMMENDATION_STATUSES as readonly string[]).includes(value);
 }
 
-/** Normaliza tags (JSON) para array de strings em minúsculas. */
+/** Normalizes tags (JSON) to lowercase string array. */
 function normalizeTags(tags: unknown): string[] {
   if (!Array.isArray(tags)) return [];
   return tags
@@ -20,10 +20,9 @@ export class RecommendationService {
   constructor(private readonly prisma: PrismaClient) {}
 
   /**
-   * Gera recomendações a partir das questões erradas na avaliação.
-   * Extrai tags das questões erradas; busca conteúdos com level = 'reforco',
-   * mesma matéria e série do aluno, com pelo menos uma tag em comum;
-   * cria registros em tb_recommendation (source_type: 'assessment', source_id: assessmentResultId).
+   * Generates recommendations from wrong answers. Extracts tags from wrong questions;
+   * finds contents with level = 'reforco', same subject and grade, at least one tag in common;
+   * creates tb_recommendation (source_type: 'assessment', source_id: assessmentResultId).
    */
   async generateFromWrongQuestions(
     studentId: string,
@@ -101,9 +100,7 @@ export class RecommendationService {
     return { count: created };
   }
 
-  /**
-   * Lista recomendações do aluno com filtro opcional por status.
-   */
+  /** Lists student recommendations with optional status filter. */
   async listByStudent(
     studentId: string,
     filters: ListRecommendationsFilters
@@ -145,10 +142,7 @@ export class RecommendationService {
     };
   }
 
-  /**
-   * Atualiza o status da recomendação (completed ou dismissed).
-   * Apenas o aluno dono pode atualizar.
-   */
+  /** Updates recommendation status (completed or dismissed). Only the owning student can update. */
   async updateStatus(
     recommendationId: string,
     studentId: string,

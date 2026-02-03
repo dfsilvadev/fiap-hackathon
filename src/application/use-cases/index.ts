@@ -1,6 +1,6 @@
 /**
- * Casos de uso (Clean Architecture - Application).
- * Orquestram entidades e interfaces de repositório; não dependem de Express/Prisma.
+ * Use cases (Clean Architecture - Application layer).
+ * Orchestrate domain and repository interfaces; no dependency on Express/Prisma.
  */
 
 export {};

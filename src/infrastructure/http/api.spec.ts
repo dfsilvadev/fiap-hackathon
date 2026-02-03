@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 /**
- * Testes de integração HTTP (auth + usuários).
- * Requer banco de teste com seed aplicado (ex.: npm run db:seed com DATABASE_URL de teste).
+ * HTTP integration tests (auth + users). Requires test DB with seed (e.g. npm run db:seed).
  */
 import request from "supertest";
 import { beforeAll, describe, expect, it } from "vitest";
@@ -42,7 +41,7 @@ describe("API HTTP (integração)", () => {
         .send({ email: COORDINATOR_EMAIL, password: COORDINATOR_PASSWORD });
 
       if (res.status !== 200) {
-        console.warn("Auth login falhou (banco de teste pode não estar com seed):", res.body);
+        console.warn("Auth login failed (test DB may lack seed):", res.body);
         return;
       }
 
@@ -91,7 +90,7 @@ describe("API HTTP (integração)", () => {
 
     it("GET /api/auth/me com token retorna user (sub, role)", async () => {
       if (!accessToken) {
-        console.warn("Pulando: token não obtido (seed não aplicado?)");
+        console.warn("Skipping: token not obtained (seed not applied?)");
         return;
       }
       const res = await request(app)
@@ -186,7 +185,7 @@ describe("API HTTP (integração)", () => {
         });
 
       if (res.status !== 201) {
-        console.warn("Create student falhou:", res.body);
+        console.warn("Create student failed:", res.body);
         return;
       }
       expect(res.status).toBe(201);
@@ -216,7 +215,7 @@ describe("API HTTP (integração)", () => {
       if (!accessToken) return;
       const categoryIds = await getCategoryIds();
       if (categoryIds.length === 0) {
-        console.warn("Nenhuma categoria no banco (seed?)");
+        console.warn("No category in DB (seed?)");
         return;
       }
       const createRes = await request(app)
@@ -230,7 +229,7 @@ describe("API HTTP (integração)", () => {
           categoryIds: [categoryIds[0]],
         });
       if (createRes.status !== 201) {
-        console.warn("Create teacher falhou:", createRes.body);
+        console.warn("Create teacher failed:", createRes.body);
         return;
       }
       expect(createRes.status).toBe(201);

@@ -14,7 +14,7 @@ export interface CreateUserStudentInput {
   role: "student";
   currentGrade: Grade;
   guardians: Guardian[];
-  dateOfBirth?: string; // ISO date
+  dateOfBirth?: string;
 }
 
 export interface CreateUserTeacherInput {

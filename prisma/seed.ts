@@ -8,7 +8,6 @@ let connectionString = process.env.DATABASE_URL ?? "";
 if (!connectionString) {
   throw new Error("DATABASE_URL is required");
 }
-// Rodando fora do Docker: host "db" não resolve → usar localhost (igual prisma.config.ts)
 const isInDocker = fs.existsSync("/.dockerenv");
 if (!isInDocker && connectionString.includes("db:")) {
   connectionString = connectionString.replace(/(@|\/\/)db:/g, "$1localhost:");
