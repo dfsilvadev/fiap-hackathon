@@ -136,11 +136,16 @@ Plano de implementação em etapas para não perder escopo. Ordem pensada para d
 
 ### Backend
 
-- [ ] **4.1** Endpoints **CRUD conteúdo** (tb_content): create, read by id, list (filtros: category_id, grade, level, is_active), update, desativar (is_active = false).
-- [ ] **4.2** Validação: professor só cria/edita conteúdo para **matérias que leciona** (consultar tb_teacher_subject); coordenador pode para qualquer matéria.
-- [ ] **4.3** Campos obrigatórios: título, category_id, grade, level ('1','2','3','reforco'), content_text; opcionais: topics, glossary, accessibility_metadata, tags (JSON).
-- [ ] **4.4** Middleware ou validação **validateTeacherSubject**: garantir que o professor autenticado leciona a matéria do recurso.
-- [ ] **4.5** Endpoint para **aluno**: listar conteúdos ativos por série (current_grade) e opcionalmente categoria; não expor dados sensíveis de criação.
+- [x] **4.1** Endpoints **CRUD conteúdo** (tb_content): create, read by id, list (filtros: category_id, grade, level, is_active), update, desativar (is_active = false).  
+  _Implementado:_ `POST /api/contents`, `GET /api/contents`, `GET /api/contents/:id`, `PATCH /api/contents/:id`, `PATCH /api/contents/:id/active`; list com query categoryId, grade, level, isActive, page, limit.
+- [x] **4.2** Validação: professor só cria/edita conteúdo para **matérias que leciona** (consultar tb_teacher_subject); coordenador pode para qualquer matéria.  
+  _Implementado:_ `ContentService.ensureCanManageContent` e `teacherTeachesCategory`; usado em create, getById, update, setActive e list (filtro por matérias do professor).
+- [x] **4.3** Campos obrigatórios: título, category_id, grade, level ('1','2','3','reforco'), content_text; opcionais: topics, glossary, accessibility_metadata, tags (JSON).  
+  _Implementado:_ Zod em `contentRoutes.ts` (createContentBodySchema, updateContentBodySchema); level enum CONTENT_LEVELS, grade enum GRADES.
+- [x] **4.4** Middleware ou validação **validateTeacherSubject**: garantir que o professor autenticado leciona a matéria do recurso.  
+  _Implementado:_ Validação no serviço (`ensureCanManageContent` + `teacherTeachesCategory`); rotas de create/update/setActive e list com `authorizeRoles("coordinator", "teacher")`.
+- [x] **4.5** Endpoint para **aluno**: listar conteúdos ativos por série (current_grade) e opcionalmente categoria; não expor dados sensíveis de criação.  
+  _Implementado:_ `GET /api/contents/for-student` com `authorizeRoles("student")`; `ContentService.listForStudent` filtra por current_grade do aluno e isActive; DTO `toStudentContentDto` sem userId, isActive, createdAt, updatedAt, accessibilityMetadata.
 
 ### Frontend
 
@@ -149,7 +154,8 @@ Plano de implementação em etapas para não perder escopo. Ordem pensada para d
 
 ### Entregável
 
-- Conteúdos criados por professor por matéria; aluno vê apenas conteúdos da sua série; reforço = level 'reforco'.
+- [x] Conteúdos criados por professor por matéria; aluno vê apenas conteúdos da sua série; reforço = level 'reforco' (backend).  
+  _Pendente:_ frontend (Parte 4.6–4.7).
 
 ---
 
@@ -159,10 +165,14 @@ Plano de implementação em etapas para não perder escopo. Ordem pensada para d
 
 ### Backend
 
-- [ ] **5.1** Endpoints **tb_learning_path**: criar/editar trilha (name, category_id, grade, is_default, description); garantir no máximo uma trilha padrão por (category_id, grade).
-- [ ] **5.2** Endpoints **tb_learning_path_content**: adicionar conteúdo à trilha (content_id, order_number), remover, reordenar (atualizar order_number). Validar: conteúdo com level 1, 2 ou 3 (reforço não entra); mesmo category_id e grade da trilha.
-- [ ] **5.3** Validação: professor só gerencia trilhas de matérias que leciona; coordenador pode qualquer matéria.
-- [ ] **5.4** Endpoint para **aluno**: obter trilha por matéria (e série do aluno) com lista de conteúdos ordenados e, por conteúdo, status (concluído/disponível/bloqueado) conforme nível do aluno e tb_student_progress (Parte 6).
+- [x] **5.1** Endpoints **tb_learning_path**: criar/editar trilha (name, category_id, grade, is_default, description); garantir no máximo uma trilha padrão por (category_id, grade).  
+  _Implementado:_ `POST /api/learning-paths`, `PATCH /api/learning-paths/:id`; `LearningPathService.ensureAtMostOneDefault` ao criar/editar com isDefault=true.
+- [x] **5.2** Endpoints **tb_learning_path_content**: adicionar conteúdo à trilha (content_id, order_number), remover, reordenar (atualizar order_number). Validar: conteúdo com level 1, 2 ou 3 (reforço não entra); mesmo category_id e grade da trilha.  
+  _Implementado:_ `POST /api/learning-paths/:id/contents`, `DELETE /api/learning-paths/:id/contents/:contentId`, `PATCH /api/learning-paths/:id/contents/reorder`; validação isTrilhaLevel, categoryId/grade iguais à trilha.
+- [x] **5.3** Validação: professor só gerencia trilhas de matérias que leciona; coordenador pode qualquer matéria.  
+  _Implementado:_ `LearningPathService.ensureCanManagePath` e `teacherTeachesCategory`; rotas de trilha com `authorizeRoles("coordinator", "teacher")`.
+- [x] **5.4** Endpoint para **aluno**: obter trilha por matéria (e série do aluno) com lista de conteúdos ordenados e, por conteúdo, status (concluído/disponível/bloqueado) conforme nível do aluno e tb_student_progress (Parte 6).  
+  _Implementado:_ `GET /api/learning-paths/for-student?categoryId=` com `authorizeRoles("student")`; retorna trilha padrão da série do aluno com contents[].status (completed/available/blocked) usando StudentLearningLevel e StudentProgress.
 
 ### Frontend
 
@@ -171,7 +181,8 @@ Plano de implementação em etapas para não perder escopo. Ordem pensada para d
 
 ### Entregável
 
-- Trilha padrão por matéria/série definida; aluno vê trilha com status por conteúdo.
+- [x] Trilha padrão por matéria/série definida; aluno vê trilha com status por conteúdo (backend).  
+  _Pendente:_ frontend (Parte 5.5–5.6).
 
 ---
 
@@ -181,10 +192,14 @@ Plano de implementação em etapas para não perder escopo. Ordem pensada para d
 
 ### Backend
 
-- [ ] **6.1** Endpoint **POST/PATCH progress** (student_id, content_id, status: not_started | in_progress | completed). Validar: aluno só altera próprio progresso; conteúdo acessível (série e nível).
-- [ ] **6.2** Ao marcar conteúdo como **completed**, registrar completed_at (e opcionalmente time_spent).
-- [ ] **6.3** Endpoint para aluno: **listar progresso** por matéria (conteúdos da trilha com status, percentual concluído, nível atual).
-- [ ] **6.4** Lógica (ou endpoint) **avaliação disponível**: para um aluno e uma matéria/nível, verificar se todos os conteúdos desse nível na trilha estão com status completed; se sim, avaliação daquele nível fica disponível (usado na Parte 7).
+- [x] **6.1** Endpoint **POST/PATCH progress** (student_id, content_id, status: not_started | in_progress | completed). Validar: aluno só altera próprio progresso; conteúdo acessível (série e nível).  
+  _Implementado:_ `PATCH /api/progress` com body `{ contentId, status, timeSpent? }`; `authorizeRoles("student")`; ProgressService.upsert valida série, conteúdo ativo e nível do aluno na matéria.
+- [x] **6.2** Ao marcar conteúdo como **completed**, registrar completed_at (e opcionalmente time_spent).  
+  _Implementado:_ No upsert, quando status=completed: completedAt=now(), startedAt preenchido se não existia, timeSpent opcional no body.
+- [x] **6.3** Endpoint para aluno: **listar progresso** por matéria (conteúdos da trilha com status, percentual concluído, nível atual).  
+  _Implementado:_ `GET /api/progress?categoryId=` com `authorizeRoles("student")`; retorna trilha da série do aluno, currentLevel, totalContents, completedCount, percentage, contents com status e completedAt.
+- [x] **6.4** Lógica (ou endpoint) **avaliação disponível**: para um aluno e uma matéria/nível, verificar se todos os conteúdos desse nível na trilha estão com status completed; se sim, avaliação daquele nível fica disponível (usado na Parte 7).  
+  _Implementado:_ `GET /api/progress/assessment-available?categoryId=&level=` (student); ProgressService.isAssessmentAvailable(studentId, categoryId, level) — retorna true se todos os conteúdos desse nível na trilha estão completed.
 
 ### Frontend
 
@@ -193,7 +208,8 @@ Plano de implementação em etapas para não perder escopo. Ordem pensada para d
 
 ### Entregável
 
-- Progresso persistido; trilha refletindo concluído/disponível/bloqueado; regra de liberação de avaliação implementada.
+- [x] Progresso persistido; trilha refletindo concluído/disponível/bloqueado; regra de liberação de avaliação implementada (backend).  
+  _Pendente:_ frontend (Parte 6.5–6.6).
 
 ---
 
@@ -203,12 +219,20 @@ Plano de implementação em etapas para não perder escopo. Ordem pensada para d
 
 ### Backend
 
-- [ ] **7.1** Endpoints **CRUD avaliação** (tb_assessment): título, description, category_id, level (1,2,3), teacher_id, min_score, start_date, end_date. Validar professor leciona a matéria.
-- [ ] **7.2** Endpoints **CRUD questão** (tb_question): assessment_id, question_text, question_type (multiple_choice, true_false, text), options, correct_answer, points, tags, order_number.
-- [ ] **7.3** Endpoint **listar avaliações disponíveis** para o aluno: por matéria e nível do aluno; respeitar datas (start_date, end_date) e regra "disponível só após completar todos os conteúdos do nível na trilha" (Parte 6).
-- [ ] **7.4** Endpoint **POST submit assessment**: receber respostas (question_id, answer_text); corrigir automaticamente (comparar com correct_answer); persistir tb_student_answer e tb_assessment_result (total_score, max_score, percentage, level_updated).
-- [ ] **7.5** **Atualização de nível:** se percentage >= min_score (ex.: 70%), atualizar tb_student_learning_level para aquele nível na matéria (ou lógica equivalente/trigger).
-- [ ] **7.6** Chamar **geração de recomendações** após submissão (Parte 8): passar respostas erradas (e tags) e dados do aluno para criar registros em tb_recommendation.
+- [x] **7.1** Endpoints **CRUD avaliação** (tb_assessment): título, description, category_id, level (1,2,3), teacher_id, min_score, start_date, end_date. Validar professor leciona a matéria.  
+  _Implementado:_ `POST /api/assessments`, `GET /api/assessments`, `GET /api/assessments/:id`, `PATCH /api/assessments/:id`; AssessmentService.ensureCanManageAssessment + teacherTeachesCategory.
+- [x] **7.2** Endpoints **CRUD questão** (tb_question): assessment_id, question_text, question_type (multiple_choice, true_false, text), options, correct_answer, points, tags, order_number.  
+  _Implementado:_ `POST /api/assessments/:id/questions`, `GET /api/assessments/:id/questions`, `PATCH /api/assessments/:id/questions/:questionId`, `DELETE /api/assessments/:id/questions/:questionId`.
+- [x] **7.3** Endpoint **listar avaliações disponíveis** para o aluno: por matéria e nível do aluno; respeitar datas (start_date, end_date) e regra "disponível só após completar todos os conteúdos do nível na trilha" (Parte 6).  
+  _Implementado:_ `GET /api/assessments/available` (student); ProgressService.isAssessmentAvailable; filtra por datas e não submetidas.
+- [x] **7.4** Endpoint **POST submit assessment**: receber respostas (question_id, answer_text); corrigir automaticamente (comparar com correct_answer); persistir tb_student_answer e tb_assessment_result (total_score, max_score, percentage, level_updated).  
+  _Implementado:_ `POST /api/assessments/:id/submit` (student); body `{ answers: [{ questionId, answerText }] }`; correção por normalização de texto; persist StudentAnswer e AssessmentResult.
+- [x] **7.5** **Atualização de nível:** se percentage >= min_score (ex.: 70%), atualizar tb_student_learning_level para aquele nível na matéria (ou lógica equivalente/trigger).  
+  _Implementado:_ No submit, se percentage >= minScore: upsert StudentLearningLevel com level da avaliação; AssessmentResult.levelUpdated = true.
+- [x] **7.6** Chamar **geração de recomendações** após submissão (Parte 8): passar respostas erradas (e tags) e dados do aluno para criar registros em tb_recommendation.  
+  _Implementado:_ AssessmentService.generateRecommendationsAfterSubmit(studentId, assessmentId, wrongQuestionIds) — stub; Parte 8 implementará a geração.
+- [x] **7.6.1** Endpoint **aluno consultar resultado detalhado** da avaliação submetida: nota, percentual, levelUpdated, e por questão: enunciado, resposta do aluno, resposta correta, isCorrect.  
+  _Implementado:_ `GET /api/assessments/:id/result` (student); AssessmentService.getAssessmentResultForStudent; retorna `result`, `assessment`, `questions` (com `correctAnswer` e `studentAnswer`).
 
 ### Frontend
 
@@ -217,7 +241,8 @@ Plano de implementação em etapas para não perder escopo. Ordem pensada para d
 
 ### Entregável
 
-- Avaliações aplicadas; correção automática; nível atualizado quando ≥70%; recomendações geradas após a prova.
+- [x] Avaliações aplicadas; correção automática; nível atualizado quando ≥70%; chamada a geração de recomendações após a prova (backend).  
+  _Pendente:_ frontend (Parte 7.7–7.8); implementação da geração de recomendações na Parte 8.
 
 ---
 
@@ -227,10 +252,14 @@ Plano de implementação em etapas para não perder escopo. Ordem pensada para d
 
 ### Backend
 
-- [ ] **8.1** **Serviço de geração de recomendações** (regras determinísticas): dado assessment_result (ou respostas erradas), extrair tags das questões erradas; buscar conteúdos com level = 'reforco' (e mesma matéria, série do aluno) que tenham pelo menos uma tag em comum; criar registros em tb_recommendation (student_id, content_id, reason, source_type: 'assessment', source_id, status: 'pending').
-- [ ] **8.2** Integrar chamada a esse serviço no fluxo de submissão da avaliação (Parte 7).
-- [ ] **8.3** Endpoint **listar recomendações** do aluno (filtro por status: pending, completed, dismissed).
-- [ ] **8.4** Endpoint **PATCH recomendação** (id): atualizar status para 'completed' ou 'dismissed'. Validar que o aluno é o dono da recomendação.
+- [x] **8.1** **Serviço de geração de recomendações** (regras determinísticas): dado assessment_result (ou respostas erradas), extrair tags das questões erradas; buscar conteúdos com level = 'reforco' (e mesma matéria, série do aluno) que tenham pelo menos uma tag em comum; criar registros em tb_recommendation (student_id, content_id, reason, source_type: 'assessment', source_id, status: 'pending').  
+  _Implementado:_ RecommendationService.generateFromWrongQuestions; extrai tags das questões (Question.tags), busca Content level='reforco', mesma categoryId e grade do aluno, interseção de tags; evita duplicata pending (studentId, contentId).
+- [x] **8.2** Integrar chamada a esse serviço no fluxo de submissão da avaliação (Parte 7).  
+  _Implementado:_ AssessmentService.submitAssessment cria AssessmentResult e chama RecommendationService.generateFromWrongQuestions(studentId, assessmentId, assessmentResultId, wrongQuestionIds).
+- [x] **8.3** Endpoint **listar recomendações** do aluno (filtro por status: pending, completed, dismissed).  
+  _Implementado:_ `GET /api/recommendations?status=pending` (student); RecommendationService.listByStudent; retorna recommendations com content (id, title, category, grade, level).
+- [x] **8.4** Endpoint **PATCH recomendação** (id): atualizar status para 'completed' ou 'dismissed'. Validar que o aluno é o dono da recomendação.  
+  _Implementado:_ `PATCH /api/recommendations/:id` (student); body `{ "status": "completed" | "dismissed" }`; RecommendationService.updateStatus valida studentId.
 
 ### Frontend
 
@@ -238,7 +267,8 @@ Plano de implementação em etapas para não perder escopo. Ordem pensada para d
 
 ### Entregável
 
-- Recomendações geradas após avaliação; aluno vê e gerencia status das recomendações.
+- [x] Recomendações geradas após avaliação; aluno vê e gerencia status das recomendações (backend).  
+  _Pendente:_ frontend (Parte 8.5).
 
 ---
 
@@ -248,11 +278,13 @@ Plano de implementação em etapas para não perder escopo. Ordem pensada para d
 
 ### Backend
 
-- [ ] **9.1** Endpoint **GET dashboard/aluno** (ou equivalente): agregar para o aluno autenticado:
+- [x] **9.1** Endpoint **GET dashboard/aluno** (ou equivalente): agregar para o aluno autenticado:
   - Trilhas por matéria (com status de cada conteúdo: concluído/disponível/bloqueado/recomendado).
   - Progresso por matéria (nível atual, % conclusão).
-  - Lista de recomendações pendentes (content_id, reason, título do conteúdo).
-- [ ] **9.2** Garantir performance (ex.: evitar N+1; resposta &lt; 2s conforme regras não funcionais).
+  - Lista de recomendações pendentes (content_id, reason, título do conteúdo).  
+  _Implementado:_ `GET /api/dashboard/student` (student); DashboardService.getStudentDashboard; retorna `grade`, `pathsBySubject[]` (categoryId, category, pathId, pathName, currentLevel, totalContents, completedCount, percentage, contents com status), `pendingRecommendations[]` (id, contentId, reason, content).
+- [x] **9.2** Garantir performance (ex.: evitar N+1; resposta &lt; 2s conforme regras não funcionais).  
+  _Implementado:_ 4 queries em paralelo (paths, levels, progress, recommendations); sem loop de queries por matéria.
 
 ### Frontend
 
@@ -261,7 +293,8 @@ Plano de implementação em etapas para não perder escopo. Ordem pensada para d
 
 ### Entregável
 
-- Dashboard do aluno funcionando (API + tela) com trilha, progresso e recomendações.
+- [x] Dashboard do aluno (API) com trilha, progresso e recomendações.  
+  _Pendente:_ frontend (Parte 9.3–9.4).
 
 ---
 
@@ -269,10 +302,14 @@ Plano de implementação em etapas para não perder escopo. Ordem pensada para d
 
 **Objetivo:** Professor (e coordenador) vê lista de alunos com nível por matéria e recomendações ativas.
 
+**Uso pedagógico (plano de ação e equiparação):** A tela permite ao professor (ou coordenador) enxergar, por aluno e por matéria, em qual **nível** cada um está (1, 2 ou 3) e quantas **recomendações pendentes** de reforço existem. Com isso é possível: (1) **Identificar desníveis** — alunos ainda no nível 1 ou 2 enquanto a turma avança; (2) **Priorizar apoio** — quem tem muitas recomendações pendentes (dificuldade em temas específicos); (3) **Planejar agrupamentos** — agrupar por nível ou por matéria para atividades diferenciadas; (4) **Equiparação** — direcionar conteúdos de reforço e acompanhar quem já tem recomendação ativa. No MVP, sem turmas, o filtro por **série** (current_grade) simula “alunos da classe” e mantém a resposta útil para ação em sala.
+
 ### Backend
 
-- [ ] **10.1** Endpoint **GET dashboard/professor/alunos** (ou equivalente): listar alunos (no MVP sem turma: todos ou filtro por série); para cada aluno: nome, série, níveis por matéria (tb_student_learning_level), recomendações pendentes (content title, reason). Professor vê apenas matérias que leciona; coordenador vê tudo.
-- [ ] **10.2** Filtro opcional por série (current_grade).
+- [x] **10.1** Endpoint **GET dashboard/professor/alunos** (ou equivalente): listar alunos (no MVP sem turma: todos ou filtro por série); para cada aluno: nome, série, níveis por matéria (tb_student_learning_level), recomendações pendentes (content title, reason). Professor vê apenas matérias que leciona; coordenador vê tudo.  
+  _Implementado:_ `GET /api/dashboard/professor/students?currentGrade=7` (teacher | coordinator); DashboardService.getProfessorStudentsDashboard; retorna `students[]` (id, name, email, currentGrade, levelsBySubject[], pendingRecommendations[]), `total`, `subjects[]`; professor só vê níveis e recomendações das matérias que leciona.
+- [x] **10.2** Filtro opcional por série (current_grade).  
+  _Implementado:_ Query `currentGrade` opcional (enum GRADES); validação Zod em dashboardRoutes.
 
 ### Frontend
 
@@ -281,7 +318,8 @@ Plano de implementação em etapas para não perder escopo. Ordem pensada para d
 
 ### Entregável
 
-- Tela mínima do professor com lista de alunos, níveis e recomendações ativas; API com permissões corretas.
+- [x] API do professor/coordenador: lista de alunos com níveis por matéria e recomendações ativas; permissões (teacher/coordinator) e filtro por série.  
+  _Pendente:_ frontend (Parte 10.3–10.4).
 
 ---
 

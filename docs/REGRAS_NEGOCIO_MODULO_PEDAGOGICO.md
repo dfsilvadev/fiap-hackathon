@@ -10,7 +10,7 @@
 
 **Referências:** `PITCH_MODULO_PEDAGOGICO.md`, `USER_STORIES_MODULO_PEDAGOGICO.md`.
 
-**Atualizado em:** 2025-01-30.
+**Atualizado em:** 2026-02-03.
 
 ---
 
@@ -194,9 +194,9 @@ Aluno visualiza trilha organizada por:
   - Sistema corrige questões objetivas automaticamente
   - Questões dissertativas podem ser corrigidas pelo professor (fase 2)
 - **Atualização de nível**:
-  - Se aluno atinge pontuação mínima (≥70%) → nível pode ser atualizado
+  - Se aluno atinge pontuação mínima (≥70%) → nível é atualizado automaticamente
   - Se aluno não atinge pontuação mínima → nível permanece
-  - Professor pode revisar e ajustar nível manualmente
+  - **MVP:** Ajuste manual de nível pelo professor não implementado (Fase 2 ou melhoria futura)
   - Sistema valida se avaliação é do nível correto antes de atualizar
 
 ---
@@ -217,16 +217,16 @@ Aluno visualiza trilha organizada por:
 
 - Com base nas tags identificadas, sistema recomenda:
   - Conteúdos de reforço (`level = 'reforco'`) que possuem as mesmas tags
-  - Conteúdos de nível anterior (ex: se aluno está no nível 2 mas errou, recomendar conteúdos de nível 1 com tags relacionadas)
-  - Conteúdos da mesma matéria e série
+  - Conteúdos da mesma matéria e série do aluno
+  - **MVP:** Apenas conteúdos com `level = 'reforco'` são recomendados; recomendar "conteúdos de nível anterior" (ex.: nível 1 quando o aluno está no 2) fica para Fase 2
 
 #### 1.5.3. Regras de Recomendação (Determinísticas)
 
-- **Para aluno**:
-  - Se nível atual < 3 e avaliação < 70% → recomendar conteúdos de reforço
-  - Se errou questões com tag X → recomendar conteúdos com tag X (que sejam de reforço ou nível ≤ atual)
-  - Priorizar conteúdos de nível igual ou inferior ao atual do aluno
-- **Para professor** (Fase 2):
+- **Para aluno (MVP)**:
+  - Após submissão da avaliação: extraem-se as tags das questões erradas
+  - Recomendam-se conteúdos com `level = 'reforco'`, mesma matéria e série, que tenham pelo menos uma tag em comum
+  - Aluno pode listar recomendações (pending/completed/dismissed) e marcar como concluída ou descartada
+- **Para professor (Fase 2)**:
   - Dashboard mostra alunos com dificuldades identificadas
   - Lista de conteúdos mais recomendados para cada aluno
   - Alertas quando muitos alunos têm dificuldade no mesmo tópico
@@ -264,7 +264,7 @@ function generateRecommendations(
 
 #### 1.6.2. Dashboard do Professor
 
-- **MVP:** Tela mínima: lista de alunos (ou por série) com nível por matéria e lista de recomendações ativas por aluno. Sem turmas, sem gráficos.
+- **MVP:** Tela mínima: lista de alunos (ou filtrada por série via `currentGrade`) com nível por matéria e lista de recomendações pendentes por aluno. Professor vê apenas matérias que leciona; coordenador vê todas. Sem turmas, sem gráficos.
 - **Fase 2:** Visão por turma (distribuição por nível, alunos em risco, conteúdos com maior dificuldade); visão por aluno (histórico de avaliações, nível, progresso, recomendações).
 
 #### 1.6.3. Dashboard do Coordenador (Fase 2)
@@ -343,8 +343,28 @@ function generateRecommendations(
 - **Padronização de série:** "6", "7", "8", "9" ou "1EM", "2EM", "3EM"
 - **Inicialização de níveis:** Ao cadastrar aluno, nível 1 em todas as matérias
 - **Trilha vs nível vs ordem:** Nível no conteúdo (`level`); ordem na trilha (`order_number`); reforço = `level = 'reforco'`, não entra na trilha
-- **Recomendação:** MVP apenas regras determinísticas (tags); sem IA/NLP
+- **Recomendação:** MVP apenas regras determinísticas (tags); sem IA/NLP; apenas conteúdos `level = 'reforco'` são recomendados
 
 ---
 
-**Documento em evolução.** Escopo: apenas módulo pedagógico. Atualizado em: 2025-01-30.
+## 7. Alinhamento com a implementação (MVP)
+
+Resumo do que foi implementado no backend/frontend conforme o `CHECKLIST_DESENVOLVIMENTO_MVP.md`, para garantir que este documento reflita a realidade do sistema.
+
+| Regra / conceito | Implementação |
+|------------------|----------------|
+| **Perfis (1.1)** | Aluno (série, responsáveis, níveis iniciais em todas as matérias), Professor (matérias em `tb_teacher_subject`), Coordenador (CRUD usuários). Login, JWT, refresh, logout. |
+| **Conteúdo (1.2)** | CRUD conteúdo com nível 1/2/3/reforço, tags, tópicos, glossário, metadados de acessibilidade. Professor só para matérias que leciona. Conteúdo ativo/inativo. |
+| **Trilha (1.3)** | CRUD trilha por matéria/série; conteúdos na trilha só nível 1, 2 ou 3 (reforço não entra). Aluno vê trilha com status concluído/disponível/bloqueado. Uma trilha padrão por (matéria, série). |
+| **Progresso (Parte 6)** | Aluno marca conteúdo como not_started / in_progress / completed. Liberação de avaliação quando todos os conteúdos do nível na trilha estão concluídos. |
+| **Avaliações (1.4)** | CRUD avaliação e questões (múltipla escolha, V/F, texto); questões com tags. Submissão pelo aluno; correção automática (comparação normalizada); ≥70% atualiza `tb_student_learning_level`. Sem correção manual de dissertativas no MVP. **Ajuste manual de nível pelo professor:** não implementado no MVP. |
+| **Recomendações (1.5)** | Após o submit: extração de tags das questões erradas; busca de conteúdos `level = 'reforco'`, mesma matéria e série, com interseção de tags; criação de `tb_recommendation` (source_type: assessment). Aluno lista (filtro por status) e pode marcar como completed ou dismissed. **Apenas reforço** no MVP (não "nível anterior"). |
+| **Dashboard aluno (1.6.1)** | GET /api/dashboard/student: trilhas por matéria (com status de cada conteúdo), progresso (nível, %), recomendações pendentes. |
+| **Dashboard professor (1.6.2)** | GET /api/dashboard/professor/students?currentGrade=: lista de alunos com nível por matéria e recomendações pendentes; professor só vê matérias que leciona; coordenador vê todas. |
+| **Turmas/matrículas** | Fora do MVP; professor/coordenador filtram por série (`currentGrade`) sem conceito de turma. |
+
+Referência de testes da API: `API_TESTES.md` (roteiro E2E por persona).
+
+---
+
+**Documento em evolução.** Escopo: apenas módulo pedagógico. Alinhado à implementação MVP em 2026-02-03.
