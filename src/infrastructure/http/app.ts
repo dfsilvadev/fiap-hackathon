@@ -11,6 +11,7 @@ import { registerLearningPathRoutes } from "./routes/learningPathRoutes.js";
 import { registerProgressRoutes } from "./routes/progressRoutes.js";
 import { registerAssessmentRoutes } from "./routes/assessmentRoutes.js";
 import { registerRecommendationRoutes } from "./routes/recommendationRoutes.js";
+import { registerDashboardRoutes } from "./routes/dashboardRoutes.js";
 
 export function createApp(): express.Application {
   const app = express();
@@ -35,6 +36,7 @@ export function createApp(): express.Application {
   registerProgressRoutes(apiRouter);
   registerAssessmentRoutes(apiRouter);
   registerRecommendationRoutes(apiRouter);
+  registerDashboardRoutes(apiRouter);
   app.use("/api", apiRouter);
 
   app.use("/api/*", (_req, res) => {
