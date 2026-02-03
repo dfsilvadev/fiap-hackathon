@@ -41,16 +41,22 @@ src/
 
    ```bash
    cp .env.example .env
-   # Ajuste DATABASE_URL para seu PostgreSQL local
+   # Ajuste DATABASE_URL e JWT_SECRET
    ```
 
-3. **Prisma (com PostgreSQL rodando localmente):**
+   **DATABASE_URL:** Ao rodar **no seu computador** (prisma:push, prisma:seed, npm run dev), use **`localhost`** no `.env` (ex.: `postgresql://postgres:postgres@localhost:5433/hackathon`). O host `db` só funciona **dentro do Docker**. Use o `.env.example` como base — ele já vem com `localhost:5433` e `PORT=3000`.  
+   **EADDRINUSE (porta em uso):** Se der erro na porta (ex.: 3001), use `PORT=3000` no `.env` ou encerre o processo que está usando a porta.
+
+3. **Prisma 7 (com PostgreSQL rodando localmente):**
+
+   O projeto usa Prisma 7 com driver adapter `@prisma/adapter-pg`. A URL do banco é lida do `.env` (via `prisma.config.ts`). O client é gerado em `src/generated/prisma`.
 
    ```bash
-   npm run db:generate
-   npm run db:push
-   # ou: npm run db:migrate
+   npm run prisma:generate   # ou db:generate — gera o client (obrigatório após clone)
+   npm run prisma:push       # ou db:push — sincroniza schema com o banco (sem migrations)
+   npm run prisma:seed       # ou db:seed — insere roles, categorias e usuário admin
    ```
+   Com migrations: `npm run prisma:migrate` (na primeira vez: `npx prisma migrate dev --name init`).
 
 4. **Rodar em desenvolvimento:**
 
@@ -59,6 +65,41 @@ src/
    ```
 
    API em `http://localhost:3000`. Health: `GET /api/health`.
+
+   **Auth:** Defina `JWT_SECRET` no `.env`. Após o seed, login de teste: `admin@example.com` / `Admin@123`.
+
+## Auth (API)
+
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| POST | `/api/auth/login` | Body: `{ email, password }` → retorna `accessToken`, `refreshToken`, `expiresIn`, `tokenType` |
+| POST | `/api/auth/refresh` | Body: `{ refreshToken }` → retorna novo `accessToken` e `refreshToken` (rotação) |
+| POST | `/api/auth/logout` | Body opcional: `{ refreshToken }` → revoga o refresh token (204) |
+| GET | `/api/auth/me` | Header: `Authorization: Bearer <accessToken>` → retorna `{ user: { sub, role } }` |
+| GET | `/api/auth/me/coordinator` | Idem, apenas role `coordinator` (403 para outros) |
+
+Usuário de teste (após `npm run db:seed`): **admin@example.com** / **Admin@123**.
+
+## Usuários (API)
+
+Todas as rotas abaixo exigem `Authorization: Bearer <accessToken>`, exceto onde indicado.
+
+| Método | Rota | Quem | Descrição |
+|--------|------|------|-----------|
+| POST | `/api/users` | Coordenador | Criar aluno (body: name, email, password, role: "student", currentGrade, guardians[]) ou professor (role: "teacher", categoryIds[]). |
+| GET | `/api/users` | Coordenador | Listar usuários; query: role, currentGrade, page, limit. |
+| GET | `/api/users/:id` | Próprio ou coordenador | Obter usuário por id (com role e teacherSubjects se professor). |
+| PATCH | `/api/users/:id` | Próprio ou coordenador | Atualizar: nome, email, dateOfBirth, série, guardians (aluno), categoryIds (professor). |
+| PATCH | `/api/users/:id/active` | Coordenador | Body: `{ isActive }` — desativar/reativar usuário (soft delete). |
+
+Séries válidas: `"6"`, `"7"`, `"8"`, `"9"`, `"1EM"`, `"2EM"`, `"3EM"`. Responsável: `{ name, phone, email, relationship }` (aluno com pelo menos 1).
+
+## Testes
+
+- **Unitários (AuthService, UserService):** `src/application/**/*.spec.ts` — rodam sem banco (Prisma mockado).
+- **Integração HTTP (auth + users):** `src/infrastructure/http/api.spec.ts` — usam a API real; para passar, é preciso banco de teste com seed (`DATABASE_URL` de teste e `npm run db:seed`).
+
+Para rodar só os unitários (sem depender do banco): `npm run test -- src/application`.
 
 ## Scripts
 
@@ -70,6 +111,7 @@ src/
 | `npm test`        | Testes (Vitest)              |
 | `npm run test:watch` | Testes em watch           |
 | `npm run test:coverage` | Cobertura               |
+| `npm run test -- src/application` | Só testes unitários (sem DB) |
 | `npm run lint`    | ESLint                       |
 | `npm run lint:fix`| ESLint com auto-fix          |
 | `npm run format`  | Prettier (write)             |
@@ -77,27 +119,54 @@ src/
 | `npm run db:generate` | Gera Prisma Client     |
 | `npm run db:push` | Sincroniza schema com o DB   |
 | `npm run db:migrate` | Cria/aplica migrations   |
+| `npm run db:seed` | Insere roles e categorias iniciais |
 | `npm run db:studio` | Abre Prisma Studio        |
 
-## Docker
+## Docker (rodar banco + API)
 
-Para subir **API + banco** juntos (ex.: produção ou teste integrado):
+Para subir **PostgreSQL + API** direto no Docker:
 
-```bash
-docker compose up -d
-```
+1. **Crie o `.env` na raiz do projeto:**
 
-- **api** — aplicação Node.js na porta `3000`
-- **db** — PostgreSQL 16 na porta `5433` (host) → `5432` (container)
+   ```bash
+   cp .env.example .env
+   ```
 
-Defina no `.env` (ou exporte) as variáveis usadas pelo compose: `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB`.
+2. **Defina no `.env` pelo menos:**
 
-**Limpar e rodar do zero (containers + volumes + rebuild):**
+   - `JWT_SECRET` — obrigatório (ex.: `sua-chave-secreta-aqui`)
+   - Opcional: `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB`, `POSTGRES_PORT`, `API_PORT` (valores padrão no `.env.example`)
 
-```bash
-docker compose down -v
-docker compose up -d --build
-```
+3. **Suba os serviços:**
+
+   ```bash
+   docker compose up -d --build
+   ```
+
+4. **Acesse:**
+
+   - API: **http://localhost:3001** (ou a porta em `API_PORT`)
+   - Health: **GET http://localhost:3001/api/health**
+   - Login de teste (após seed): `admin@example.com` / `Admin@123`
+
+**O que acontece ao subir:**
+
+- O serviço **db** (PostgreSQL 16) sobe primeiro e fica saudável.
+- O serviço **api** espera o db e, no **entrypoint**, executa `prisma migrate deploy`, depois **`prisma db seed`** (roles, categorias e usuário admin) e em seguida inicia a API.
+- Na primeira subida o seed cria o usuário de teste **admin@example.com** / **Admin@123**; nas seguintes o seed é idempotente (não duplica dados).
+- A API usa a imagem **node:20-bookworm-slim** (Debian) para evitar problemas com bcrypt e addons nativos.
+
+**Por que o Dockerfile tem mais passos que o jwt-auth-service?** Este projeto usa **bcrypt** (addon nativo), **npm** (script `prepare`/husky) e **seed no entrypoint** (tsx + Prisma client em `src/generated`). O jwt-auth usa bcryptjs (JS puro), tsup (bundle) e não roda seed no container, então o Dockerfile deles fica mais enxuto.
+
+**Comandos úteis:**
+
+| Comando | Descrição |
+|---------|-----------|
+| `docker compose up -d --build` | Sobe banco + API (constrói a imagem da API) |
+| `docker compose down` | Para os containers |
+| `docker compose down -v` | Para e remove o volume do banco |
+| `docker compose logs -f api` | Ver logs da API |
+| `docker compose build --no-cache api` | Reconstruir a API sem cache (ex.: após mudar código) |
 
 ## Regras ESLint
 

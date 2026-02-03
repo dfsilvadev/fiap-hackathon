@@ -8,10 +8,13 @@
     "build": "tsc && tsc-alias -p tsconfig.json",
     "start": "node dist/server.js",
     "dev": "tsx watch src/server.ts",
-    "db:generate": "prisma generate",
-    "db:push": "prisma db push",
-    "db:migrate": "prisma migrate dev",
-    "db:studio": "prisma studio",
+    "prisma:generate": "prisma generate",
+    "prisma:push": "prisma db push",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:migrate:deploy": "prisma migrate deploy",
+    "prisma:studio": "prisma studio",
+    "prisma:format": "prisma format",
+    "prisma:seed": "tsx prisma/seed.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
@@ -25,16 +28,24 @@
     "node": ">=20.0.0"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "express": "^4.21.0",
     "express-rate-limit": "^7.4.0",
     "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
     "zod": "^3.23.8",
-    "@prisma/client": "^5.22.0"
+    "@prisma/client": "^7.1.0",
+    "@prisma/adapter-pg": "^7.0.1",
+    "pg": "^8.13.0",
+    "dotenv": "^16.4.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.14.0",
+    "@types/bcrypt": "^5.0.2",
     "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^22.9.0",
+    "@types/pg": "^8.11.6",
     "@typescript-eslint/eslint-plugin": "^8.14.0",
     "@typescript-eslint/parser": "^8.14.0",
     "eslint": "^9.14.0",
@@ -42,12 +53,18 @@
     "husky": "^9.1.6",
     "lint-staged": "^15.2.10",
     "prettier": "^3.3.3",
-    "prisma": "^5.22.0",
+    "prisma": "^7.1.0",
     "tsx": "^4.19.2",
     "typescript": "^5.6.3",
     "vitest": "^2.1.4",
     "@vitest/coverage-v8": "^2.1.4",
-    "tsc-alias": "^1.8.10"
+    "tsc-alias": "^1.8.10",
+    "supertest": "^7.0.0",
+    "@types/supertest": "^6.0.2",
+    "dotenv-cli": "^7.4.2"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   },
   "lint-staged": {
     "src/**/*.ts": [

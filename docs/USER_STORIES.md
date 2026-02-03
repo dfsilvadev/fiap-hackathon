@@ -8,7 +8,7 @@ Labels sugeridos: `MVP` | `Fase 2` | `Backend` | `Frontend` | `API` | `SPA`.
 
 **Referências:** `PITCH_MODULO_PEDAGOGICO.md`, `REGRAS_NEGOCIO_MODULO_PEDAGOGICO.md`.
 
-**Atualizado em:** 2025-01-30.
+**Atualizado em:** 2026-02-03.
 
 ---
 
@@ -1048,17 +1048,252 @@ Labels sugeridos: `MVP` | `Fase 2` | `Backend` | `Frontend` | `API` | `SPA`.
 
 ---
 
+## Stories de Frontend (MVP) — alinhadas ao CHECKLIST_DESENVOLVIMENTO_MVP
+
+As stories abaixo cobrem **apenas a camada de interface** (SPA/teleas) e estão mapeadas aos itens de **Frontend** do `CHECKLIST_DESENVOLVIMENTO_MVP.md`. O backend correspondente já está implementado (API documentada em `API_TESTES.md`).
+
+**Labels sugeridos:** `MVP` | `Frontend` | `SPA`. **Referência:** Checklist Partes 2–10, itens marcados como Frontend.
+
+---
+
+### F.1 — Autenticação (Checklist Parte 2: 2.7–2.10)
+
+#### Story F.1.1 — Tela de login e redirecionamento
+
+**EU COMO:** visitante  
+**DESEJO QUE:** eu faça login em uma tela com email e senha e seja redirecionado para a área restrita  
+**PARA QUE:** eu acesse o sistema de forma segura e seja direcionado ao dashboard conforme meu perfil.
+
+**REGRAS NEGOCIAIS**
+
+- **[RN001]:** O login é realizado via POST /api/auth/login; o token JWT retornado deve ser armazenado (ex.: localStorage ou cookie) e enviado no header `Authorization: Bearer <token>` em todas as requisições à API.
+- **[RN002]:** Após login com sucesso, redirecionar para área restrita (ex.: dashboard do aluno ou do professor conforme role).
+- **[RN003]:** Em 401 ou 403 em qualquer rota protegida, redirecionar para a tela de login.
+
+**CRITÉRIOS DE ACEITE**
+
+- **[CA001]:** Existe tela de login com campos email e senha; ao submeter, chama POST /api/auth/login; validação de formato (email válido, senha não vazia).
+- **[CA002]:** Token (accessToken) é armazenado e enviado no header em todas as chamadas à API; após login com sucesso, usuário é redirecionado para a área restrita.
+- **[CA003]:** Em credenciais inválidas ou erro da API, exibir mensagem genérica (ex.: "Credenciais inválidas"); em 401/403 em rotas protegidas, redirecionar para login.
+
+#### Story F.1.2 — Logout
+
+**EU COMO:** usuário autenticado  
+**DESEJO QUE:** eu possa encerrar minha sessão (logout)  
+**PARA QUE:** eu saia do sistema com segurança em computadores compartilhados.
+
+**CRITÉRIOS DE ACEITE**
+
+- **[CA001]:** Existe opção clara de "Sair" ou "Logout" (ex.: menu do usuário ou header).
+- **[CA002]:** Ao acionar logout, o token é removido do cliente; opcionalmente chamar POST /api/auth/logout com refreshToken; usuário é redirecionado para a tela de login.
+
+---
+
+### F.2 — Usuários e perfis (Checklist Parte 3: 3.6–3.8)
+
+#### Story F.2.1 — Tela coordenador: listar usuários, criar aluno/professor, editar/desativar
+
+**EU COMO:** coordenador  
+**DESEJO QUE:** eu tenha uma tela para listar usuários, criar aluno (série, responsáveis) ou professor (matérias), editar e desativar  
+**PARA QUE:** eu gerencie alunos e professores do sistema.
+
+**CRITÉRIOS DE ACEITE**
+
+- **[CA001]:** Tela lista usuários (GET /api/users com filtros role, currentGrade, paginação); apenas coordenador acessa.
+- **[CA002]:** Formulário de criação: para aluno — nome, email, senha, série, responsáveis (mín. 1 com name, phone, email, relationship); para professor — nome, email, senha, matérias (categoryIds, mín. 1). Chama POST /api/users; exibe sucesso/erro.
+- **[CA003]:** Edição (PATCH /api/users/:id) e desativação/reativação (PATCH /api/users/:id/active) disponíveis; mensagens claras de sucesso e erro.
+
+#### Story F.2.2 — Tela de perfil do aluno
+
+**EU COMO:** aluno (ou coordenador editando aluno)  
+**DESEJO QUE:** eu visualize e edite meu perfil: nome, email, data de nascimento, série, responsáveis  
+**PARA QUE:** meus dados e contato dos responsáveis estejam corretos.
+
+**CRITÉRIOS DE ACEITE**
+
+- **[CA001]:** Tela exibe e permite editar: nome, email, data de nascimento, série (lista padronizada 6–9, 1EM–3EM), lista de responsáveis (campos por responsável). Acesso: próprio aluno ou coordenador.
+- **[CA002]:** Atualização via PATCH /api/users/:id; validação de série e mínimo um responsável; feedback de sucesso/erro.
+
+#### Story F.2.3 — Tela de perfil do professor
+
+**EU COMO:** professor (ou coordenador editando professor)  
+**DESEJO QUE:** eu visualize e edite as matérias que leciono  
+**PARA QUE:** o sistema valide corretamente em qual matéria posso criar conteúdo e avaliações.
+
+**CRITÉRIOS DE ACEITE**
+
+- **[CA001]:** Tela exibe e, se permitido pela regra, edita as matérias (categorias) vinculadas ao professor; atualização via PATCH /api/users/:id com categoryIds.
+- **[CA002]:** Coordenador pode alterar; professor pode alterar apenas as próprias matérias (conforme regra do produto); mensagens de sucesso/erro.
+
+---
+
+### F.3 — Conteúdo pedagógico (Checklist Parte 4: 4.6–4.7)
+
+#### Story F.3.1 — Telas professor: listar conteúdos, criar, editar, desativar
+
+**EU COMO:** professor ou coordenador  
+**DESEJO QUE:** eu liste conteúdos, crie novo conteúdo (título, matéria, série, nível, texto, tags, tópicos/glossário se MVP incluir), edite e desative  
+**PARA QUE:** eu disponibilize e mantenha o material didático por matéria e nível.
+
+**CRITÉRIOS DE ACEITE**
+
+- **[CA001]:** Tela lista conteúdos (GET /api/contents com filtros categoryId, grade, level, isActive, page, limit); professor vê apenas matérias que leciona.
+- **[CA002]:** Formulário de criação/edição: título, matéria, série, nível (1, 2, 3, reforço), texto principal, tags (opcional), tópicos/glossário se incluídos no MVP. POST /api/contents e PATCH /api/contents/:id; PATCH /api/contents/:id/active para desativar.
+- **[CA003]:** Validação de campos obrigatórios; em 403 (matéria que não leciona), exibir mensagem clara.
+
+#### Story F.3.2 — Telas aluno: listar conteúdos da série/matéria e abrir para leitura
+
+**EU COMO:** aluno  
+**DESEJO QUE:** eu liste conteúdos da minha série e matéria e abra um conteúdo para leitura (título, texto, tópicos, glossário)  
+**PARA QUE:** eu estude o material adequado ao meu ano e disciplina.
+
+**CRITÉRIOS DE ACEITE**
+
+- **[CA001]:** Tela lista conteúdos (GET /api/contents/for-student, opcionalmente ?categoryId=); exibe título e informações relevantes; filtro por matéria quando aplicável.
+- **[CA002]:** Ao abrir um conteúdo (GET /api/contents/:id), exibe título, texto principal, tópicos e glossário de forma legível e acessível; aluno só acessa conteúdos da sua série.
+
+---
+
+### F.4 — Trilha de aprendizado (Checklist Parte 5: 5.5–5.6)
+
+#### Story F.4.1 — Telas professor/coordenador: listar trilhas, criar/editar trilha, adicionar/remover/reordenar conteúdos
+
+**EU COMO:** professor ou coordenador  
+**DESEJO QUE:** eu liste trilhas, crie/edite trilha por matéria e série, e adicione/remova/reordene conteúdos na trilha (apenas nível 1, 2 ou 3)  
+**PARA QUE:** eu defina o caminho de aprendizado por matéria e série.
+
+**CRITÉRIOS DE ACEITE**
+
+- **[CA001]:** Tela lista trilhas (GET /api/learning-paths); criar (POST /api/learning-paths) e editar (PATCH /api/learning-paths/:id) com name, categoryId, grade, isDefault, description.
+- **[CA002]:** Em uma trilha, adicionar conteúdo (POST /api/learning-paths/:id/contents com contentId, orderNumber), remover (DELETE .../contents/:contentId), reordenar (PATCH .../contents/reorder); apenas conteúdos nível 1, 2 ou 3; mesma matéria e série da trilha.
+- **[CA003]:** Professor só gerencia trilhas de matérias que leciona; coordenador pode qualquer matéria; mensagens de erro claras (ex.: conteúdo de reforço não pode entrar na trilha).
+
+#### Story F.4.2 — Tela aluno: ver trilha por matéria com indicadores (concluído, disponível, bloqueado, recomendado)
+
+**EU COMO:** aluno  
+**DESEJO QUE:** eu escolha uma matéria e veja a trilha com indicadores por conteúdo (concluído, disponível, bloqueado, recomendado quando houver)  
+**PARA QUE:** eu saiba qual é o próximo passo e o que já concluí.
+
+**CRITÉRIOS DE ACEITE**
+
+- **[CA001]:** Tela permite escolher matéria e chama GET /api/learning-paths/for-student?categoryId=; exibe nome da trilha e lista de conteúdos ordenados.
+- **[CA002]:** Cada conteúdo exibe status: concluído, disponível, bloqueado; quando houver recomendações, indicar "recomendado" (conteúdo de reforço sugerido). Navegação para abrir conteúdo disponível ou recomendado.
+
+---
+
+### F.5 — Progresso do aluno (Checklist Parte 6: 6.5–6.6)
+
+#### Story F.5.1 — Marcar conteúdo como concluído na tela de leitura
+
+**EU COMO:** aluno  
+**DESEJO QUE:** na tela de leitura do conteúdo eu tenha um botão ou ação "Marcar como concluído"  
+**PARA QUE:** o sistema registre meu progresso e a trilha e a liberação de avaliação sejam atualizadas.
+
+**CRITÉRIOS DE ACEITE**
+
+- **[CA001]:** Na tela de leitura do conteúdo (disponível para o aluno), existe ação "Marcar como concluído" (e opcionalmente "Em progresso"); ao acionar, chama PATCH /api/progress com { contentId, status: "completed", timeSpent? }.
+- **[CA002]:** Após marcar como concluído, a interface reflete o novo estado (ex.: atualizar trilha ou exibir mensagem); se todos os conteúdos do nível na trilha estiverem concluídos, a avaliação do nível fica disponível.
+
+#### Story F.5.2 — Exibir progresso por matéria
+
+**EU COMO:** aluno  
+**DESEJO QUE:** eu veja meu progresso por matéria: nível atual, percentual de conclusão, lista de conteúdos concluídos e pendentes  
+**PARA QUE:** eu tenha visibilidade do que já fiz e do que falta.
+
+**CRITÉRIOS DE ACEITE**
+
+- **[CA001]:** Tela (ou seção) exibe progresso por matéria usando GET /api/progress?categoryId=: nível atual (currentLevel), percentual (percentage), total e concluídos (totalContents, completedCount), lista de conteúdos com status e completedAt.
+- **[CA002]:** Possibilidade de escolher matéria (categoryId) quando o aluno tem mais de uma; exibição clara de concluídos vs pendentes/bloqueados.
+
+---
+
+### F.6 — Avaliações (Checklist Parte 7: 7.7–7.8)
+
+#### Story F.6.1 — Telas professor: criar/editar avaliação e questões
+
+**EU COMO:** professor ou coordenador  
+**DESEJO QUE:** eu crie e edite avaliações (título, matéria, nível, datas, min_score) e adicione/edite/remova questões (enunciado, tipo, alternativas, resposta correta, tags)  
+**PARA QUE:** eu aplique avaliações por nível e matéria aos alunos.
+
+**CRITÉRIOS DE ACEITE**
+
+- **[CA001]:** Tela lista avaliações (GET /api/assessments) e permite criar (POST /api/assessments) com título, description, categoryId, level (1,2,3), minScore, startDate, endDate; editar (PATCH /api/assessments/:id).
+- **[CA002]:** Em uma avaliação: listar questões (GET /api/assessments/:id/questions), criar (POST .../questions), editar (PATCH .../questions/:questionId), remover (DELETE .../questions/:questionId). Campos: questionText, questionType (multiple_choice, true_false, text), options, correctAnswer, points, tags, orderNumber.
+- **[CA003]:** Professor só para matérias que leciona; validação de nível e datas; mensagens de erro claras.
+
+#### Story F.6.2 — Tela aluno: listar avaliações disponíveis, realizar e ver resultado
+
+**EU COMO:** aluno  
+**DESEJO QUE:** eu liste as avaliações disponíveis, realize uma avaliação (responder questões e enviar) e veja o resultado (nota, %, se nível foi atualizado, link para recomendações)  
+**PARA QUE:** eu seja avaliado por nível e saiba meu desempenho e o que estudar em seguida.
+
+**CRITÉRIOS DE ACEITE**
+
+- **[CA001]:** Tela lista avaliações disponíveis (GET /api/assessments/available); ao escolher uma, obtém a prova sem resposta correta (GET /api/assessments/:id/for-student).
+- **[CA002]:** Tela de realização: exibe questões (texto, tipo, alternativas quando aplicável); aluno preenche respostas e submete (POST /api/assessments/:id/submit com body { answers: [{ questionId, answerText }] }); exibe feedback (totalScore, maxScore, percentage, levelUpdated).
+- **[CA003]:** Tela de resultado detalhado (GET /api/assessments/:id/result): exibe nota, percentual, se nível foi atualizado; por questão: enunciado, resposta do aluno, resposta correta, se acertou; link ou navegação para recomendações quando houver.
+
+---
+
+### F.7 — Recomendações (Checklist Parte 8: 8.5)
+
+#### Story F.7.1 — Tela aluno: Minhas recomendações
+
+**EU COMO:** aluno  
+**DESEJO QUE:** eu veja minha lista de recomendações (título do conteúdo, reason, link para abrir) e possa marcar como concluída ou descartar  
+**PARA QUE:** eu acesse os conteúdos de reforço sugeridos e gerencie o que já vi ou não quero ver.
+
+**CRITÉRIOS DE ACEITE**
+
+- **[CA001]:** Tela "Minhas recomendações" lista itens (GET /api/recommendations; filtro opcional ?status=pending); cada item exibe título do conteúdo, reason (ex.: "Dificuldade em: frações") e link para abrir o conteúdo.
+- **[CA002]:** Ações "Marcar como concluída" e "Descartar" por recomendação; ao acionar, chama PATCH /api/recommendations/:id com { status: "completed" } ou { status: "dismissed" }; lista atualiza ou item some da lista pendente.
+
+---
+
+### F.8 — Dashboard do aluno (Checklist Parte 9: 9.3–9.4)
+
+#### Story F.8.1 — Página Dashboard do aluno
+
+**EU COMO:** aluno  
+**DESEJO QUE:** eu tenha uma página inicial (dashboard) com resumo da trilha por matéria, resumo de progresso (nível e % por matéria) e lista de recomendações ativas com link para o conteúdo  
+**PARA QUE:** eu tenha uma visão única do meu caminho de aprendizado e do que fazer em seguida.
+
+**CRITÉRIOS DE ACEITE**
+
+- **[CA001]:** Página consome GET /api/dashboard/student; exibe grade (série), pathsBySubject (por matéria: nome da trilha, currentLevel, totalContents, completedCount, percentage, contents com status).
+- **[CA002]:** Exibe lista de recomendações pendentes (pendingRecommendations: título do conteúdo, reason) com link para abrir o conteúdo.
+- **[CA003]:** Navegação clara: dashboard → trilha (por matéria), dashboard → conteúdo, dashboard → recomendações; links ou botões que levam às telas correspondentes.
+
+---
+
+### F.9 — Tela do professor (Checklist Parte 10: 10.3–10.4)
+
+#### Story F.9.1 — Tela Acompanhamento (professor/coordenador)
+
+**EU COMO:** professor ou coordenador  
+**DESEJO QUE:** eu acesse uma tela de acompanhamento com lista de alunos (com opção de filtrar por série), e para cada aluno ver nível por matéria e lista de recomendações ativas (título, reason)  
+**PARA QUE:** eu identifique quem está atrasado e quem tem recomendações de reforço para priorizar apoio e equiparação.
+
+**CRITÉRIOS DE ACEITE**
+
+- **[CA001]:** Tela consome GET /api/dashboard/professor/students (query opcional ?currentGrade=7); exibe lista de alunos (id, name, email, currentGrade) e, por aluno, levelsBySubject (categoryName, level) e pendingRecommendations (contentTitle, reason).
+- **[CA002]:** Filtro por série (currentGrade) disponível; professor vê apenas matérias que leciona; coordenador vê todas as matérias.
+- **[CA003]:** Acesso restrito a usuários com role teacher ou coordinator; em 403, redirecionar ou exibir mensagem de acesso negado.
+
+---
+
 ## Resumo para Kanbanize (Módulo Pedagógico)
 
 - **Épicos:** 8 (Autenticação e Usuários; Conteúdos Pedagógicos; Trilha de Aprendizado; Turmas e Matrículas; Avaliações; Progresso e Recomendações; Dashboards; Não Funcionais).
-- **Stories:** 40 no total, todas no formato detalhado acima.
+- **Stories (funcionais gerais):** 40 no total, no formato detalhado acima.
+- **Stories de Frontend (MVP):** Seção **Stories de Frontend (MVP)** — 18 stories (F.1.1 a F.9.1) alinhadas 1:1 aos itens de **Frontend** do `CHECKLIST_DESENVOLVIMENTO_MVP.md` (Partes 2–10). Uso: implementação das telas da SPA em cima da API já existente.
 - **Escopo MVP (Hackathon):** Épicos 1, 2, 3, 5, 6; Dashboard aluno (7.1) e **tela mínima professor** (7.2). Épico 4 (Turmas e Matrículas) inteiro e Stories 7.3, 7.4, 7.5 são **Fase 2**.
 
 **Sugestão de uso:**
 
 1. Criar um **card de épico** para cada épico.
 2. Criar **cards de story** com o bloco completo (EU COMO / DESEJO QUE / PARA QUE / REGRAS NEGOCIAIS / FORA DO ESCOPO / CRITÉRIOS DE ACEITE) no corpo do card.
-3. Usar **tags**: `MVP`, `Fase 2`, `Backend`, `Frontend`, `API`, `SPA` — marcar Stories 4.1 a 4.4 e 7.3 a 7.5 como `Fase 2`; 7.1 e 7.2 como `MVP`.
-4. Priorizar: Auth e Usuários → Conteúdos + Trilha → Avaliações + Progresso/Recomendações → Dashboard aluno (7.1) e tela mínima professor (7.2); por último Turmas e dashboards completos (Fase 2).
+3. Usar **tags**: `MVP`, `Fase 2`, `Backend`, `Frontend`, `API`, `SPA` — marcar Stories 4.1 a 4.4 e 7.3 a 7.5 como `Fase 2`; 7.1 e 7.2 como `MVP`; todas as Stories F.1.1–F.9.1 como `Frontend` e `MVP`.
+4. Priorizar: Auth e Usuários → Conteúdos + Trilha → Avaliações + Progresso/Recomendações → Dashboard aluno (7.1) e tela mínima professor (7.2); por último Turmas e dashboards completos (Fase 2). Para o frontend, seguir a ordem F.1 → F.2 → … → F.9 (espelha a ordem do checklist).
 
-**Documento em evolução.** Escopo: apenas módulo pedagógico. Referências: PITCH_MODULO_PEDAGOGICO.md, REGRAS_NEGOCIO_MODULO_PEDAGOGICO.md. Atualizado em: 2025-01-30.
+**Documento em evolução.** Escopo: apenas módulo pedagógico. Referências: PITCH_MODULO_PEDAGOGICO.md, REGRAS_NEGOCIO_MODULO_PEDAGOGICO.md, CHECKLIST_DESENVOLVIMENTO_MVP.md. Atualizado em: 2026-02-03.

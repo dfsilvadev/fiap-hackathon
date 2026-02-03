@@ -1,6 +1,6 @@
 /**
- * Entidades de domínio (Clean Architecture - camada mais interna).
- * Regras de negócio puras, sem dependência de frameworks.
+ * Domain entities (Clean Architecture - innermost layer).
+ * Pure business rules, no framework dependency.
  */
 
 export {};

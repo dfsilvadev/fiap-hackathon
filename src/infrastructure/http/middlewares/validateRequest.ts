@@ -3,8 +3,7 @@ import type { ZodType } from "zod";
 import { AppError } from "@shared/errors/AppError.js";
 
 /**
- * Middleware que valida body/query/params com Zod.
- * Uso: validateRequest({ body: mySchema })
+ * Validates body/query/params with Zod. Usage: validateRequest({ body: mySchema })
  */
 export function validateRequest(schemas: { body?: ZodType; query?: ZodType; params?: ZodType }) {
   return (req: Request, _res: Response, next: NextFunction): void => {
