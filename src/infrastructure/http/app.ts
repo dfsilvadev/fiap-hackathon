@@ -1,5 +1,6 @@
 import express from "express";
 import helmet from "helmet";
+import cors from "cors";
 import rateLimit from "express-rate-limit";
 import { env } from "@shared/config/env.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
@@ -18,6 +19,13 @@ export function createApp(): express.Application {
 
   app.use(helmet());
   app.use(express.json());
+
+  app.use(
+    cors({
+      credentials: true,
+      origin: ["http://localhost:5173"],
+    })
+  );
 
   const limiter = rateLimit({
     windowMs: env.RATE_LIMIT_WINDOW_MS,
