@@ -72,10 +72,10 @@ Plataforma de **acompanhamento pedagógico** que oferece: **trilha de aprendizad
 
 ## 7. Referências internas do módulo
 
-- **Regras de negócio:** `REGRAS_NEGOCIO.md`
-- **User stories:** `USER_STORIES.md`
-- **Checklists de implementação:** `CHECKLIST_DESENVOLVIMENTO_MVP.md`
-- **Roteiro de testes da API:** `API_TESTES.md`
+- **Regras de negócio:** `business-rules.md`
+- **User stories:** `user-stories.md`
+- **Checklists de implementação:** `mvp-developer-checklist.md`
+- **Roteiro de testes da API:** `api-tests.md`
 
 ---
 
@@ -137,7 +137,7 @@ Use a estrutura abaixo, conectando diretamente com as seções deste pitch:
 
 ### 8.3. Vídeo do MVP funcionando (máx. 8 minutos)
 
-Foque em **um fluxo principal bem redondo**, usando como base a seção **5. Demo** e o roteiro de testes do `API_TESTES.md`:
+Foque em **um fluxo principal bem redondo**, usando como base a seção **5. Demo** e o roteiro de testes do `api-tests.md`:
 
 Sugestão de roteiro de demo:
 
@@ -235,7 +235,7 @@ Critérios oficiais:
   - MVP demonstrado de forma fluida (do login até o acompanhamento do professor).
 
 - **Documentação (10%)**
-  - Este pitch + `CHECKLIST_DESENVOLVIMENTO_MVP.md` + `API_TESTES.md` + relatório formam o pacote de documentação.
+  - Este pitch + `mvp-developer-checklist.md` + `api-tests.md` + relatório formam o pacote de documentação.
 
 ---
 

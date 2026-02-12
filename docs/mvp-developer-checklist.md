@@ -2,7 +2,7 @@
 
 Plano de implementação em etapas para não perder escopo. Ordem pensada para dependências (backend primeiro, depois frontend que consome a API).
 
-**Referências:** `PITCH_MODULO_PEDAGOGICO.md`, `REGRAS_NEGOCIO_MODULO_PEDAGOGICO.md`, `USER_STORIES_MODULO_PEDAGOGICO.md`, `DATA_MODEL.md`.
+**Referências:** `pitch.md`, `business-rules.md`, `user-stories.md`, `architecture.md`.
 
 **Atualizado em:** 2025-01-30.
 
@@ -31,7 +31,7 @@ Plano de implementação em etapas para não perder escopo. Ordem pensada para d
 
 ### Backend
 
-- [x] **1.1** Garantir que o schema Prisma está alinhado ao `DATA_MODEL.md` (já criado; revisar se necessário).
+- [x] **1.1** Garantir que o schema Prisma está alinhado ao `architecture.md` (modelagem em seção 2; revisar se necessário).
 - [x] **1.2** Criar migration inicial (ou `db push` documentado) e aplicar no ambiente local.  
   _Implementado:_ Ordem documentada no README (`db:migrate` ou `db:push`). A pasta `prisma/migrations` e o SQL inicial são criados ao rodar `npx prisma migrate dev --name init` com o banco ligado.
 - [x] **1.3** Criar seed do Prisma:
@@ -87,7 +87,7 @@ Plano de implementação em etapas para não perder escopo. Ordem pensada para d
 
 **Objetivo:** CRUD de usuários (coordenador), perfis aluno (série, responsáveis) e professor (matérias), e criação de níveis iniciais do aluno.
 
-### Análise pré-implementação (REGRAS_NEGOCIO + REVISAO_DOCS_PITCH + USER_STORIES)
+### Análise pré-implementação (business-rules + pitch + user-stories)
 
 | Fonte | Exigência | Garantir na implementação |
 |-------|-----------|----------------------------|

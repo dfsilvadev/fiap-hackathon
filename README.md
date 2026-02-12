@@ -1,16 +1,21 @@
 # Backend — Módulo Pedagógico (Hackathon)
 
-API Node.js com **Express**, **Prisma**, **TypeScript**, seguindo **Clean Architecture** e **SOLID**.
+Módulo backend de uma plataforma de **acompanhamento pedagógico** voltada para o ensino público. O foco é **auxiliar professores e professoras** a enxergar rapidamente **quem está atrasado em cada matéria** e indicar **reforços específicos por tópico**, em vez de apenas mostrar uma nota geral.
+
+O sistema oferece **trilha de aprendizado por matéria e série** (níveis 1 → 2 → 3), registra o **nível do aluno por matéria**, aplica **avaliações por nível com correção automática** e gera **recomendações de reforço determinísticas** (usando as *tags* das questões erradas para sugerir conteúdos `level = reforco` com as mesmas tags). Do outro lado, professores e coordenadores têm **dashboards** para acompanhar séries, trilhas e recomendações ativas.
+
+Este projeto implementa apenas o **módulo pedagógico (backend)** do hackathon: API REST em Node/Express, com regras de negócio centralizadas em casos de uso (`application/`) e persistência em PostgreSQL via Prisma.
 
 ## Stack
 
 - **Runtime:** Node.js 20+
-- **Framework:** Express
-- **ORM:** Prisma (PostgreSQL)
+- **Framework HTTP:** Express
+- **Linguagem:** TypeScript
+- **ORM:** Prisma 7 + `@prisma/adapter-pg` (PostgreSQL 16)
 - **Validação:** Zod
 - **Segurança:** Helmet, express-rate-limit
-- **Testes:** Vitest
-- **Qualidade:** ESLint (no-console error, no-unused-vars error), Prettier, Husky + lint-staged
+- **Testes:** Vitest (unitários e integração HTTP)
+- **Qualidade:** ESLint, Prettier, Husky + lint-staged
 - **Container:** Docker + Docker Compose
 
 ## Estrutura (Clean Architecture)
@@ -29,7 +34,7 @@ src/
 - PostgreSQL 16 (ou use Docker)
 - npm
 
-## Setup
+## Como rodar localmente
 
 1. **Clonar o repositório e instalar dependências:**
 
@@ -47,7 +52,7 @@ src/
    **DATABASE_URL:** Ao rodar **no seu computador** (prisma:push, prisma:seed, npm run dev), use **`localhost`** no `.env` (ex.: `postgresql://postgres:postgres@localhost:5433/hackathon`). O host `db` só funciona **dentro do Docker**. Use o `.env.example` como base — ele já vem com `localhost:5433` e `PORT=3000`.  
    **EADDRINUSE (porta em uso):** Se der erro na porta (ex.: 3001), use `PORT=3000` no `.env` ou encerre o processo que está usando a porta.
 
-3. **Prisma 7 (com PostgreSQL rodando localmente):**
+3. **Prisma (com PostgreSQL rodando localmente):**
 
    O projeto usa Prisma 7 com driver adapter `@prisma/adapter-pg`. A URL do banco é lida do `.env` (via `prisma.config.ts`). O client é gerado em `src/generated/prisma`.
 
@@ -58,7 +63,7 @@ src/
    ```
    Com migrations: `npm run prisma:migrate` (na primeira vez: `npx prisma migrate dev --name init`).
 
-4. **Rodar em desenvolvimento:**
+4. **Rodar em desenvolvimento (API local):**
 
    ```bash
    npm run dev
@@ -168,6 +173,16 @@ Para subir **PostgreSQL + API** direto no Docker:
 | `docker compose logs -f api` | Ver logs da API |
 | `docker compose build --no-cache api` | Reconstruir a API sem cache (ex.: após mudar código) |
 
+## Principais docs (`docs/`)
+
+- `docs/pitch.md` — pitch do módulo pedagógico, alinhado ao tema do hackathon (problema, solução, diferencial, público, roteiro de entrega).
+- `docs/business-rules.md` — regras de negócio do módulo (trilhas, progresso, avaliações, recomendações, dashboards).
+- `docs/user-stories.md` — user stories para Aluno, Professor e Coordenador.
+- `docs/api-tests.md` — roteiro de testes E2E da API (ótimo para gravar o vídeo do MVP).
+- `docs/content-by-level-examples.md` — exemplos de conteúdos por nível e tags.
+- `docs/learning-paths-examples.md` — exemplos de trilhas por série/matéria.
+- `docs/mvp-developer-checklist.md` — checklist do MVP vs. itens de Fase 2.
+
 ## Regras ESLint
 
 - `no-console`: **error**
@@ -179,4 +194,4 @@ No pre-commit são executados `eslint --fix` e `prettier --write` nos arquivos `
 
 ## Referências
 
-- [docs/](docs/) — Regras de negócio, modelo de dados, user stories.
+- [docs/](docs/) — pasta com todos os documentos citados acima.
