@@ -1,5 +1,5 @@
-import type { PrismaClient } from "../../generated/prisma/client.js";
 import { AppError } from "@shared/errors/AppError.js";
+import type { PrismaClient } from "../../generated/prisma/client.js";
 
 /**
  * Student dashboard. Aggregates paths per subject (with content status),
@@ -150,7 +150,14 @@ export class DashboardService {
       });
       categoryIds = subjects.map((s) => s.categoryId);
       if (categoryIds.length === 0) {
-        return { students: [], total: 0, subjects: [] };
+        return {
+          students: [],
+          total: 0,
+          subjects: [],
+          summaryByGrade: [],
+          subjectsByGrade: [],
+          learningPaths: [],
+        };
       }
     }
 
@@ -158,7 +165,212 @@ export class DashboardService {
       where: { name: "student" },
       select: { id: true },
     });
-    if (!studentRole) return { students: [], total: 0, subjects: [] };
+    if (!studentRole) {
+      return {
+        students: [],
+        total: 0,
+        subjects: [],
+        summaryByGrade: [],
+        subjectsByGrade: [],
+        learningPaths: [],
+      };
+    }
+
+    const categories =
+      categoryIds != null
+        ? await this.prisma.category.findMany({
+            where: { id: { in: categoryIds } },
+            select: { id: true, name: true },
+          })
+        : await this.prisma.category.findMany({ select: { id: true, name: true } });
+
+    // Overview: alunos ativos/total por série, conteúdos/avaliações por série, matérias por série, trilhas
+    const allStudentsForGrade = await this.prisma.user.findMany({
+      where: { roleId: studentRole.id },
+      select: { id: true, currentGrade: true, isActive: true },
+    });
+
+    const byGradeMap = new Map<
+      string,
+      {
+        totalStudents: number;
+        activeStudents: number;
+        contentsCount: number;
+        assessmentsCount: number;
+      }
+    >();
+    for (const s of allStudentsForGrade) {
+      const grade = s.currentGrade ?? "sem-serie";
+      const entry = byGradeMap.get(grade) ?? {
+        totalStudents: 0,
+        activeStudents: 0,
+        contentsCount: 0,
+        assessmentsCount: 0,
+      };
+      entry.totalStudents += 1;
+      if (s.isActive) entry.activeStudents += 1;
+      byGradeMap.set(grade, entry);
+    }
+
+    const contentWhere =
+      role === "teacher"
+        ? { userId, categoryId: categoryIds != null ? { in: categoryIds } : undefined }
+        : { categoryId: categoryIds != null ? { in: categoryIds } : undefined };
+    const contentsByGrade = await this.prisma.content.groupBy({
+      by: ["grade"],
+      where: contentWhere,
+      _count: { _all: true },
+    });
+    for (const g of contentsByGrade) {
+      const grade = g.grade;
+      const entry = byGradeMap.get(grade) ?? {
+        totalStudents: 0,
+        activeStudents: 0,
+        contentsCount: 0,
+        assessmentsCount: 0,
+      };
+      entry.contentsCount = g._count._all;
+      byGradeMap.set(grade, entry);
+    }
+
+    const assessmentsWithGrade = await this.prisma.assessment.findMany({
+      where: role === "teacher" ? { teacherId: userId } : {},
+      select: { id: true, contentId: true },
+    });
+    const contentIdsFromAssessments = assessmentsWithGrade
+      .map((a) => a.contentId)
+      .filter((id): id is string => id != null);
+    const contentGradeMap = new Map<string, string>();
+    if (contentIdsFromAssessments.length > 0) {
+      const contents = await this.prisma.content.findMany({
+        where: { id: { in: contentIdsFromAssessments } },
+        select: { id: true, grade: true },
+      });
+      for (const c of contents) contentGradeMap.set(c.id, c.grade);
+    }
+    const assessmentGradeCount = new Map<string, number>();
+    for (const a of assessmentsWithGrade) {
+      const grade = (a.contentId && contentGradeMap.get(a.contentId)) ?? "sem-serie";
+      assessmentGradeCount.set(grade, (assessmentGradeCount.get(grade) ?? 0) + 1);
+    }
+    for (const [grade, count] of assessmentGradeCount) {
+      const entry = byGradeMap.get(grade) ?? {
+        totalStudents: 0,
+        activeStudents: 0,
+        contentsCount: 0,
+        assessmentsCount: 0,
+      };
+      entry.assessmentsCount = count;
+      byGradeMap.set(grade, entry);
+    }
+
+    const summaryByGrade = Array.from(byGradeMap.entries())
+      .map(([grade, v]) => ({ grade, ...v }))
+      .sort((a, b) => String(a.grade).localeCompare(String(b.grade)));
+
+    // Matérias que leciona por série: por categoria, por grade (contentsCount, pathsCount, assessmentsCount)
+    const pathCategoryGrade = await this.prisma.learningPath.findMany({
+      where: { categoryId: categoryIds != null ? { in: categoryIds } : undefined, isActive: true },
+      select: { categoryId: true, grade: true, id: true },
+    });
+    const contentCategoryGrade = await this.prisma.content.findMany({
+      where: contentWhere,
+      select: { categoryId: true, grade: true },
+    });
+    const assessmentCategoryGradeRows = await this.prisma.assessment.findMany({
+      where: role === "teacher" ? { teacherId: userId } : {},
+      select: { categoryId: true, contentId: true },
+    });
+
+    const subjectGradeStats = new Map<
+      string,
+      Map<string, { contentsCount: number; pathsCount: number; assessmentsCount: number }>
+    >();
+    for (const c of categories) {
+      subjectGradeStats.set(c.id, new Map());
+    }
+    for (const c of contentCategoryGrade) {
+      if (!subjectGradeStats.has(c.categoryId)) continue;
+      const byGrade = subjectGradeStats.get(c.categoryId)!;
+      const cur = byGrade.get(c.grade) ?? { contentsCount: 0, pathsCount: 0, assessmentsCount: 0 };
+      cur.contentsCount += 1;
+      byGrade.set(c.grade, cur);
+    }
+    for (const p of pathCategoryGrade) {
+      if (!subjectGradeStats.has(p.categoryId)) continue;
+      const byGrade = subjectGradeStats.get(p.categoryId)!;
+      const cur = byGrade.get(p.grade) ?? { contentsCount: 0, pathsCount: 0, assessmentsCount: 0 };
+      cur.pathsCount += 1;
+      byGrade.set(p.grade, cur);
+    }
+    for (const a of assessmentCategoryGradeRows) {
+      if (!subjectGradeStats.has(a.categoryId)) continue;
+      const grade = (a.contentId && contentGradeMap.get(a.contentId)) ?? "sem-serie";
+      const byGrade = subjectGradeStats.get(a.categoryId)!;
+      const cur = byGrade.get(grade) ?? { contentsCount: 0, pathsCount: 0, assessmentsCount: 0 };
+      cur.assessmentsCount += 1;
+      byGrade.set(grade, cur);
+    }
+
+    const subjectsByGrade = categories.map((cat) => ({
+      categoryId: cat.id,
+      categoryName: cat.name,
+      byGrade: Array.from((subjectGradeStats.get(cat.id) ?? new Map()).entries()).map(
+        ([grade, stats]) => ({ grade, ...stats })
+      ),
+    }));
+
+    // Trilhas: título, quantidade de módulos, alunos (da série da trilha), % conclusão
+    const pathsWithContents = await this.prisma.learningPath.findMany({
+      where: { categoryId: categoryIds != null ? { in: categoryIds } : undefined, isActive: true },
+      include: {
+        category: { select: { id: true, name: true } },
+        contents: { orderBy: { orderNumber: "asc" }, select: { contentId: true } },
+      },
+    });
+
+    const learningPaths: Array<{
+      pathId: string;
+      title: string;
+      grade: string;
+      categoryId: string;
+      categoryName: string;
+      moduleCount: number;
+      studentCount: number;
+      completionPercentage: number;
+    }> = [];
+
+    for (const path of pathsWithContents) {
+      const contentIds = path.contents.map((c) => c.contentId);
+      const moduleCount = contentIds.length;
+      const studentsInGrade = allStudentsForGrade.filter((s) => s.currentGrade === path.grade);
+      const studentCount = studentsInGrade.length;
+
+      let completionPercentage = 0;
+      if (moduleCount > 0 && studentCount > 0) {
+        const progressRows = await this.prisma.studentProgress.findMany({
+          where: {
+            studentId: { in: studentsInGrade.map((s) => s.id) },
+            contentId: { in: contentIds },
+            status: "completed",
+          },
+          select: { studentId: true, contentId: true },
+        });
+        const completedTotal = progressRows.length;
+        completionPercentage = Math.round((completedTotal / (moduleCount * studentCount)) * 100);
+      }
+
+      learningPaths.push({
+        pathId: path.id,
+        title: path.name,
+        grade: path.grade,
+        categoryId: path.categoryId,
+        categoryName: path.category.name,
+        moduleCount,
+        studentCount,
+        completionPercentage,
+      });
+    }
 
     const where: { roleId: string; currentGrade?: string } = { roleId: studentRole.id };
     if (filters.currentGrade != null && filters.currentGrade !== "") {
@@ -170,15 +382,16 @@ export class DashboardService {
       select: { id: true, name: true, email: true, currentGrade: true },
       orderBy: { name: "asc" },
     });
+
     if (students.length === 0) {
-      const subjects =
-        categoryIds != null
-          ? await this.prisma.category.findMany({
-              where: { id: { in: categoryIds } },
-              select: { id: true, name: true },
-            })
-          : await this.prisma.category.findMany({ select: { id: true, name: true } });
-      return { students: [], total: 0, subjects };
+      return {
+        students: [],
+        total: 0,
+        subjects: categories,
+        summaryByGrade,
+        subjectsByGrade,
+        learningPaths,
+      };
     }
 
     const studentIds = students.map((s) => s.id);
@@ -187,7 +400,7 @@ export class DashboardService {
     };
     if (categoryIds != null) levelWhere.categoryId = { in: categoryIds };
 
-    const [levelRows, recommendations, categories] = await Promise.all([
+    const [levelRows, recommendations] = await Promise.all([
       this.prisma.studentLearningLevel.findMany({
         where: levelWhere,
         include: { category: { select: { id: true, name: true } } },
@@ -208,12 +421,6 @@ export class DashboardService {
           },
         },
       }),
-      categoryIds != null
-        ? this.prisma.category.findMany({
-            where: { id: { in: categoryIds } },
-            select: { id: true, name: true },
-          })
-        : this.prisma.category.findMany({ select: { id: true, name: true } }),
     ]);
 
     const levelsByStudent = new Map<
@@ -266,6 +473,167 @@ export class DashboardService {
       students: studentsPayload,
       total: studentsPayload.length,
       subjects: categories,
+      summaryByGrade,
+      subjectsByGrade,
+      learningPaths,
+    };
+  }
+
+  /**
+   * Coordinator-only dashboard. Aggregated view of the platform:
+   * - summary metrics (students/teachers/contents/assessments/recommendations)
+   * - breakdown by grade (students and pending recommendations)
+   * - breakdown by subject (contents, paths, assessments, students with pending recommendations)
+   */
+  async getCoordinatorDashboard(): Promise<unknown> {
+    // Roles
+    const [studentRole, teacherRole] = await this.prisma.role.findMany({
+      where: { name: { in: ["student", "teacher"] } },
+      select: { id: true, name: true },
+    });
+
+    const studentRoleId = studentRole?.name === "student" ? studentRole.id : undefined;
+    const teacherRoleId = teacherRole?.name === "teacher" ? teacherRole.id : undefined;
+
+    // Basic queries in paralelo
+    const [
+      students,
+      teachers,
+      pendingRecommendations,
+      contentsGroup,
+      pathsGroup,
+      assessmentsGroup,
+      categories,
+    ] = await Promise.all([
+      this.prisma.user.findMany({
+        where: studentRoleId ? { roleId: studentRoleId } : { role: { name: "student" } },
+        select: { id: true, currentGrade: true, isActive: true },
+      }),
+      this.prisma.user.findMany({
+        where: teacherRoleId ? { roleId: teacherRoleId } : { role: { name: "teacher" } },
+        select: { id: true },
+      }),
+      this.prisma.recommendation.findMany({
+        where: { status: "pending" },
+        select: {
+          studentId: true,
+          content: { select: { categoryId: true } },
+        },
+      }),
+      this.prisma.content.groupBy({
+        by: ["categoryId"],
+        _count: { _all: true },
+      }),
+      this.prisma.learningPath.groupBy({
+        by: ["categoryId"],
+        _count: { _all: true },
+      }),
+      this.prisma.assessment.groupBy({
+        by: ["categoryId"],
+        _count: { _all: true },
+      }),
+      this.prisma.category.findMany({
+        select: { id: true, name: true },
+      }),
+    ]);
+
+    // Summary
+    const totalStudents = students.length;
+    const activeStudents = students.filter((s) => s.isActive).length;
+    const inactiveStudents = totalStudents - activeStudents;
+    const totalTeachers = teachers.length;
+    const totalPendingRecommendations = pendingRecommendations.length;
+
+    const totalContents = contentsGroup.reduce((sum, g) => sum + g._count._all, 0);
+    const totalLearningPaths = pathsGroup.reduce((sum, g) => sum + g._count._all, 0);
+    const totalAssessments = assessmentsGroup.reduce((sum, g) => sum + g._count._all, 0);
+
+    // By grade
+    const studentsByGrade = new Map<
+      string,
+      { grade: string; studentCount: number; pendingRecommendationsCount: number }
+    >();
+    const studentGradeById = new Map<string, string | null>(
+      students.map((s) => [s.id, s.currentGrade ?? null])
+    );
+
+    for (const s of students) {
+      const grade = s.currentGrade ?? "UNKNOWN";
+      const entry = studentsByGrade.get(grade) ?? {
+        grade,
+        studentCount: 0,
+        pendingRecommendationsCount: 0,
+      };
+      entry.studentCount += 1;
+      studentsByGrade.set(grade, entry);
+    }
+
+    for (const rec of pendingRecommendations) {
+      const grade = studentGradeById.get(rec.studentId) ?? "UNKNOWN";
+      const entry = studentsByGrade.get(grade);
+      if (entry) {
+        entry.pendingRecommendationsCount += 1;
+      } else {
+        studentsByGrade.set(grade, {
+          grade,
+          studentCount: 0,
+          pendingRecommendationsCount: 1,
+        });
+      }
+    }
+
+    const byGrade = Array.from(studentsByGrade.values()).sort((a, b) =>
+      String(a.grade).localeCompare(String(b.grade))
+    );
+
+    // By subject
+    const contentCountByCategory = new Map<string, number>(
+      contentsGroup.map((g) => [g.categoryId, g._count._all])
+    );
+    const pathsCountByCategory = new Map<string, number>(
+      pathsGroup.map((g) => [g.categoryId, g._count._all])
+    );
+    const assessmentsCountByCategory = new Map<string, number>(
+      assessmentsGroup.map((g) => [g.categoryId, g._count._all])
+    );
+
+    const studentsWithRecsByCategory = new Map<string, Set<string>>();
+    for (const rec of pendingRecommendations) {
+      const catId = rec.content.categoryId;
+      const set = studentsWithRecsByCategory.get(catId) ?? new Set<string>();
+      set.add(rec.studentId);
+      studentsWithRecsByCategory.set(catId, set);
+    }
+
+    const bySubject = categories.map((c) => {
+      const contentsCount = contentCountByCategory.get(c.id) ?? 0;
+      const pathsCount = pathsCountByCategory.get(c.id) ?? 0;
+      const assessmentsCount = assessmentsCountByCategory.get(c.id) ?? 0;
+      const studentsWithPendingRecommendations = studentsWithRecsByCategory.get(c.id)?.size ?? 0;
+
+      return {
+        categoryId: c.id,
+        categoryName: c.name,
+        contentsCount,
+        pathsCount,
+        assessmentsCount,
+        studentsWithPendingRecommendations,
+      };
+    });
+
+    return {
+      summary: {
+        totalStudents,
+        activeStudents,
+        inactiveStudents,
+        totalTeachers,
+        pendingRecommendations: totalPendingRecommendations,
+        totalContents,
+        totalLearningPaths,
+        totalAssessments,
+      },
+      byGrade,
+      bySubject,
     };
   }
 }
