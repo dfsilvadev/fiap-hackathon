@@ -378,8 +378,17 @@ export class DashboardService {
     }
 
     const students = await this.prisma.user.findMany({
-      where,
-      select: { id: true, name: true, email: true, currentGrade: true },
+      where: { ...where, isActive: true },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        currentGrade: true,
+        guardians: true,
+        dateOfBirth: true,
+        phone: true,
+        isActive: true,
+      },
       orderBy: { name: "asc" },
     });
 
@@ -465,6 +474,10 @@ export class DashboardService {
       name: s.name,
       email: s.email,
       currentGrade: s.currentGrade,
+      guardians: s.guardians,
+      dateOfBirth: s.dateOfBirth,
+      phone: s.phone,
+      isActive: s.isActive,
       levelsBySubject: levelsByStudent.get(s.id) ?? [],
       pendingRecommendations: recsByStudent.get(s.id) ?? [],
     }));
