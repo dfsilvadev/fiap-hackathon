@@ -6,7 +6,7 @@ Labels sugeridos: `MVP` | `Fase 2` | `Backend` | `Frontend` | `API` | `SPA`.
 > **Escopo deste documento:** Apenas o **módulo pedagógico**. Blog, publicações e comentários estão **fora do escopo**.  
 > **Escopo MVP (Hackathon):** Autenticação e Usuários (Épico 1), Conteúdos Pedagógicos (Épico 2), Trilha (Épico 3), Avaliações (Épico 5), Progresso e Recomendações (Épico 6), **Dashboard do aluno** (7.1) e **tela mínima do professor** (7.2). Turmas e Matrículas (Épico 4) e dashboards completos (7.3–7.5) são **Fase 2**. Conteúdo de reforço é identificado apenas por `level = 'reforco'`.
 
-**Referências:** `PITCH_MODULO_PEDAGOGICO.md`, `REGRAS_NEGOCIO_MODULO_PEDAGOGICO.md`.
+**Referências:** `pitch.md`, `business-rules.md`.
 
 **Atualizado em:** 2026-02-03.
 
@@ -982,7 +982,7 @@ Labels sugeridos: `MVP` | `Fase 2` | `Backend` | `Frontend` | `API` | `SPA`.
 **REGRAS NEGOCIAIS**
 
 - **[RN001]:** Listagens (conteúdos, usuários, avaliações, alunos, etc.) devem suportar paginação (page, limit) na API e na interface.
-- **[RN002]:** Tempos desejados (conforme REGRAS_NEGOCIO_MODULO_PEDAGOGICO): carregamento do dashboard < 2 s, carregamento de conteúdo < 1 s, submissão de avaliação < 3 s.
+- **[RN002]:** Tempos desejados (conforme business-rules): carregamento do dashboard < 2 s, carregamento de conteúdo < 1 s, submissão de avaliação < 3 s.
 - **[RN003]:** Respostas de erro (4xx/5xx) devem ser tratadas na interface com mensagem clara.
 
 **FORA DO ESCOPO**
@@ -1048,9 +1048,9 @@ Labels sugeridos: `MVP` | `Fase 2` | `Backend` | `Frontend` | `API` | `SPA`.
 
 ---
 
-## Stories de Frontend (MVP) — alinhadas ao CHECKLIST_DESENVOLVIMENTO_MVP
+## Stories de Frontend (MVP) — alinhadas ao mvp-developer-checklist
 
-As stories abaixo cobrem **apenas a camada de interface** (SPA/teleas) e estão mapeadas aos itens de **Frontend** do `CHECKLIST_DESENVOLVIMENTO_MVP.md`. O backend correspondente já está implementado (API documentada em `API_TESTES.md`).
+As stories abaixo cobrem **apenas a camada de interface** (SPA/teleas) e estão mapeadas aos itens de **Frontend** do `mvp-developer-checklist.md`. O backend correspondente já está implementado (API documentada em `api-tests.md`).
 
 **Labels sugeridos:** `MVP` | `Frontend` | `SPA`. **Referência:** Checklist Partes 2–10, itens marcados como Frontend.
 
@@ -1286,7 +1286,7 @@ As stories abaixo cobrem **apenas a camada de interface** (SPA/teleas) e estão 
 
 - **Épicos:** 8 (Autenticação e Usuários; Conteúdos Pedagógicos; Trilha de Aprendizado; Turmas e Matrículas; Avaliações; Progresso e Recomendações; Dashboards; Não Funcionais).
 - **Stories (funcionais gerais):** 40 no total, no formato detalhado acima.
-- **Stories de Frontend (MVP):** Seção **Stories de Frontend (MVP)** — 18 stories (F.1.1 a F.9.1) alinhadas 1:1 aos itens de **Frontend** do `CHECKLIST_DESENVOLVIMENTO_MVP.md` (Partes 2–10). Uso: implementação das telas da SPA em cima da API já existente.
+- **Stories de Frontend (MVP):** Seção **Stories de Frontend (MVP)** — 18 stories (F.1.1 a F.9.1) alinhadas 1:1 aos itens de **Frontend** do `mvp-developer-checklist.md` (Partes 2–10). Uso: implementação das telas da SPA em cima da API já existente.
 - **Escopo MVP (Hackathon):** Épicos 1, 2, 3, 5, 6; Dashboard aluno (7.1) e **tela mínima professor** (7.2). Épico 4 (Turmas e Matrículas) inteiro e Stories 7.3, 7.4, 7.5 são **Fase 2**.
 
 **Sugestão de uso:**
@@ -1296,4 +1296,4 @@ As stories abaixo cobrem **apenas a camada de interface** (SPA/teleas) e estão 
 3. Usar **tags**: `MVP`, `Fase 2`, `Backend`, `Frontend`, `API`, `SPA` — marcar Stories 4.1 a 4.4 e 7.3 a 7.5 como `Fase 2`; 7.1 e 7.2 como `MVP`; todas as Stories F.1.1–F.9.1 como `Frontend` e `MVP`.
 4. Priorizar: Auth e Usuários → Conteúdos + Trilha → Avaliações + Progresso/Recomendações → Dashboard aluno (7.1) e tela mínima professor (7.2); por último Turmas e dashboards completos (Fase 2). Para o frontend, seguir a ordem F.1 → F.2 → … → F.9 (espelha a ordem do checklist).
 
-**Documento em evolução.** Escopo: apenas módulo pedagógico. Referências: PITCH_MODULO_PEDAGOGICO.md, REGRAS_NEGOCIO_MODULO_PEDAGOGICO.md, CHECKLIST_DESENVOLVIMENTO_MVP.md. Atualizado em: 2026-02-03.
+**Documento em evolução.** Escopo: apenas módulo pedagógico. Referências: pitch.md, business-rules.md, mvp-developer-checklist.md. Atualizado em: 2026-02-03.

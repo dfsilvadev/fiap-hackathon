@@ -106,6 +106,11 @@ export class ProgressService {
       },
       update: data,
     });
+    // After successfully updating progress, try to promote the student's level for this subject
+    if (input.status === "completed") {
+      // Best effort: if this fails we still return the progress normally
+      await this.maybePromoteStudentLevel(studentId, content.categoryId, student.currentGrade);
+    }
     return this.toProgressDto(progress);
   }
 
@@ -238,6 +243,105 @@ export class ProgressService {
       },
     });
     return completed === contentIds.length;
+  }
+
+  /**
+   * Promotes the student's level for a subject (category) when all contents
+   * of the current level in the default active learning path for that grade
+   * are completed.
+   *
+   * This keeps StudentLearningLevel.level in sync with actual progress so
+   * that higher-level contents become available.
+   */
+  private async maybePromoteStudentLevel(
+    studentId: string,
+    categoryId: string,
+    grade: string
+  ): Promise<void> {
+    // Find the default active learning path for this subject and grade
+    const path = await this.prisma.learningPath.findFirst({
+      where: {
+        categoryId,
+        grade,
+        isDefault: true,
+        isActive: true,
+      },
+      include: {
+        contents: {
+          orderBy: { orderNumber: "asc" },
+          include: {
+            content: {
+              select: { id: true, level: true },
+            },
+          },
+        },
+      },
+    });
+
+    if (!path || path.contents.length === 0) {
+      return;
+    }
+
+    // Current student level for this subject (defaults to "1")
+    const studentLevelRow = await this.prisma.studentLearningLevel.findUnique({
+      where: { studentId_categoryId: { studentId, categoryId } },
+    });
+    const currentLevel = studentLevelRow?.level ?? "1";
+    const currentLevelNum = parseInt(currentLevel, 10) || 1;
+
+    // Determine the maximum numeric level defined in the path (ignoring "reforco" and non-numeric levels)
+    const numericLevels = path.contents
+      .map((pc) => parseInt(pc.content.level, 10))
+      .filter((n) => !Number.isNaN(n));
+    if (numericLevels.length === 0) {
+      return;
+    }
+    const maxLevelNum = Math.max(...numericLevels);
+
+    // If already at or above the max level, nothing to promote
+    if (currentLevelNum >= maxLevelNum) {
+      return;
+    }
+
+    // All contents for the current level in this path
+    const levelContents = path.contents.filter((pc) => {
+      const levelNum = parseInt(pc.content.level, 10);
+      return !Number.isNaN(levelNum) && levelNum === currentLevelNum;
+    });
+
+    if (levelContents.length === 0) {
+      return;
+    }
+
+    const contentIds = levelContents.map((pc) => pc.content.id);
+
+    // How many of these contents the student has completed
+    const completedCount = await this.prisma.studentProgress.count({
+      where: {
+        studentId,
+        contentId: { in: contentIds },
+        status: "completed",
+      },
+    });
+
+    // Only promote if all contents of the current level are completed
+    if (completedCount !== contentIds.length) {
+      return;
+    }
+
+    const nextLevel = String(currentLevelNum + 1);
+
+    await this.prisma.studentLearningLevel.upsert({
+      where: { studentId_categoryId: { studentId, categoryId } },
+      create: {
+        studentId,
+        categoryId,
+        level: nextLevel,
+      },
+      update: {
+        level: nextLevel,
+      },
+    });
   }
 
   private toProgressDto(p: {

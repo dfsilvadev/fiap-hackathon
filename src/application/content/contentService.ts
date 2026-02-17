@@ -85,6 +85,24 @@ export class ContentService {
       if (!student?.currentGrade || student.currentGrade !== content.grade) {
         throw new AppError("Content not found", 404, "NOT_FOUND");
       }
+
+      // Extra protection: block direct URL access to higher-level contents
+      // based on the student's current level for this subject (category).
+      const studentLevelRow = await this.prisma.studentLearningLevel.findUnique({
+        where: { studentId_categoryId: { studentId: userId, categoryId: content.categoryId } },
+      });
+      const studentLevel = studentLevelRow?.level ?? "1";
+      const studentLevelNum = parseInt(studentLevel, 10) || 1;
+      const contentLevelNum = parseInt(content.level, 10) || 1;
+      // "reforco" is treated as a special advanced level that requires max student level
+      if (content.level === "reforco") {
+        if (studentLevelNum < 3) {
+          throw new AppError("Content not found", 404, "NOT_FOUND");
+        }
+      } else if (contentLevelNum > studentLevelNum) {
+        throw new AppError("Content not found", 404, "NOT_FOUND");
+      }
+
       return this.toStudentContentDto(content);
     }
 

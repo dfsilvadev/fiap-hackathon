@@ -4,13 +4,13 @@
 
 > **Escopo MVP (Hackathon):**
 >
-> - **Dentro do MVP:** Perfis (aluno, professor, coordenador), conteúdo pedagógico (nível 1/2/3/reforço), trilha padrão por matéria/série, progresso do aluno, avaliações por nível com tags, recomendações determinísticas, **dashboard do aluno** (trilha, progresso, recomendações) e **tela mínima do professor** (lista de alunos com nível por matéria e recomendações ativas por aluno). Turmas e matrículas **não** são implementadas no MVP: o professor vê lista de alunos (ou filtrada por série) e acompanha níveis/recomendações sem o conceito de turma.
-> - **Fase 2 (fora do MVP):** Turmas e matrículas (`tb_class`, `tb_enrollment`, `tb_class_teacher_subject`), dashboards agregados do professor e do coordenador (gráficos, "alunos em risco"), múltiplas trilhas, questões dissertativas corrigidas pelo professor.
+> - **Dentro do MVP:** Perfis (aluno, professor, coordenador), conteúdo pedagógico (nível 1/2/3/reforço), trilha padrão por matéria/série, progresso do aluno, avaliações por nível com tags, recomendações determinísticas, **dashboard do aluno** (trilha, progresso, recomendações), **dashboard do professor** (lista de alunos com nível por matéria, recomendações ativas e visão analítica por série/matéria) e **dashboard do coordenador** (visão agregada simples por série/matéria). Turmas e matrículas **não** são implementadas no MVP: professor/coordenador filtram por série (`currentGrade`) e acompanham níveis/recomendações sem o conceito de turma.
+> - **Fase 2 (fora do MVP):** Turmas e matrículas (`tb_class`, `tb_enrollment`, `tb_class_teacher_subject`), dashboards agregados avançados do professor e do coordenador (gráficos, \"alunos em risco\", visão por turma), múltiplas trilhas, questões dissertativas corrigidas pelo professor.
 > - **Refinamento técnico:** "É conteúdo de reforço" é derivado exclusivamente de `level = 'reforco'`; não se usa campo redundante `is_reinforcement` no MVP (ver nota em 1.2.1 e 3.3).
 
-**Referências:** `PITCH_MODULO_PEDAGOGICO.md`, `USER_STORIES_MODULO_PEDAGOGICO.md`.
+**Referências:** `pitch.md`, `user-stories.md`.
 
-**Atualizado em:** 2026-02-03.
+**Atualizado em:** 2026-02-12.
 
 ---
 
@@ -264,12 +264,27 @@ function generateRecommendations(
 
 #### 1.6.2. Dashboard do Professor
 
-- **MVP:** Tela mínima: lista de alunos (ou filtrada por série via `currentGrade`) com nível por matéria e lista de recomendações pendentes por aluno. Professor vê apenas matérias que leciona; coordenador vê todas. Sem turmas, sem gráficos.
-- **Fase 2:** Visão por turma (distribuição por nível, alunos em risco, conteúdos com maior dificuldade); visão por aluno (histórico de avaliações, nível, progresso, recomendações).
+- **MVP:**
+  - Endpoint principal: `GET /api/dashboard/professor/students?currentGrade=`.
+  - **Lista de alunos** (ou filtrada por série via `currentGrade`) com:
+    - Nível por matéria (`levelsBySubject`).
+    - Recomendações pendentes por aluno (`pendingRecommendations`).
+  - **Visão analítica por série/matéria**:
+    - `summaryByGrade`: total de alunos, alunos ativos, conteúdos e avaliações do professor por série.
+    - `subjectsByGrade`: matérias que o professor leciona com contagem de conteúdos, trilhas e avaliações por série.
+    - `learningPaths`: trilhas nas matérias do professor com título, série, quantidade de módulos, quantidade de alunos da série e percentual médio de conclusão.
+  - Professor vê apenas matérias que leciona; coordenador pode usar a mesma rota para visão ampla (todas as matérias).
+- **Fase 2:** Visão por turma (distribuição por nível, alunos em risco, conteúdos com maior dificuldade); visão por aluno (histórico de avaliações, nível, progresso, recomendações detalhadas).
 
-#### 1.6.3. Dashboard do Coordenador (Fase 2)
+#### 1.6.3. Dashboard do Coordenador
 
-- Visão agregada: distribuição de níveis por série/turma/matéria, taxa de alunos em risco, conteúdos mais problemáticos, relatórios.
+- **MVP:**
+  - Endpoint principal: `GET /api/dashboard/coordinator`.
+  - Visão agregada simples:
+    - `summary`: totais de alunos, alunos ativos/inativos, professores, conteúdos, trilhas, avaliações e recomendações pendentes.
+    - `byGrade`: alunos e recomendações pendentes por série.
+    - `bySubject`: por matéria, quantidade de conteúdos, trilhas, avaliações e alunos com recomendações pendentes.
+- **Fase 2:** Visão agregada avançada: distribuição de níveis por série/turma/matéria, taxa de alunos em risco, conteúdos mais problemáticos, relatórios e filtros por turma.
 
 ---
 
@@ -349,7 +364,7 @@ function generateRecommendations(
 
 ## 7. Alinhamento com a implementação (MVP)
 
-Resumo do que foi implementado no backend/frontend conforme o `CHECKLIST_DESENVOLVIMENTO_MVP.md`, para garantir que este documento reflita a realidade do sistema.
+Resumo do que foi implementado no backend/frontend conforme o `mvp-developer-checklist.md`, para garantir que este documento reflita a realidade do sistema.
 
 | Regra / conceito | Implementação |
 |------------------|----------------|
@@ -360,10 +375,11 @@ Resumo do que foi implementado no backend/frontend conforme o `CHECKLIST_DESENVO
 | **Avaliações (1.4)** | CRUD avaliação e questões (múltipla escolha, V/F, texto); questões com tags. Submissão pelo aluno; correção automática (comparação normalizada); ≥70% atualiza `tb_student_learning_level`. Sem correção manual de dissertativas no MVP. **Ajuste manual de nível pelo professor:** não implementado no MVP. |
 | **Recomendações (1.5)** | Após o submit: extração de tags das questões erradas; busca de conteúdos `level = 'reforco'`, mesma matéria e série, com interseção de tags; criação de `tb_recommendation` (source_type: assessment). Aluno lista (filtro por status) e pode marcar como completed ou dismissed. **Apenas reforço** no MVP (não "nível anterior"). |
 | **Dashboard aluno (1.6.1)** | GET /api/dashboard/student: trilhas por matéria (com status de cada conteúdo), progresso (nível, %), recomendações pendentes. |
-| **Dashboard professor (1.6.2)** | GET /api/dashboard/professor/students?currentGrade=: lista de alunos com nível por matéria e recomendações pendentes; professor só vê matérias que leciona; coordenador vê todas. |
+| **Dashboard professor (1.6.2)** | GET /api/dashboard/professor/students?currentGrade=: lista de alunos com nível por matéria e recomendações pendentes; professor só vê matérias que leciona; coordenador vê todas. Inclui visão analítica (`summaryByGrade`, `subjectsByGrade`, `learningPaths`) para apoiar o dashboard do professor. |
+| **Dashboard coordenador (1.6.3)** | GET /api/dashboard/coordinator: visão agregada simples por série e matéria (`summary`, `byGrade`, `bySubject`), usada na tela de dashboard do coordenador. |
 | **Turmas/matrículas** | Fora do MVP; professor/coordenador filtram por série (`currentGrade`) sem conceito de turma. |
 
-Referência de testes da API: `API_TESTES.md` (roteiro E2E por persona).
+Referência de testes da API: `api-tests.md` (roteiro E2E por persona).
 
 ---
 

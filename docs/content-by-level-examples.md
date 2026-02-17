@@ -14,7 +14,7 @@ Substitua `<uuid-categoria-portugues>`, `<uuid-categoria-matematica>` e `<uuid-c
 {
   "title": "Classes de palavras: substantivo e adjetivo",
   "contentText": "As palavras podem ser agrupadas em classes conforme a função que exercem na oração. O substantivo é a palavra que nomeia seres, lugares, sentimentos e ideias. O adjetivo é a palavra que caracteriza o substantivo, atribuindo-lhe qualidade, estado ou modo. Exemplo: 'A casa antiga' — 'casa' é substantivo; 'antiga' é adjetivo.",
-  "categoryId": "<uuid-categoria-portugues>",
+  "categoryId": "201b3c62-6367-47c6-8dc7-cc6149014988",
   "grade": "7",
   "level": "1",
   "topics": [
@@ -49,7 +49,7 @@ Substitua `<uuid-categoria-portugues>`, `<uuid-categoria-matematica>` e `<uuid-c
 {
   "title": "Verbos: tempo, modo e conjugação",
   "contentText": "O verbo é a palavra que indica ação, estado ou fenômeno. Ele varia em tempo (presente, passado, futuro), modo (indicativo, subjuntivo, imperativo) e em pessoa e número. A conjugação verbal segue padrões conforme a terminação do infinitivo: -ar (1ª conjugação), -er (2ª), -ir (3ª). Exemplo: 'Eu estudo' (presente do indicativo, 1ª pessoa do singular).",
-  "categoryId": "<uuid-categoria-portugues>",
+  "categoryId": "201b3c62-6367-47c6-8dc7-cc6149014988",
   "grade": "7",
   "level": "2",
   "topics": [
@@ -84,7 +84,7 @@ Substitua `<uuid-categoria-portugues>`, `<uuid-categoria-matematica>` e `<uuid-c
 {
   "title": "Análise sintática: sujeito, predicado e complementos",
   "contentText": "A oração é formada por sujeito (sobre quem se fala) e predicado (o que se declara sobre o sujeito). O predicado pode ser verbal (com verbo de ação) ou nominal (com verbo de ligação e predicativo). Os complementos verbais são: objeto direto (sem preposição), objeto indireto (com preposição) e complemento nominal. Exemplo: 'O aluno entregou a redação ao professor' — sujeito: O aluno; predicado: entregou a redação ao professor; objeto direto: a redação; objeto indireto: ao professor.",
-  "categoryId": "<uuid-categoria-portugues>",
+  "categoryId": "201b3c62-6367-47c6-8dc7-cc6149014988",
   "grade": "7",
   "level": "3",
   "topics": [
@@ -119,7 +119,7 @@ Substitua `<uuid-categoria-portugues>`, `<uuid-categoria-matematica>` e `<uuid-c
 {
   "title": "Introdução às frações",
   "contentText": "Uma fração representa uma parte de um todo. Ela é escrita na forma a/b, em que a é o numerador (partes consideradas) e b é o denominador (partes em que o todo foi dividido). Exemplo: 3/4 significa três partes de um todo dividido em quatro partes iguais. Frações equivalentes representam o mesmo valor (ex.: 1/2 = 2/4 = 4/8).",
-  "categoryId": "<uuid-categoria-matematica>",
+  "categoryId": "fdf4484c-b041-472a-b5b8-a1aa334af0db",
   "grade": "7",
   "level": "1",
   "topics": [
@@ -158,7 +158,7 @@ Substitua `<uuid-categoria-portugues>`, `<uuid-categoria-matematica>` e `<uuid-c
 {
   "title": "Operações com frações",
   "contentText": "Para somar ou subtrair frações, é necessário que tenham o mesmo denominador. Se não tiverem, reduzimos ao mesmo denominador (mínimo múltiplo comum). Na multiplicação, multiplicamos numeradores entre si e denominadores entre si. Na divisão, mantemos a primeira fração e multiplicamos pelo inverso da segunda. Exemplo: 1/2 + 1/3 = 3/6 + 2/6 = 5/6.",
-  "categoryId": "<uuid-categoria-matematica>",
+  "categoryId": "fdf4484c-b041-472a-b5b8-a1aa334af0db",
   "grade": "7",
   "level": "2",
   "topics": [
@@ -193,7 +193,7 @@ Substitua `<uuid-categoria-portugues>`, `<uuid-categoria-matematica>` e `<uuid-c
 {
   "title": "Equações do 1º grau com uma incógnita",
   "contentText": "Uma equação do 1º grau é uma igualdade em que aparece uma incógnita (geralmente x) elevada ao expoente 1. Resolver a equação significa encontrar o valor da incógnita que torna a igualdade verdadeira. Para isso, isolamos a incógnita usando as operações inversas: o que está somando passa subtraindo, o que está multiplicando passa dividindo, e vice-versa. Exemplo: 2x + 5 = 13 → 2x = 8 → x = 4.",
-  "categoryId": "<uuid-categoria-matematica>",
+  "categoryId": "fdf4484c-b041-472a-b5b8-a1aa334af0db",
   "grade": "7",
   "level": "3",
   "topics": [
@@ -228,7 +228,7 @@ Substitua `<uuid-categoria-portugues>`, `<uuid-categoria-matematica>` e `<uuid-c
 {
   "title": "Brasil Colonial: economia e sociedade",
   "contentText": "No período colonial, a economia brasileira foi marcada pelo cultivo da cana-de-açúcar no Nordeste e pela exploração de metais preciosos em Minas Gerais. A sociedade era estratificada: no topo, os donos de engenho e a Coroa; na base, indígenas e africanos escravizados. O trabalho escravo sustentou a produção açucareira e a mineração até o século XIX.",
-  "categoryId": "<uuid-categoria-historia>",
+  "categoryId": "d6baf101-f2e8-496f-ab18-759963163635",
   "grade": "7",
   "level": "1",
   "topics": [
@@ -263,7 +263,7 @@ Substitua `<uuid-categoria-portugues>`, `<uuid-categoria-matematica>` e `<uuid-c
 {
   "title": "Independência do Brasil e Primeiro Reinado",
   "contentText": "A independência do Brasil, proclamada em 7 de setembro de 1822, foi resultado de tensões entre a elite colonial e Portugal, da presença da família real no Brasil e do processo de crise do Antigo Regime. D. Pedro I tornou-se imperador. O Primeiro Reinado (1822-1831) foi marcado pela Constituição de 1824 (poder moderador), pela Guerra da Cisplatina e por conflitos com a Assembleia e com setores que defendiam maior autonomia e abolição da escravidão.",
-  "categoryId": "<uuid-categoria-historia>",
+  "categoryId": "d6baf101-f2e8-496f-ab18-759963163635",
   "grade": "7",
   "level": "2",
   "topics": [
@@ -298,7 +298,7 @@ Substitua `<uuid-categoria-portugues>`, `<uuid-categoria-matematica>` e `<uuid-c
 {
   "title": "Segundo Reinado: café, imigração e abolição",
   "contentText": "O Segundo Reinado (1840-1889) consolidou o Estado nacional e teve na cultura do café a principal base econômica. A expansão cafeeira no Vale do Paraíba e depois no Oeste Paulista exigiu mão de obra: primeiro o tráfico interno de escravizados, depois a imigração europeia (italianos, portugueses, espanhóis). A abolição da escravidão (1888) foi resultado de pressões internas e internacionais e da resistência dos escravizados. A monarquia caiu em 1889, com a Proclamação da República.",
-  "categoryId": "<uuid-categoria-historia>",
+  "categoryId": "d6baf101-f2e8-496f-ab18-759963163635",
   "grade": "7",
   "level": "3",
   "topics": [

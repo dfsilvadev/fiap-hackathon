@@ -1,4 +1,4 @@
-// Pedagogical module schema (MVP). Ref: docs/DATA_MODEL.md
+// Pedagogical module schema (MVP). Ref: docs/architecture.md
 
 generator client {
   provider = "prisma-client"
