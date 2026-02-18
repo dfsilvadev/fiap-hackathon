@@ -1,7 +1,7 @@
-import type { PrismaClient } from "../../generated/prisma/client.js";
 import { AppError } from "@shared/errors/AppError.js";
-import { PROGRESS_STATUSES, type ProgressStatus } from "./types.js";
+import type { PrismaClient } from "../../generated/prisma/client.js";
 import type { UpsertProgressInput } from "./types.js";
+import { PROGRESS_STATUSES, type ProgressStatus } from "./types.js";
 
 function isProgressStatus(value: string): value is ProgressStatus {
   return (PROGRESS_STATUSES as readonly string[]).includes(value);
@@ -47,7 +47,14 @@ export class ProgressService {
       const studentLevelNum = parseInt(studentLevel, 10) || 1;
       const contentLevelNum = parseInt(content.level, 10) || 1;
       if (content.level === "reforco") {
-        if (studentLevelNum < 3) {
+        const recommendation = await this.prisma.recommendation.findFirst({
+          where: {
+            studentId,
+            contentId: content.id,
+            status: { in: ["pending", "completed"] },
+          },
+        });
+        if (!recommendation) {
           throw new AppError(
             "Content level is not yet accessible for your current level",
             403,
@@ -232,7 +239,7 @@ export class ProgressService {
         },
       },
     });
-    if (!path || path.contents.length === 0) return true;
+    if (!path || path.contents.length === 0) return false;
 
     const contentIds = path.contents.map((c) => c.contentId);
     const completed = await this.prisma.studentProgress.count({

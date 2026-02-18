@@ -1,15 +1,15 @@
-import type { PrismaClient } from "../../generated/prisma/client.js";
-import { AppError } from "@shared/errors/AppError.js";
-import { isTrilhaLevel } from "@shared/constants/contentLevels.js";
 import { ProgressService } from "@application/progress/progressService.js";
 import { RecommendationService } from "@application/recommendation/recommendationService.js";
+import { isTrilhaLevel } from "@shared/constants/contentLevels.js";
+import { AppError } from "@shared/errors/AppError.js";
+import type { PrismaClient } from "../../generated/prisma/client.js";
 import type {
   CreateAssessmentInput,
-  UpdateAssessmentInput,
-  ListAssessmentsFilters,
   CreateQuestionInput,
-  UpdateQuestionInput,
+  ListAssessmentsFilters,
   SubmitAssessmentInput,
+  UpdateAssessmentInput,
+  UpdateQuestionInput,
 } from "./types.js";
 import { QUESTION_TYPES, type QuestionType } from "./types.js";
 
@@ -483,14 +483,24 @@ export class AssessmentService {
     const minScoreNum = Number(assessment.minScore);
     let levelUpdated = false;
     if (percentage >= minScoreNum) {
-      await this.prisma.studentLearningLevel.upsert({
+      const currentLevelRow = await this.prisma.studentLearningLevel.findUnique({
         where: {
           studentId_categoryId: { studentId, categoryId: assessment.categoryId },
         },
-        create: { studentId, categoryId: assessment.categoryId, level: assessment.level },
-        update: { level: assessment.level },
       });
-      levelUpdated = true;
+      const currentLevel = currentLevelRow?.level ?? "1";
+      const currentLevelNum = parseInt(currentLevel, 10) || 1;
+      const assessmentLevelNum = parseInt(assessment.level, 10) || 1;
+      if (assessmentLevelNum > currentLevelNum) {
+        await this.prisma.studentLearningLevel.upsert({
+          where: {
+            studentId_categoryId: { studentId, categoryId: assessment.categoryId },
+          },
+          create: { studentId, categoryId: assessment.categoryId, level: assessment.level },
+          update: { level: assessment.level },
+        });
+        levelUpdated = true;
+      }
     }
 
     const assessmentResult = await this.prisma.assessmentResult.create({
