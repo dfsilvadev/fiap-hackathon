@@ -51,7 +51,6 @@ export class ProgressService {
           where: {
             studentId,
             contentId: content.id,
-            status: { in: ["pending", "completed"] },
           },
         });
         if (!recommendation) {
@@ -113,6 +112,20 @@ export class ProgressService {
       },
       update: data,
     });
+
+    if (input.status === "completed" && content.level === "reforco") {
+      await this.prisma.recommendation.updateMany({
+        where: {
+          studentId,
+          contentId: input.contentId,
+          status: "pending",
+        },
+        data: {
+          status: "completed",
+        },
+      });
+    }
+
     // After successfully updating progress, try to promote the student's level for this subject
     if (input.status === "completed") {
       // Best effort: if this fails we still return the progress normally

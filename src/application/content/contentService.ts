@@ -100,7 +100,6 @@ export class ContentService {
           where: {
             studentId: userId,
             contentId: content.id,
-            status: { in: ["pending", "completed"] },
           },
         });
         if (!recommendation) throw new AppError("Content not found", 404, "NOT_FOUND");
