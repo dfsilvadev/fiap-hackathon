@@ -1,5 +1,5 @@
-import type { PrismaClient } from "../../generated/prisma/client.js";
 import { AppError } from "@shared/errors/AppError.js";
+import type { PrismaClient } from "../../generated/prisma/client.js";
 import type { ListRecommendationsFilters, UpdateRecommendationStatusInput } from "./types.js";
 import { RECOMMENDATION_STATUSES, type RecommendationStatus } from "./types.js";
 
@@ -161,10 +161,49 @@ export class RecommendationService {
       throw new AppError("You can only update your own recommendations", 403, "FORBIDDEN");
     }
 
-    const updated = await this.prisma.recommendation.update({
-      where: { id: recommendationId },
-      data: { status: input.status },
-      include: { content: { select: { id: true, title: true } } },
+    const now = new Date();
+    const updated = await this.prisma.$transaction(async (tx) => {
+      const recommendationUpdated = await tx.recommendation.update({
+        where: { id: recommendationId },
+        data: { status: input.status },
+        include: { content: { select: { id: true, title: true } } },
+      });
+
+      if (input.status === "completed") {
+        const existingProgress = await tx.studentProgress.findUnique({
+          where: {
+            studentId_contentId: {
+              studentId,
+              contentId: recommendation.contentId,
+            },
+          },
+          select: { startedAt: true, timeSpent: true },
+        });
+
+        await tx.studentProgress.upsert({
+          where: {
+            studentId_contentId: {
+              studentId,
+              contentId: recommendation.contentId,
+            },
+          },
+          create: {
+            studentId,
+            contentId: recommendation.contentId,
+            status: "completed",
+            startedAt: existingProgress?.startedAt ?? now,
+            completedAt: now,
+            timeSpent: existingProgress?.timeSpent ?? undefined,
+          },
+          update: {
+            status: "completed",
+            startedAt: existingProgress?.startedAt ?? now,
+            completedAt: now,
+          },
+        });
+      }
+
+      return recommendationUpdated;
     });
     return {
       id: updated.id,
