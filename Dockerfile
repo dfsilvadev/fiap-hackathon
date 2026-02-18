@@ -1,4 +1,3 @@
-# Build
 FROM node:20-alpine AS builder
 WORKDIR /app
 COPY package*.json prisma.config.ts ./
@@ -7,7 +6,6 @@ RUN npm ci
 COPY . .
 RUN npx prisma generate && npm run build
 
-# Produção
 FROM node:20-bookworm-slim AS runner
 WORKDIR /app
 RUN apt-get update -qq && apt-get install -y --no-install-recommends openssl ca-certificates && rm -rf /var/lib/apt/lists/*

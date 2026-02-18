@@ -1,7 +1,7 @@
 import { isContentLevel, TRILHA_LEVELS } from "@shared/constants/contentLevels.js";
 import { isGrade } from "@shared/constants/grades.js";
 import { AppError } from "@shared/errors/AppError.js";
-import type { PrismaClient } from "../../generated/prisma/client.js";
+import type { Prisma, PrismaClient } from "../../generated/prisma/client.js";
 import type {
   CreateContentInput,
   ListContentsFilters,
@@ -124,13 +124,7 @@ export class ContentService {
     const limit = Math.min(MAX_LIMIT, Math.max(1, filters.limit ?? DEFAULT_LIMIT));
     const skip = (page - 1) * limit;
 
-    type ContentWhere = {
-      categoryId?: string | { in: string[] };
-      grade?: string;
-      level?: string;
-      isActive?: boolean;
-    };
-    const where: ContentWhere = {};
+    const where: Prisma.ContentWhereInput = {};
     if (filters.categoryId) where.categoryId = filters.categoryId;
     if (filters.grade) where.grade = filters.grade;
     if (filters.level) where.level = filters.level;
@@ -155,17 +149,15 @@ export class ContentService {
       }
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- where shape matches Prisma ContentWhereInput
-    const prismaWhere = where as any;
     const [contents, total] = await Promise.all([
       this.prisma.content.findMany({
-        where: prismaWhere,
+        where,
         skip,
         take: limit,
         orderBy: { updatedAt: "desc" },
         include: { category: { select: { id: true, name: true } } },
       }),
-      this.prisma.content.count({ where: prismaWhere }),
+      this.prisma.content.count({ where }),
     ]);
 
     const dtos = contents.map((c) => this.toContentDto(c));
