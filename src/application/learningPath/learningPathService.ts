@@ -1,13 +1,13 @@
-import type { PrismaClient } from "../../generated/prisma/client.js";
-import { AppError } from "@shared/errors/AppError.js";
-import { isGrade } from "@shared/constants/grades.js";
 import { isTrilhaLevel } from "@shared/constants/contentLevels.js";
+import { isGrade } from "@shared/constants/grades.js";
+import { AppError } from "@shared/errors/AppError.js";
+import type { Prisma, PrismaClient } from "../../generated/prisma/client.js";
 import type {
-  CreateLearningPathInput,
-  UpdateLearningPathInput,
-  ListLearningPathsFilters,
   AddContentToPathInput,
+  CreateLearningPathInput,
+  ListLearningPathsFilters,
   ReorderPathContentsInput,
+  UpdateLearningPathInput,
 } from "./types.js";
 
 const DEFAULT_PAGE = 1;
@@ -113,8 +113,7 @@ export class LearningPathService {
     const limit = Math.min(MAX_LIMIT, Math.max(1, filters.limit ?? DEFAULT_LIMIT));
     const skip = (page - 1) * limit;
 
-    type PathWhere = { categoryId?: string | { in: string[] }; grade?: string };
-    const where: PathWhere = {};
+    const where: Prisma.LearningPathWhereInput = {};
     if (filters.categoryId) where.categoryId = filters.categoryId;
     if (filters.grade) where.grade = filters.grade;
 
@@ -132,17 +131,15 @@ export class LearningPathService {
       if (typeof currentCat !== "string") where.categoryId = { in: categoryIds };
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- where shape matches Prisma
-    const prismaWhere = where as any;
     const [paths, total] = await Promise.all([
       this.prisma.learningPath.findMany({
-        where: prismaWhere,
+        where,
         skip,
         take: limit,
         orderBy: [{ grade: "asc" }, { name: "asc" }],
         include: { category: { select: { id: true, name: true } } },
       }),
-      this.prisma.learningPath.count({ where: prismaWhere }),
+      this.prisma.learningPath.count({ where }),
     ]);
     return { paths: paths.map((p) => this.toPathSummaryDto(p)), total };
   }

@@ -1,15 +1,15 @@
-import type { PrismaClient } from "../../generated/prisma/client.js";
-import { AppError } from "@shared/errors/AppError.js";
-import { isTrilhaLevel } from "@shared/constants/contentLevels.js";
 import { ProgressService } from "@application/progress/progressService.js";
 import { RecommendationService } from "@application/recommendation/recommendationService.js";
+import { isTrilhaLevel } from "@shared/constants/contentLevels.js";
+import { AppError } from "@shared/errors/AppError.js";
+import type { Prisma, PrismaClient } from "../../generated/prisma/client.js";
 import type {
   CreateAssessmentInput,
-  UpdateAssessmentInput,
-  ListAssessmentsFilters,
   CreateQuestionInput,
-  UpdateQuestionInput,
+  ListAssessmentsFilters,
   SubmitAssessmentInput,
+  UpdateAssessmentInput,
+  UpdateQuestionInput,
 } from "./types.js";
 import { QUESTION_TYPES, type QuestionType } from "./types.js";
 
@@ -119,8 +119,7 @@ export class AssessmentService {
     const limit = Math.min(MAX_LIMIT, Math.max(1, filters.limit ?? DEFAULT_LIMIT));
     const skip = (page - 1) * limit;
 
-    type AssessmentWhere = { categoryId?: string | { in: string[] }; level?: string };
-    const where: AssessmentWhere = {};
+    const where: Prisma.AssessmentWhereInput = {};
     if (filters.categoryId) where.categoryId = filters.categoryId;
     if (filters.level) where.level = filters.level;
 
@@ -138,17 +137,15 @@ export class AssessmentService {
       if (typeof currentCat !== "string") where.categoryId = { in: categoryIds };
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const prismaWhere = where as any;
     const [assessments, total] = await Promise.all([
       this.prisma.assessment.findMany({
-        where: prismaWhere,
+        where,
         skip,
         take: limit,
         orderBy: [{ startDate: "desc" }],
         include: { category: { select: { id: true, name: true } } },
       }),
-      this.prisma.assessment.count({ where: prismaWhere }),
+      this.prisma.assessment.count({ where }),
     ]);
     return {
       assessments: assessments.map((a) => this.toAssessmentSummaryDto(a)),
