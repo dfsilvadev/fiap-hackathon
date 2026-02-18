@@ -1,4 +1,4 @@
-import { isContentLevel } from "@shared/constants/contentLevels.js";
+import { isContentLevel, TRILHA_LEVELS } from "@shared/constants/contentLevels.js";
 import { isGrade } from "@shared/constants/grades.js";
 import { AppError } from "@shared/errors/AppError.js";
 import type { Prisma, PrismaClient } from "../../generated/prisma/client.js";
@@ -85,6 +85,29 @@ export class ContentService {
       if (!student?.currentGrade || student.currentGrade !== content.grade) {
         throw new AppError("Content not found", 404, "NOT_FOUND");
       }
+
+      // Extra protection: block direct URL access to higher-level contents
+      // based on the student's current level for this subject (category).
+      const studentLevelRow = await this.prisma.studentLearningLevel.findUnique({
+        where: { studentId_categoryId: { studentId: userId, categoryId: content.categoryId } },
+      });
+      const studentLevel = studentLevelRow?.level ?? "1";
+      const studentLevelNum = parseInt(studentLevel, 10) || 1;
+      const contentLevelNum = parseInt(content.level, 10) || 1;
+      // "reforco" is only available when it is a recommendation for the student.
+      if (content.level === "reforco") {
+        const recommendation = await this.prisma.recommendation.findFirst({
+          where: {
+            studentId: userId,
+            contentId: content.id,
+            status: { in: ["pending", "completed"] },
+          },
+        });
+        if (!recommendation) throw new AppError("Content not found", 404, "NOT_FOUND");
+      } else if (contentLevelNum > studentLevelNum) {
+        throw new AppError("Content not found", 404, "NOT_FOUND");
+      }
+
       return this.toStudentContentDto(content);
     }
 
@@ -157,9 +180,15 @@ export class ContentService {
     const limit = Math.min(MAX_LIMIT, Math.max(1, filters.limit ?? DEFAULT_LIMIT));
     const skip = (page - 1) * limit;
 
-    const where: { isActive: boolean; grade: string; categoryId?: string } = {
+    const where: {
+      isActive: boolean;
+      grade: string;
+      categoryId?: string;
+      level?: { in: string[] };
+    } = {
       isActive: true,
       grade: student.currentGrade,
+      level: { in: [...TRILHA_LEVELS] },
     };
     if (filters.categoryId) where.categoryId = filters.categoryId;
 
@@ -174,7 +203,23 @@ export class ContentService {
       this.prisma.content.count({ where }),
     ]);
 
-    const dtos = contents.map((c) => this.toStudentContentDto(c));
+    const categoryIds = [...new Set(contents.map((c) => c.categoryId))];
+    const levelRows =
+      categoryIds.length > 0
+        ? await this.prisma.studentLearningLevel.findMany({
+            where: { studentId, categoryId: { in: categoryIds } },
+            select: { categoryId: true, level: true },
+          })
+        : [];
+    const levelByCategory = new Map(levelRows.map((row) => [row.categoryId, row.level]));
+
+    const dtos = contents.map((c) => {
+      const currentLevel = levelByCategory.get(c.categoryId) ?? "1";
+      const currentLevelNum = parseInt(currentLevel, 10) || 1;
+      const contentLevelNum = parseInt(c.level, 10) || 1;
+      const status = contentLevelNum > currentLevelNum ? "blocked" : "available";
+      return this.toStudentContentDto(c, status);
+    });
     return { contents: dtos, total };
   }
 
@@ -259,19 +304,22 @@ export class ContentService {
     };
   }
 
-  private toStudentContentDto(c: {
-    id: string;
-    title: string;
-    contentText: string;
-    categoryId: string;
-    grade: string;
-    level: string;
-    isActive: boolean;
-    topics: unknown;
-    glossary: unknown;
-    tags: unknown;
-    category?: { id: string; name: string };
-  }): unknown {
+  private toStudentContentDto(
+    c: {
+      id: string;
+      title: string;
+      contentText: string;
+      categoryId: string;
+      grade: string;
+      level: string;
+      isActive: boolean;
+      topics: unknown;
+      glossary: unknown;
+      tags: unknown;
+      category?: { id: string; name: string };
+    },
+    status?: "available" | "blocked"
+  ): unknown {
     return {
       id: c.id,
       title: c.title,
@@ -283,6 +331,7 @@ export class ContentService {
       topics: c.topics,
       glossary: c.glossary,
       tags: c.tags,
+      ...(status && { status }),
     };
   }
 }

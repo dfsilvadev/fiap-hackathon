@@ -115,6 +115,7 @@ Simula o professor criando conteúdos e uma trilha para a série 7, usando o **c
 | **2.8** | POST | `{{baseUrl}}/api/learning-paths/<pathId>/contents` | Body: `{ "contentId": "<contentId2>", "orderNumber": 1 }` | **204** |
 | **2.9** | GET | `{{baseUrl}}/api/learning-paths` | Idem | **200** — `paths` |
 | **2.10** | GET | `{{baseUrl}}/api/learning-paths/<pathId>` | Idem | **200** — trilha com `contents` ordenados |
+| **2.11** | GET | `{{baseUrl}}/api/teachers/subjects?page=1&limit=10` | Header: `Authorization: Bearer {{accessToken}}` | **200** — `subjects[]` com matérias que o professor leciona (`id`, `name`, `contentsCount`, `pathsCount`), além de `total`, `page`, `limit`, `totalPages` |
 
 **Body para 2.1 (login Professor):**
 ```json
@@ -258,18 +259,161 @@ Simula o **Aluno 1** realizando uma avaliação disponível, vendo o resultado e
 
 Resultado esperado: após o submit (6.3), o aluno vê seu desempenho detalhado (6.4) e passa a ter recomendações de conteúdos de reforço (6.5).
 
+**Exemplo de body real para 6.3 (submit de avaliação com 2 questões):**
+
+Suponha que a resposta de 6.2 retornou algo como:
+
+```json
+{
+  "assessment": {
+    "id": "a1f51a4b-2f8f-4a4a-9a70-5b9c0e8c1111",
+    "title": "Avaliação de Gramática",
+    "level": "1",
+    "questions": [
+      {
+        "id": "q-gramatica-1",
+        "questionText": "Assinale a alternativa em que todas as palavras estão escritas corretamente.",
+        "questionType": "multiple_choice_single",
+        "options": [
+          "exceção, necessário, consequencia",
+          "excessão, nescessário, consequência",
+          "exceção, necessário, consequência",
+          "excessão, necessário, consequencia"
+        ]
+      },
+      {
+        "id": "q-gramatica-2",
+        "questionText": "Explique com suas palavras o que é um sujeito na frase.",
+        "questionType": "open"
+      }
+    ]
+  }
+}
+```
+
+Para enviar **uma correta e uma errada**, o body de 6.3 poderia ser:
+
+```json
+{
+  "answers": [
+    {
+      "questionId": "q-gramatica-1",
+      "answerText": "2"
+    },
+    {
+      "questionId": "q-gramatica-2",
+      "answerText": "Um verbo qualquer que apareça na frase"
+    }
+  ]
+}
+```
+
+Onde:
+- `"2"` é o índice da alternativa correta na questão de múltipla escolha.
+- A segunda resposta é considerada **errada** na correção automática.
+
+**Exemplo de resposta real para 6.4 (result):**
+
+```json
+{
+  "result": {
+    "totalScore": 1,
+    "maxScore": 2,
+    "percentage": 50,
+    "levelUpdated": false,
+    "completedAt": "2026-02-12T12:34:56.000Z"
+  },
+  "assessment": {
+    "id": "a1f51a4b-2f8f-4a4a-9a70-5b9c0e8c1111",
+    "title": "Avaliação de Gramática",
+    "description": "Avaliação sobre ortografia e regras gramaticais.",
+    "category": {
+      "id": "cat-portugues",
+      "name": "Português"
+    },
+    "level": "1"
+  },
+  "questions": [
+    {
+      "id": "q-gramatica-1",
+      "questionText": "Assinale a alternativa em que todas as palavras estão escritas corretamente.",
+      "questionType": "multiple_choice_single",
+      "options": [
+        "exceção, necessário, consequencia",
+        "excessão, nescessário, consequência",
+        "exceção, necessário, consequência",
+        "excessão, necessário, consequencia"
+      ],
+      "points": 1,
+      "orderNumber": 1,
+      "correctAnswer": "2",
+      "studentAnswer": {
+        "answerText": "2",
+        "isCorrect": true,
+        "pointsEarned": 1
+      }
+    },
+    {
+      "id": "q-gramatica-2",
+      "questionText": "Explique com suas palavras o que é um sujeito na frase.",
+      "questionType": "open",
+      "options": null,
+      "points": 1,
+      "orderNumber": 2,
+      "correctAnswer": "",
+      "studentAnswer": {
+        "answerText": "Um verbo qualquer que apareça na frase",
+        "isCorrect": false,
+        "pointsEarned": 0
+      }
+    }
+  ]
+}
+```
+
+**Exemplo de resposta real para 6.5 (recomendações pendentes após erros em Gramática):**
+
+```json
+{
+  "recommendations": [
+    {
+      "id": "rec-gramatica-1",
+      "contentId": "content-reforco-gramatica",
+      "content": {
+        "id": "content-reforco-gramatica",
+        "title": "Reforço de Gramática",
+        "categoryId": "cat-portugues",
+        "category": {
+          "id": "cat-portugues",
+          "name": "Português"
+        },
+        "grade": "7",
+        "level": "reforco"
+      },
+      "reason": "Difficulty in: gramatica, ortografia",
+      "sourceType": "assessment",
+      "sourceId": "assessment-result-id",
+      "status": "pending",
+      "createdAt": "2026-02-12T12:35:10.000Z",
+      "updatedAt": "2026-02-12T12:35:10.000Z"
+    }
+  ]
+}
+```
+
 ---
 
-# Fase 7 — Dashboards (Aluno e Professor)
+# Fase 7 — Dashboards (Aluno, Professor e Coordenador)
 
-Fluxo opcional para validar os **dashboards** do aluno e do professor/coordenador.
+Fluxo opcional para validar os **dashboards** do aluno, do professor e do coordenador.
 
 | Passo | Persona | Método | URL | Body / Headers | Resposta esperada |
 |-------|---------|--------|-----|-----------------|--------------------|
 | **7.1** | Aluno 1 | GET | `{{baseUrl}}/api/dashboard/student` | Header: `Authorization: Bearer {{accessToken do Aluno 1}}` | **200** — `grade`, `pathsBySubject[]` com trilhas, status dos conteúdos e `pendingRecommendations[]` |
-| **7.2** | Professor | GET | `{{baseUrl}}/api/dashboard/professor/students?currentGrade=7` | Header: `Authorization: Bearer {{accessToken do Professor}}` | **200** — `students[]` (alunos da série 7) com `levelsBySubject[]` (nível por matéria) e `pendingRecommendations[]` para as matérias que o professor leciona |
+| **7.2** | Professor | GET | `{{baseUrl}}/api/dashboard/professor/students?currentGrade=7` | Header: `Authorization: Bearer {{accessToken do Professor}}` | **200** — `students[]` (alunos da série 7) com `levelsBySubject[]` (nível por matéria) e `pendingRecommendations[]` para as matérias que o professor leciona + blocos analíticos `summaryByGrade`, `subjectsByGrade`, `learningPaths` |
+| **7.3** | Coordenador | GET | `{{baseUrl}}/api/dashboard/coordinator` | Header: `Authorization: Bearer {{accessToken do Coordenador}}` | **200** — `summary` (totais de alunos/professores/conteúdos/trilhas/avaliações/recomendações), `byGrade[]` (alunos e recomendações por série) e `bySubject[]` (matérias com contagens e alunos com recomendações pendentes) |
 
-Resultado esperado: o aluno vê uma visão unificada da própria trilha/progresso/recomendações; o professor vê, por série, em que nível os alunos estão em cada matéria e quais têm recomendações pendentes (apoio à **equiparação**).
+Resultado esperado: o aluno vê uma visão unificada da própria trilha/progresso/recomendações; o professor vê, por série, em que nível os alunos estão em cada matéria, quais trilhas existem e quais alunos têm recomendações ativas; o coordenador vê um painel agregado por série e matéria para apoiar decisões de gestão pedagógica.
 
 ---
 
@@ -282,7 +426,7 @@ Resultado esperado: o aluno vê uma visão unificada da própria trilha/progress
 5. **Fase 4 — Aluno 2 (série 8):** login → listar conteúdos (série 8) → obter trilha (esperado 404/sem trilha).
 6. **Fase 5 — Auth:** refresh e logout.
 7. **Fase 6 — Avaliações e Recomendações (Aluno 1):** listar avaliações disponíveis → fazer prova → ver resultado detalhado → consultar recomendações de reforço.
-8. **Fase 7 — Dashboards:** aluno vê trilha/progresso/recomendações; professor/coordenador vê lista de alunos com níveis por matéria e recomendações ativas.
+8. **Fase 7 — Dashboards:** aluno vê trilha/progresso/recomendações; professor vê lista de alunos + visão analítica por série/matéria; coordenador vê visão agregada por série/matéria.
 
 ---
 

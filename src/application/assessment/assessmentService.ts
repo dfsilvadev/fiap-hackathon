@@ -480,14 +480,24 @@ export class AssessmentService {
     const minScoreNum = Number(assessment.minScore);
     let levelUpdated = false;
     if (percentage >= minScoreNum) {
-      await this.prisma.studentLearningLevel.upsert({
+      const currentLevelRow = await this.prisma.studentLearningLevel.findUnique({
         where: {
           studentId_categoryId: { studentId, categoryId: assessment.categoryId },
         },
-        create: { studentId, categoryId: assessment.categoryId, level: assessment.level },
-        update: { level: assessment.level },
       });
-      levelUpdated = true;
+      const currentLevel = currentLevelRow?.level ?? "1";
+      const currentLevelNum = parseInt(currentLevel, 10) || 1;
+      const assessmentLevelNum = parseInt(assessment.level, 10) || 1;
+      if (assessmentLevelNum > currentLevelNum) {
+        await this.prisma.studentLearningLevel.upsert({
+          where: {
+            studentId_categoryId: { studentId, categoryId: assessment.categoryId },
+          },
+          create: { studentId, categoryId: assessment.categoryId, level: assessment.level },
+          update: { level: assessment.level },
+        });
+        levelUpdated = true;
+      }
     }
 
     const assessmentResult = await this.prisma.assessmentResult.create({
