@@ -235,22 +235,11 @@ export class DashboardService {
 
     const assessmentsWithGrade = await this.prisma.assessment.findMany({
       where: role === "teacher" ? { teacherId: userId } : {},
-      select: { id: true, contentId: true },
+      select: { id: true, grade: true },
     });
-    const contentIdsFromAssessments = assessmentsWithGrade
-      .map((a) => a.contentId)
-      .filter((id): id is string => id != null);
-    const contentGradeMap = new Map<string, string>();
-    if (contentIdsFromAssessments.length > 0) {
-      const contents = await this.prisma.content.findMany({
-        where: { id: { in: contentIdsFromAssessments } },
-        select: { id: true, grade: true },
-      });
-      for (const c of contents) contentGradeMap.set(c.id, c.grade);
-    }
     const assessmentGradeCount = new Map<string, number>();
     for (const a of assessmentsWithGrade) {
-      const grade = (a.contentId && contentGradeMap.get(a.contentId)) ?? "sem-serie";
+      const grade = a.grade ?? "sem-serie";
       assessmentGradeCount.set(grade, (assessmentGradeCount.get(grade) ?? 0) + 1);
     }
     for (const [grade, count] of assessmentGradeCount) {
@@ -279,7 +268,7 @@ export class DashboardService {
     });
     const assessmentCategoryGradeRows = await this.prisma.assessment.findMany({
       where: role === "teacher" ? { teacherId: userId } : {},
-      select: { categoryId: true, contentId: true },
+      select: { categoryId: true, grade: true },
     });
 
     const subjectGradeStats = new Map<
@@ -305,7 +294,7 @@ export class DashboardService {
     }
     for (const a of assessmentCategoryGradeRows) {
       if (!subjectGradeStats.has(a.categoryId)) continue;
-      const grade = (a.contentId && contentGradeMap.get(a.contentId)) ?? "sem-serie";
+      const grade = a.grade ?? "sem-serie";
       const byGrade = subjectGradeStats.get(a.categoryId)!;
       const cur = byGrade.get(grade) ?? { contentsCount: 0, pathsCount: 0, assessmentsCount: 0 };
       cur.assessmentsCount += 1;

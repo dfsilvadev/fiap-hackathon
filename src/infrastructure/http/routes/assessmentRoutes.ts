@@ -1,19 +1,20 @@
+import { ASSESSMENT_LEVELS, QUESTION_TYPES } from "@application/assessment/types.js";
+import { GRADES } from "@shared/constants/grades.js";
 import { Router } from "express";
 import { z } from "zod";
-import { ASSESSMENT_LEVELS, QUESTION_TYPES } from "@application/assessment/types.js";
 import {
   createAssessment,
+  createQuestion,
+  deleteQuestion,
   getAssessmentById,
+  getAssessmentForStudent,
+  getAssessmentResultForStudent,
   listAssessments,
   listAvailableForStudent,
-  getAssessmentForStudent,
-  updateAssessment,
-  createQuestion,
   listQuestions,
-  updateQuestion,
-  deleteQuestion,
   submitAssessment,
-  getAssessmentResultForStudent,
+  updateAssessment,
+  updateQuestion,
 } from "../controllers/assessmentController.js";
 import { authenticate } from "../middlewares/authenticate.js";
 import { authorizeRoles } from "../middlewares/authorizeRoles.js";
@@ -21,11 +22,13 @@ import { validateRequest } from "../middlewares/validateRequest.js";
 
 const assessmentLevelSchema = z.enum(ASSESSMENT_LEVELS);
 const questionTypeSchema = z.enum(QUESTION_TYPES);
+const gradeSchema = z.enum(GRADES);
 
 const createAssessmentBodySchema = z.object({
   title: z.string().min(1),
   description: z.string().optional(),
   categoryId: z.string().uuid(),
+  grade: gradeSchema,
   level: assessmentLevelSchema,
   minScore: z.number().min(0).max(100).optional(),
   startDate: z.string().min(1),
@@ -44,6 +47,7 @@ const updateAssessmentBodySchema = z.object({
 const listAssessmentsQuerySchema = z.object({
   query: z.object({
     categoryId: z.string().uuid().optional(),
+    grade: gradeSchema.optional(),
     level: assessmentLevelSchema.optional(),
     page: z.coerce.number().int().min(1).optional(),
     limit: z.coerce.number().int().min(1).max(100).optional(),

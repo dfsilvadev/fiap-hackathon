@@ -8,6 +8,7 @@ export interface CreateAssessmentInput {
   title: string;
   description?: string;
   categoryId: string;
+  grade: string;
   level: AssessmentLevel;
   minScore?: number;
   startDate: string;
@@ -25,6 +26,7 @@ export interface UpdateAssessmentInput {
 
 export interface ListAssessmentsFilters {
   categoryId?: string;
+  grade?: string;
   level?: string;
   page?: number;
   limit?: number;
