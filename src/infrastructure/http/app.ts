@@ -32,7 +32,7 @@ export function createApp(): express.Application {
 
   const authLimiter = rateLimit({
     windowMs: env.RATE_LIMIT_WINDOW_MS,
-    max: isProduction ? env.RATE_LIMIT_AUTH_MAX : Math.max(env.RATE_LIMIT_AUTH_MAX, 100),
+    max: isProduction ? env.RATE_LIMIT_AUTH_MAX : Math.max(env.RATE_LIMIT_AUTH_MAX, 300),
     standardHeaders: true,
     legacyHeaders: false,
     message: {
@@ -43,10 +43,11 @@ export function createApp(): express.Application {
 
   const apiLimiter = rateLimit({
     windowMs: env.RATE_LIMIT_WINDOW_MS,
-    max: isProduction ? env.RATE_LIMIT_MAX : Math.max(env.RATE_LIMIT_MAX, env.RATE_LIMIT_DEV_MAX),
+    max: env.RATE_LIMIT_MAX,
     standardHeaders: true,
     legacyHeaders: false,
     skip: (req) => {
+      if (!isProduction) return true;
       if (req.path === "/api/health" || req.path === "/api/health/") return true;
       return req.path.startsWith("/api/auth");
     },
