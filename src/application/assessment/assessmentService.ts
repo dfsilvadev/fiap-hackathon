@@ -74,6 +74,28 @@ export class AssessmentService {
     });
     if (!category) throw new AppError("Category not found", 404, "NOT_FOUND");
 
+    if (input.contentId) {
+      const content = await this.prisma.content.findUnique({
+        where: { id: input.contentId },
+        select: { id: true, categoryId: true, grade: true },
+      });
+      if (!content) throw new AppError("Content not found", 404, "NOT_FOUND");
+      if (content.categoryId !== input.categoryId) {
+        throw new AppError(
+          "contentId must belong to the same category as the assessment",
+          400,
+          "VALIDATION_ERROR"
+        );
+      }
+      if (content.grade !== input.grade) {
+        throw new AppError(
+          "contentId must belong to the same grade as the assessment",
+          400,
+          "VALIDATION_ERROR"
+        );
+      }
+    }
+
     const startDate = new Date(input.startDate);
     const endDate = input.endDate ? new Date(input.endDate) : null;
     if (isNaN(startDate.getTime()))
@@ -89,10 +111,12 @@ export class AssessmentService {
         categoryId: input.categoryId,
         grade: input.grade,
         level: input.level,
+        contentId: input.contentId,
         teacherId: userId,
         minScore: input.minScore ?? 70,
         startDate,
         endDate,
+        isActive: input.isActive,
       },
     });
     return { id: assessment.id, title: assessment.title };
@@ -392,6 +416,7 @@ export class AssessmentService {
       category: assessment.category,
       grade: assessment.grade,
       level: assessment.level,
+      contentId: assessment.contentId,
       minScore: Number(assessment.minScore),
       startDate: assessment.startDate,
       endDate: assessment.endDate,
@@ -581,6 +606,7 @@ export class AssessmentService {
         category: assessment.category,
         grade: assessment.grade,
         level: assessment.level,
+        contentId: assessment.contentId,
       },
       questions: assessment.questions.map((q) => {
         const sa = answerByQuestionId.get(q.id);
@@ -626,6 +652,7 @@ export class AssessmentService {
     categoryId: string;
     grade: string | null;
     level: string;
+    contentId: string | null;
     teacherId: string;
     minScore: unknown;
     startDate: Date;
@@ -653,6 +680,7 @@ export class AssessmentService {
       category: a.category,
       grade: a.grade,
       level: a.level,
+      contentId: a.contentId,
       teacherId: a.teacherId,
       minScore: Number(a.minScore),
       startDate: a.startDate,
@@ -679,6 +707,7 @@ export class AssessmentService {
     categoryId: string;
     grade: string | null;
     level: string;
+    contentId: string | null;
     minScore: unknown;
     startDate: Date;
     endDate: Date | null;
@@ -692,6 +721,7 @@ export class AssessmentService {
       category: a.category,
       grade: a.grade,
       level: a.level,
+      contentId: a.contentId,
       minScore: Number(a.minScore),
       startDate: a.startDate,
       endDate: a.endDate,

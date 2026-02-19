@@ -30,9 +30,11 @@ const createAssessmentBodySchema = z.object({
   categoryId: z.string().uuid(),
   grade: gradeSchema,
   level: assessmentLevelSchema,
+  contentId: z.string().uuid().optional(),
   minScore: z.number().min(0).max(100).optional(),
   startDate: z.string().min(1),
   endDate: z.string().optional(),
+  isActive: z.boolean().optional(),
 });
 
 const updateAssessmentBodySchema = z.object({

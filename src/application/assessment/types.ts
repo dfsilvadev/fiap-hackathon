@@ -10,9 +10,11 @@ export interface CreateAssessmentInput {
   categoryId: string;
   grade: string;
   level: AssessmentLevel;
+  contentId?: string;
   minScore?: number;
   startDate: string;
   endDate?: string;
+  isActive?: boolean;
 }
 
 export interface UpdateAssessmentInput {

@@ -46,6 +46,7 @@ export function createApp(): express.Application {
     max: env.RATE_LIMIT_MAX,
     standardHeaders: true,
     legacyHeaders: false,
+    skipFailedRequests: true,
     skip: (req) => {
       if (!isProduction) return true;
       if (req.path === "/api/health" || req.path === "/api/health/") return true;
