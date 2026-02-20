@@ -1,0 +1,3797 @@
+{
+  "meta": {
+    "source": "docs/frontend-test-step-by-step.md",
+    "counts": {
+      "learningPaths": 8,
+      "contents": 48,
+      "assessments": 24,
+      "questions": 72
+    },
+    "categoryIds": {
+      "Português": "201b3c62-6367-47c6-8dc7-cc6149014988",
+      "Matemática": "fdf4484c-b041-472a-b5b8-a1aa334af0db",
+      "Ciências": "5dab008b-f19a-4741-872a-36693cdc9159",
+      "História": "d6baf101-f2e8-496f-ab18-759963163635"
+    },
+    "creatorByCategory": {
+      "Português": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "Matemática": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "Ciências": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "História": "b190d2fd-153d-4ca9-a00f-69d0824700da"
+    }
+  },
+  "learningPathPayloads": [
+    {
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "name": "Trilha de Português - 6º ano",
+        "categoryId": "201b3c62-6367-47c6-8dc7-cc6149014988",
+        "grade": "6",
+        "isDefault": true,
+        "description": "Trilha padrão de Português para o 6º ano."
+      }
+    },
+    {
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "name": "Trilha de Matemática - 6º ano",
+        "categoryId": "fdf4484c-b041-472a-b5b8-a1aa334af0db",
+        "grade": "6",
+        "isDefault": true,
+        "description": "Trilha padrão de Matemática para o 6º ano."
+      }
+    },
+    {
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "name": "Trilha de História - 6º ano",
+        "categoryId": "d6baf101-f2e8-496f-ab18-759963163635",
+        "grade": "6",
+        "isDefault": true,
+        "description": "Trilha padrão de História para o 6º ano."
+      }
+    },
+    {
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "name": "Trilha de Ciências - 6º ano",
+        "categoryId": "5dab008b-f19a-4741-872a-36693cdc9159",
+        "grade": "6",
+        "isDefault": true,
+        "description": "Trilha padrão de Ciências para o 6º ano."
+      }
+    },
+    {
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "name": "Trilha de Português - 7º ano",
+        "categoryId": "201b3c62-6367-47c6-8dc7-cc6149014988",
+        "grade": "7",
+        "isDefault": true,
+        "description": "Trilha padrão de Português para o 7º ano."
+      }
+    },
+    {
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "name": "Trilha de Matemática - 7º ano",
+        "categoryId": "fdf4484c-b041-472a-b5b8-a1aa334af0db",
+        "grade": "7",
+        "isDefault": true,
+        "description": "Trilha padrão de Matemática para o 7º ano."
+      }
+    },
+    {
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "name": "Trilha de História - 7º ano",
+        "categoryId": "d6baf101-f2e8-496f-ab18-759963163635",
+        "grade": "7",
+        "isDefault": true,
+        "description": "Trilha padrão de História para o 7º ano."
+      }
+    },
+    {
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "name": "Trilha de Ciências - 7º ano",
+        "categoryId": "5dab008b-f19a-4741-872a-36693cdc9159",
+        "grade": "7",
+        "isDefault": true,
+        "description": "Trilha padrão de Ciências para o 7º ano."
+      }
+    }
+  ],
+  "contentPayloads": [
+    {
+      "ref": "content_ref_001",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Leitura e ideia principal",
+        "contentText": "Leitura orientada de textos curtos para identificar tema, objetivo do autor e ideia principal com base em pistas textuais.",
+        "categoryId": "201b3c62-6367-47c6-8dc7-cc6149014988",
+        "grade": "6",
+        "level": "1",
+        "topics": [
+          {
+            "title": "compreensão textual",
+            "content": "Aprofundamento sobre compreensão textual."
+          },
+          {
+            "title": "tema central",
+            "content": "Aprofundamento sobre tema central."
+          },
+          {
+            "title": "informações explícitas",
+            "content": "Aprofundamento sobre informações explícitas."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "interpretação",
+            "definition": "Compreensão do sentido de um texto a partir de informações explícitas e implícitas."
+          },
+          {
+            "word": "leitura",
+            "definition": "Processo de compreender e atribuir sentido ao que está escrito."
+          },
+          {
+            "word": "ideia-principal",
+            "definition": "Mensagem central que o texto pretende comunicar."
+          }
+        ],
+        "tags": [
+          "interpretação",
+          "leitura",
+          "ideia-principal"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_002",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Coesão textual e conectivos",
+        "contentText": "Uso de conectivos para ligar frases e parágrafos, evitando repetições e melhorando a progressão lógica do texto.",
+        "categoryId": "201b3c62-6367-47c6-8dc7-cc6149014988",
+        "grade": "6",
+        "level": "2",
+        "topics": [
+          {
+            "title": "organização de ideias",
+            "content": "Aprofundamento sobre organização de ideias."
+          },
+          {
+            "title": "conectores de oposição e conclusão",
+            "content": "Aprofundamento sobre conectores de oposição e conclusão."
+          },
+          {
+            "title": "fluidez textual",
+            "content": "Aprofundamento sobre fluidez textual."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "coesão",
+            "definition": "Uso de recursos linguísticos que conectam frases e parágrafos."
+          },
+          {
+            "word": "conectivos",
+            "definition": "Palavras que estabelecem relações de sentido entre partes do texto."
+          },
+          {
+            "word": "parágrafo",
+            "definition": "Unidade textual com uma ideia central desenvolvida por frases relacionadas."
+          }
+        ],
+        "tags": [
+          "coesão",
+          "conectivos",
+          "parágrafo"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_003",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Produção de texto argumentativo inicial",
+        "contentText": "Introdução ao texto argumentativo com foco na construção de opinião fundamentada e organização básica de argumentos.",
+        "categoryId": "201b3c62-6367-47c6-8dc7-cc6149014988",
+        "grade": "6",
+        "level": "3",
+        "topics": [
+          {
+            "title": "tese",
+            "content": "Aprofundamento sobre tese."
+          },
+          {
+            "title": "argumento",
+            "content": "Aprofundamento sobre argumento."
+          },
+          {
+            "title": "conclusão",
+            "content": "Aprofundamento sobre conclusão."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "argumentação",
+            "definition": "Defesa de um ponto de vista com razões e evidências."
+          },
+          {
+            "word": "tese",
+            "definition": "Posição principal defendida em um texto argumentativo."
+          },
+          {
+            "word": "opinião",
+            "definition": "Posicionamento pessoal sobre um tema."
+          }
+        ],
+        "tags": [
+          "argumentação",
+          "tese",
+          "opinião"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_004",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Reforço: ortografia e acentuação",
+        "contentText": "Revisão prática das principais regras de ortografia e acentuação com exercícios contextualizados.",
+        "categoryId": "201b3c62-6367-47c6-8dc7-cc6149014988",
+        "grade": "6",
+        "level": "reforco",
+        "topics": [
+          {
+            "title": "regras de acentuação",
+            "content": "Aprofundamento sobre regras de acentuação."
+          },
+          {
+            "title": "grafia correta",
+            "content": "Aprofundamento sobre grafia correta."
+          },
+          {
+            "title": "correção de erros",
+            "content": "Aprofundamento sobre correção de erros."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "ortografia",
+            "definition": "Conjunto de regras da escrita correta das palavras."
+          },
+          {
+            "word": "acentuação",
+            "definition": "Regras que determinam o uso de acentos gráficos nas palavras."
+          }
+        ],
+        "tags": [
+          "ortografia",
+          "acentuação",
+          "revisão"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_005",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Reforço: pontuação básica",
+        "contentText": "Aplicação de sinais de pontuação para melhorar clareza, ritmo e sentido de frases e pequenos textos.",
+        "categoryId": "201b3c62-6367-47c6-8dc7-cc6149014988",
+        "grade": "6",
+        "level": "reforco",
+        "topics": [
+          {
+            "title": "ponto final",
+            "content": "Aprofundamento sobre ponto final."
+          },
+          {
+            "title": "vírgula",
+            "content": "Aprofundamento sobre vírgula."
+          },
+          {
+            "title": "interrogação e exclamação",
+            "content": "Aprofundamento sobre interrogação e exclamação."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "pontuação",
+            "definition": "Uso de sinais gráficos para organizar e dar sentido às frases."
+          },
+          {
+            "word": "interpretação",
+            "definition": "Compreensão do sentido de um texto a partir de informações explícitas e implícitas."
+          }
+        ],
+        "tags": [
+          "pontuação",
+          "clareza",
+          "frase"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_006",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Reforço: concordância verbal e nominal",
+        "contentText": "Prática de concordância entre sujeito e verbo, além de ajuste entre substantivos e adjetivos em diferentes contextos.",
+        "categoryId": "201b3c62-6367-47c6-8dc7-cc6149014988",
+        "grade": "6",
+        "level": "reforco",
+        "topics": [
+          {
+            "title": "concordância verbal",
+            "content": "Aprofundamento sobre concordância verbal."
+          },
+          {
+            "title": "concordância nominal",
+            "content": "Aprofundamento sobre concordância nominal."
+          },
+          {
+            "title": "erros frequentes",
+            "content": "Aprofundamento sobre erros frequentes."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "concordância",
+            "definition": "Relação correta entre palavras em número, gênero e pessoa."
+          },
+          {
+            "word": "gramática",
+            "definition": "Conjunto de regras de funcionamento da língua."
+          }
+        ],
+        "tags": [
+          "concordância",
+          "gramática",
+          "sujeito-verbo"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_007",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Operações com números decimais",
+        "contentText": "Resolução de operações com decimais em situações de compra, medidas e comparação de valores.",
+        "categoryId": "fdf4484c-b041-472a-b5b8-a1aa334af0db",
+        "grade": "6",
+        "level": "1",
+        "topics": [
+          {
+            "title": "adição",
+            "content": "Aprofundamento sobre adição."
+          },
+          {
+            "title": "subtração",
+            "content": "Aprofundamento sobre subtração."
+          },
+          {
+            "title": "alinhamento de vírgulas",
+            "content": "Aprofundamento sobre alinhamento de vírgulas."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "decimais",
+            "definition": "Números representados com vírgula para indicar parte inteira e parte fracionária."
+          },
+          {
+            "word": "equações",
+            "definition": "Igualdades matemáticas com termos desconhecidos a serem determinados."
+          }
+        ],
+        "tags": [
+          "decimais",
+          "operações",
+          "valor-posicional"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_008",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Frações equivalentes e simplificação",
+        "contentText": "Estudo de frações equivalentes e simplificação com problemas que envolvem parte-todo e comparação de quantidades.",
+        "categoryId": "fdf4484c-b041-472a-b5b8-a1aa334af0db",
+        "grade": "6",
+        "level": "2",
+        "topics": [
+          {
+            "title": "frações equivalentes",
+            "content": "Aprofundamento sobre frações equivalentes."
+          },
+          {
+            "title": "MDC",
+            "content": "Aprofundamento sobre MDC."
+          },
+          {
+            "title": "comparação",
+            "content": "Aprofundamento sobre comparação."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "frações",
+            "definition": "Representação numérica de partes de um todo."
+          },
+          {
+            "word": "equivalência",
+            "definition": "Relação entre frações que representam o mesmo valor."
+          },
+          {
+            "word": "simplificação",
+            "definition": "Redução de uma fração para outra equivalente com termos menores."
+          }
+        ],
+        "tags": [
+          "frações",
+          "equivalência",
+          "simplificação"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_009",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Expressões numéricas com racionais",
+        "contentText": "Resolução de expressões numéricas com números racionais, respeitando hierarquia de operações.",
+        "categoryId": "fdf4484c-b041-472a-b5b8-a1aa334af0db",
+        "grade": "6",
+        "level": "3",
+        "topics": [
+          {
+            "title": "parênteses",
+            "content": "Aprofundamento sobre parênteses."
+          },
+          {
+            "title": "prioridade de operações",
+            "content": "Aprofundamento sobre prioridade de operações."
+          },
+          {
+            "title": "interpretação",
+            "content": "Aprofundamento sobre interpretação."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "racionais",
+            "definition": "Conjunto de números que pode ser escrito como fração entre inteiros."
+          },
+          {
+            "word": "expressões",
+            "definition": "Combinações de números e operações matemáticas."
+          },
+          {
+            "word": "ordem-de-operações",
+            "definition": "Regra que define a sequência correta para resolver operações."
+          }
+        ],
+        "tags": [
+          "racionais",
+          "expressões",
+          "ordem-de-operações"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_010",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Reforço: adição e subtração com decimais",
+        "contentText": "Reforço com exercícios graduais de adição e subtração de números decimais em contextos reais.",
+        "categoryId": "fdf4484c-b041-472a-b5b8-a1aa334af0db",
+        "grade": "6",
+        "level": "reforco",
+        "topics": [
+          {
+            "title": "valor posicional",
+            "content": "Aprofundamento sobre valor posicional."
+          },
+          {
+            "title": "operações básicas",
+            "content": "Aprofundamento sobre operações básicas."
+          },
+          {
+            "title": "conferência de resultado",
+            "content": "Aprofundamento sobre conferência de resultado."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "decimais",
+            "definition": "Números representados com vírgula para indicar parte inteira e parte fracionária."
+          },
+          {
+            "word": "equações",
+            "definition": "Igualdades matemáticas com termos desconhecidos a serem determinados."
+          }
+        ],
+        "tags": [
+          "decimais",
+          "cálculo",
+          "revisão"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_011",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Reforço: comparação de frações",
+        "contentText": "Estratégias para comparar frações por equivalência, ampliação e representação gráfica.",
+        "categoryId": "fdf4484c-b041-472a-b5b8-a1aa334af0db",
+        "grade": "6",
+        "level": "reforco",
+        "topics": [
+          {
+            "title": "denominadores iguais",
+            "content": "Aprofundamento sobre denominadores iguais."
+          },
+          {
+            "title": "denominadores diferentes",
+            "content": "Aprofundamento sobre denominadores diferentes."
+          },
+          {
+            "title": "reta numérica",
+            "content": "Aprofundamento sobre reta numérica."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "frações",
+            "definition": "Representação numérica de partes de um todo."
+          },
+          {
+            "word": "equações",
+            "definition": "Igualdades matemáticas com termos desconhecidos a serem determinados."
+          }
+        ],
+        "tags": [
+          "frações",
+          "comparação",
+          "representação"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_012",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Reforço: interpretação de problemas matemáticos",
+        "contentText": "Leitura de problemas com foco em extração de dados, escolha de operação adequada e validação da resposta.",
+        "categoryId": "fdf4484c-b041-472a-b5b8-a1aa334af0db",
+        "grade": "6",
+        "level": "reforco",
+        "topics": [
+          {
+            "title": "identificação de dados",
+            "content": "Aprofundamento sobre identificação de dados."
+          },
+          {
+            "title": "escolha de operação",
+            "content": "Aprofundamento sobre escolha de operação."
+          },
+          {
+            "title": "resposta",
+            "content": "Aprofundamento sobre resposta."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "interpretação",
+            "definition": "Compreensão do sentido de um texto a partir de informações explícitas e implícitas."
+          },
+          {
+            "word": "equações",
+            "definition": "Igualdades matemáticas com termos desconhecidos a serem determinados."
+          }
+        ],
+        "tags": [
+          "problemas",
+          "estratégia",
+          "interpretação"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_013",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Tempo histórico e cronologia",
+        "contentText": "Introdução ao tempo histórico e organização de acontecimentos em sequência cronológica.",
+        "categoryId": "d6baf101-f2e8-496f-ab18-759963163635",
+        "grade": "6",
+        "level": "1",
+        "topics": [
+          {
+            "title": "ordem temporal",
+            "content": "Aprofundamento sobre ordem temporal."
+          },
+          {
+            "title": "periodização",
+            "content": "Aprofundamento sobre periodização."
+          },
+          {
+            "title": "eventos históricos",
+            "content": "Aprofundamento sobre eventos históricos."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "cronologia",
+            "definition": "Organização de fatos em sequência temporal."
+          },
+          {
+            "word": "século",
+            "definition": "Período de 100 anos usado para localizar eventos históricos no tempo."
+          },
+          {
+            "word": "linha-do-tempo",
+            "definition": "Recurso visual que organiza acontecimentos em ordem de ocorrência."
+          }
+        ],
+        "tags": [
+          "cronologia",
+          "século",
+          "linha-do-tempo"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_014",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Fontes históricas e memória",
+        "contentText": "Uso de diferentes fontes históricas para construir narrativas sobre o passado.",
+        "categoryId": "d6baf101-f2e8-496f-ab18-759963163635",
+        "grade": "6",
+        "level": "2",
+        "topics": [
+          {
+            "title": "fontes escritas",
+            "content": "Aprofundamento sobre fontes escritas."
+          },
+          {
+            "title": "fontes visuais",
+            "content": "Aprofundamento sobre fontes visuais."
+          },
+          {
+            "title": "interpretação",
+            "content": "Aprofundamento sobre interpretação."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "fontes",
+            "definition": "Vestígios e registros usados para estudar o passado."
+          },
+          {
+            "word": "memória",
+            "definition": "Lembranças e registros que contribuem para construir narrativas históricas."
+          },
+          {
+            "word": "documentos",
+            "definition": "Registros escritos, visuais ou materiais usados como fonte histórica."
+          }
+        ],
+        "tags": [
+          "fontes",
+          "memória",
+          "documentos"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_015",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Povos antigos e organização social",
+        "contentText": "Estudo comparativo de povos antigos e seus modos de organização social e cultural.",
+        "categoryId": "d6baf101-f2e8-496f-ab18-759963163635",
+        "grade": "6",
+        "level": "3",
+        "topics": [
+          {
+            "title": "vida cotidiana",
+            "content": "Aprofundamento sobre vida cotidiana."
+          },
+          {
+            "title": "trabalho",
+            "content": "Aprofundamento sobre trabalho."
+          },
+          {
+            "title": "formas de poder",
+            "content": "Aprofundamento sobre formas de poder."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "antiguidade",
+            "definition": "Período histórico das primeiras civilizações até a queda do Império Romano do Ocidente."
+          },
+          {
+            "word": "sociedade",
+            "definition": "Conjunto de pessoas organizadas por relações, normas e instituições."
+          },
+          {
+            "word": "cultura",
+            "definition": "Práticas, valores e conhecimentos compartilhados por um grupo social."
+          }
+        ],
+        "tags": [
+          "antiguidade",
+          "sociedade",
+          "cultura"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_016",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Reforço: leitura de linha do tempo",
+        "contentText": "Atividades de leitura e montagem de linhas do tempo para consolidar noções de anterioridade e posterioridade.",
+        "categoryId": "d6baf101-f2e8-496f-ab18-759963163635",
+        "grade": "6",
+        "level": "reforco",
+        "topics": [
+          {
+            "title": "antes/depois",
+            "content": "Aprofundamento sobre antes/depois."
+          },
+          {
+            "title": "marcos históricos",
+            "content": "Aprofundamento sobre marcos históricos."
+          },
+          {
+            "title": "ordenação",
+            "content": "Aprofundamento sobre ordenação."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "linha-do-tempo",
+            "definition": "Recurso visual que organiza acontecimentos em ordem de ocorrência."
+          },
+          {
+            "word": "cronologia",
+            "definition": "Organização de fatos em sequência temporal."
+          }
+        ],
+        "tags": [
+          "linha-do-tempo",
+          "datas",
+          "sequência"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_017",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Reforço: interpretação de documentos históricos",
+        "contentText": "Prática de análise guiada de documentos e imagens para identificar informações históricas relevantes.",
+        "categoryId": "d6baf101-f2e8-496f-ab18-759963163635",
+        "grade": "6",
+        "level": "reforco",
+        "topics": [
+          {
+            "title": "autor e contexto",
+            "content": "Aprofundamento sobre autor e contexto."
+          },
+          {
+            "title": "intenção",
+            "content": "Aprofundamento sobre intenção."
+          },
+          {
+            "title": "evidência",
+            "content": "Aprofundamento sobre evidência."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "fontes",
+            "definition": "Vestígios e registros usados para estudar o passado."
+          },
+          {
+            "word": "contexto",
+            "definition": "Conjunto de informações que ajuda a compreender o sentido de uma mensagem."
+          }
+        ],
+        "tags": [
+          "fontes",
+          "análise",
+          "contexto"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_018",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Reforço: noções de período histórico",
+        "contentText": "Revisão de critérios de divisão do tempo histórico e reconhecimento de mudanças e permanências.",
+        "categoryId": "d6baf101-f2e8-496f-ab18-759963163635",
+        "grade": "6",
+        "level": "reforco",
+        "topics": [
+          {
+            "title": "periodização",
+            "content": "Aprofundamento sobre periodização."
+          },
+          {
+            "title": "continuidade",
+            "content": "Aprofundamento sobre continuidade."
+          },
+          {
+            "title": "mudança",
+            "content": "Aprofundamento sobre mudança."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "história",
+            "definition": "Estudo das ações humanas no tempo e no espaço."
+          },
+          {
+            "word": "cronologia",
+            "definition": "Organização de fatos em sequência temporal."
+          }
+        ],
+        "tags": [
+          "períodos",
+          "revisão",
+          "história"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_019",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Célula e organização dos seres vivos",
+        "contentText": "Estudo da célula como unidade básica da vida e dos níveis de organização biológica.",
+        "categoryId": "5dab008b-f19a-4741-872a-36693cdc9159",
+        "grade": "6",
+        "level": "1",
+        "topics": [
+          {
+            "title": "célula",
+            "content": "Aprofundamento sobre célula."
+          },
+          {
+            "title": "tecido",
+            "content": "Aprofundamento sobre tecido."
+          },
+          {
+            "title": "órgão e sistema",
+            "content": "Aprofundamento sobre órgão e sistema."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "célula",
+            "definition": "Unidade estrutural e funcional básica dos seres vivos."
+          },
+          {
+            "word": "seres-vivos",
+            "definition": "Organismos que apresentam ciclo de vida, metabolismo e capacidade de reprodução."
+          },
+          {
+            "word": "organização",
+            "definition": "Forma como estruturas biológicas ou sociais se distribuem e se relacionam."
+          }
+        ],
+        "tags": [
+          "célula",
+          "seres-vivos",
+          "organização"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_020",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Misturas e separação de materiais",
+        "contentText": "Identificação de tipos de mistura e aplicação de métodos de separação em exemplos do cotidiano.",
+        "categoryId": "5dab008b-f19a-4741-872a-36693cdc9159",
+        "grade": "6",
+        "level": "2",
+        "topics": [
+          {
+            "title": "homogênea/heterogênea",
+            "content": "Aprofundamento sobre homogênea/heterogênea."
+          },
+          {
+            "title": "filtração",
+            "content": "Aprofundamento sobre filtração."
+          },
+          {
+            "title": "decantação",
+            "content": "Aprofundamento sobre decantação."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "misturas",
+            "definition": "Combinação de duas ou mais substâncias sem formação de nova substância."
+          },
+          {
+            "word": "separação",
+            "definition": "Processos físicos usados para separar componentes de uma mistura."
+          },
+          {
+            "word": "matéria",
+            "definition": "Tudo o que tem massa e ocupa espaço."
+          }
+        ],
+        "tags": [
+          "misturas",
+          "separação",
+          "matéria"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_021",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Ecossistemas e cadeias alimentares",
+        "contentText": "Relações ecológicas básicas com foco em cadeia alimentar e equilíbrio ambiental.",
+        "categoryId": "5dab008b-f19a-4741-872a-36693cdc9159",
+        "grade": "6",
+        "level": "3",
+        "topics": [
+          {
+            "title": "produtores e consumidores",
+            "content": "Aprofundamento sobre produtores e consumidores."
+          },
+          {
+            "title": "teia alimentar",
+            "content": "Aprofundamento sobre teia alimentar."
+          },
+          {
+            "title": "fluxo de energia",
+            "content": "Aprofundamento sobre fluxo de energia."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "ecossistema",
+            "definition": "Conjunto de seres vivos e fatores ambientais que interagem em um local."
+          },
+          {
+            "word": "cadeia-alimentar",
+            "definition": "Sequência de transferência de energia entre organismos por alimentação."
+          },
+          {
+            "word": "equilíbrio",
+            "definition": "Estado de estabilidade dinâmica das relações em um sistema."
+          }
+        ],
+        "tags": [
+          "ecossistema",
+          "cadeia-alimentar",
+          "equilíbrio"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_022",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Reforço: partes da célula",
+        "contentText": "Revisão das principais estruturas celulares e suas funções em linguagem acessível.",
+        "categoryId": "5dab008b-f19a-4741-872a-36693cdc9159",
+        "grade": "6",
+        "level": "reforco",
+        "topics": [
+          {
+            "title": "membrana",
+            "content": "Aprofundamento sobre membrana."
+          },
+          {
+            "title": "núcleo",
+            "content": "Aprofundamento sobre núcleo."
+          },
+          {
+            "title": "citoplasma",
+            "content": "Aprofundamento sobre citoplasma."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "célula",
+            "definition": "Unidade estrutural e funcional básica dos seres vivos."
+          },
+          {
+            "word": "ecossistema",
+            "definition": "Conjunto de seres vivos e fatores ambientais que interagem em um local."
+          }
+        ],
+        "tags": [
+          "célula",
+          "organelas",
+          "funções"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_023",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Reforço: estados físicos da matéria",
+        "contentText": "Reforço sobre estados físicos da matéria e mudanças de estado com exemplos diários.",
+        "categoryId": "5dab008b-f19a-4741-872a-36693cdc9159",
+        "grade": "6",
+        "level": "reforco",
+        "topics": [
+          {
+            "title": "sólido/líquido/gasoso",
+            "content": "Aprofundamento sobre sólido/líquido/gasoso."
+          },
+          {
+            "title": "fusão",
+            "content": "Aprofundamento sobre fusão."
+          },
+          {
+            "title": "evaporação",
+            "content": "Aprofundamento sobre evaporação."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "matéria",
+            "definition": "Tudo o que tem massa e ocupa espaço."
+          },
+          {
+            "word": "célula",
+            "definition": "Unidade estrutural e funcional básica dos seres vivos."
+          }
+        ],
+        "tags": [
+          "matéria",
+          "estados-físicos",
+          "mudanças"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_024",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Reforço: relações alimentares no ambiente",
+        "contentText": "Exercícios de identificação de níveis tróficos e análise de impacto ambiental em cadeias alimentares.",
+        "categoryId": "5dab008b-f19a-4741-872a-36693cdc9159",
+        "grade": "6",
+        "level": "reforco",
+        "topics": [
+          {
+            "title": "níveis tróficos",
+            "content": "Aprofundamento sobre níveis tróficos."
+          },
+          {
+            "title": "predação",
+            "content": "Aprofundamento sobre predação."
+          },
+          {
+            "title": "equilíbrio",
+            "content": "Aprofundamento sobre equilíbrio."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "cadeia-alimentar",
+            "definition": "Sequência de transferência de energia entre organismos por alimentação."
+          },
+          {
+            "word": "equilíbrio",
+            "definition": "Estado de estabilidade dinâmica das relações em um sistema."
+          }
+        ],
+        "tags": [
+          "ecologia",
+          "cadeia-alimentar",
+          "ambiente"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_025",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Interpretação e inferência textual",
+        "contentText": "Desenvolvimento da leitura inferencial para compreender sentidos não explícitos no texto.",
+        "categoryId": "201b3c62-6367-47c6-8dc7-cc6149014988",
+        "grade": "7",
+        "level": "1",
+        "topics": [
+          {
+            "title": "informação implícita",
+            "content": "Aprofundamento sobre informação implícita."
+          },
+          {
+            "title": "pistas textuais",
+            "content": "Aprofundamento sobre pistas textuais."
+          },
+          {
+            "title": "sentido global",
+            "content": "Aprofundamento sobre sentido global."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "inferência",
+            "definition": "Conclusão construída a partir de pistas do texto e conhecimento prévio."
+          },
+          {
+            "word": "interpretação",
+            "definition": "Compreensão do sentido de um texto a partir de informações explícitas e implícitas."
+          },
+          {
+            "word": "contexto",
+            "definition": "Conjunto de informações que ajuda a compreender o sentido de uma mensagem."
+          }
+        ],
+        "tags": [
+          "inferência",
+          "interpretação",
+          "contexto"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_026",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Estrutura de parágrafos argumentativos",
+        "contentText": "Construção de parágrafos argumentativos com organização lógica e progressão de ideias.",
+        "categoryId": "201b3c62-6367-47c6-8dc7-cc6149014988",
+        "grade": "7",
+        "level": "2",
+        "topics": [
+          {
+            "title": "frase temática",
+            "content": "Aprofundamento sobre frase temática."
+          },
+          {
+            "title": "desenvolvimento",
+            "content": "Aprofundamento sobre desenvolvimento."
+          },
+          {
+            "title": "fechamento",
+            "content": "Aprofundamento sobre fechamento."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "parágrafo",
+            "definition": "Unidade textual com uma ideia central desenvolvida por frases relacionadas."
+          },
+          {
+            "word": "argumentação",
+            "definition": "Defesa de um ponto de vista com razões e evidências."
+          },
+          {
+            "word": "organização",
+            "definition": "Forma como estruturas biológicas ou sociais se distribuem e se relacionam."
+          }
+        ],
+        "tags": [
+          "parágrafo",
+          "argumentação",
+          "organização"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_027",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Defesa de ponto de vista em texto",
+        "contentText": "Estratégias de escrita para defender ponto de vista com consistência e clareza.",
+        "categoryId": "201b3c62-6367-47c6-8dc7-cc6149014988",
+        "grade": "7",
+        "level": "3",
+        "topics": [
+          {
+            "title": "seleção de argumentos",
+            "content": "Aprofundamento sobre seleção de argumentos."
+          },
+          {
+            "title": "refutação",
+            "content": "Aprofundamento sobre refutação."
+          },
+          {
+            "title": "conclusão",
+            "content": "Aprofundamento sobre conclusão."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "tese",
+            "definition": "Posição principal defendida em um texto argumentativo."
+          },
+          {
+            "word": "interpretação",
+            "definition": "Compreensão do sentido de um texto a partir de informações explícitas e implícitas."
+          }
+        ],
+        "tags": [
+          "tese",
+          "argumentos",
+          "persuasão"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_028",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Reforço: interpretação de enunciados",
+        "contentText": "Treino de leitura de enunciados para evitar erros por interpretação inadequada.",
+        "categoryId": "201b3c62-6367-47c6-8dc7-cc6149014988",
+        "grade": "7",
+        "level": "reforco",
+        "topics": [
+          {
+            "title": "verbos de comando",
+            "content": "Aprofundamento sobre verbos de comando."
+          },
+          {
+            "title": "objetivo da questão",
+            "content": "Aprofundamento sobre objetivo da questão."
+          },
+          {
+            "title": "resposta adequada",
+            "content": "Aprofundamento sobre resposta adequada."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "interpretação",
+            "definition": "Compreensão do sentido de um texto a partir de informações explícitas e implícitas."
+          },
+          {
+            "word": "argumentação",
+            "definition": "Defesa de um ponto de vista com razões e evidências."
+          }
+        ],
+        "tags": [
+          "interpretação",
+          "enunciado",
+          "compreensão"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_029",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Reforço: uso de conectores lógicos",
+        "contentText": "Aplicação de conectores para garantir fluidez e coerência em textos argumentativos.",
+        "categoryId": "201b3c62-6367-47c6-8dc7-cc6149014988",
+        "grade": "7",
+        "level": "reforco",
+        "topics": [
+          {
+            "title": "adição",
+            "content": "Aprofundamento sobre adição."
+          },
+          {
+            "title": "oposição",
+            "content": "Aprofundamento sobre oposição."
+          },
+          {
+            "title": "conclusão",
+            "content": "Aprofundamento sobre conclusão."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "coesão",
+            "definition": "Uso de recursos linguísticos que conectam frases e parágrafos."
+          },
+          {
+            "word": "argumentação",
+            "definition": "Defesa de um ponto de vista com razões e evidências."
+          }
+        ],
+        "tags": [
+          "conectores",
+          "coesão",
+          "argumentação"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_030",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Reforço: revisão gramatical aplicada",
+        "contentText": "Revisão orientada de aspectos gramaticais com foco em qualidade de texto e reescrita.",
+        "categoryId": "201b3c62-6367-47c6-8dc7-cc6149014988",
+        "grade": "7",
+        "level": "reforco",
+        "topics": [
+          {
+            "title": "pontuação",
+            "content": "Aprofundamento sobre pontuação."
+          },
+          {
+            "title": "concordância",
+            "content": "Aprofundamento sobre concordância."
+          },
+          {
+            "title": "clareza",
+            "content": "Aprofundamento sobre clareza."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "gramática",
+            "definition": "Conjunto de regras de funcionamento da língua."
+          },
+          {
+            "word": "pontuação",
+            "definition": "Uso de sinais gráficos para organizar e dar sentido às frases."
+          },
+          {
+            "word": "concordância",
+            "definition": "Relação correta entre palavras em número, gênero e pessoa."
+          }
+        ],
+        "tags": [
+          "gramática",
+          "revisão",
+          "reescrita"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_031",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Introdução à álgebra",
+        "contentText": "Primeiros conceitos algébricos com tradução de linguagem verbal para expressões matemáticas.",
+        "categoryId": "fdf4484c-b041-472a-b5b8-a1aa334af0db",
+        "grade": "7",
+        "level": "1",
+        "topics": [
+          {
+            "title": "variável",
+            "content": "Aprofundamento sobre variável."
+          },
+          {
+            "title": "termos algébricos",
+            "content": "Aprofundamento sobre termos algébricos."
+          },
+          {
+            "title": "modelagem simples",
+            "content": "Aprofundamento sobre modelagem simples."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "álgebra",
+            "definition": "Área da matemática que utiliza símbolos para representar valores e relações."
+          },
+          {
+            "word": "incógnita",
+            "definition": "Valor desconhecido representado por uma letra em expressões e equações."
+          },
+          {
+            "word": "expressão",
+            "definition": "Representação matemática formada por números, letras e operações."
+          }
+        ],
+        "tags": [
+          "álgebra",
+          "incógnita",
+          "expressão"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_032",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Equações do 1º grau",
+        "contentText": "Resolução de equações lineares com passo a passo e validação das soluções encontradas.",
+        "categoryId": "fdf4484c-b041-472a-b5b8-a1aa334af0db",
+        "grade": "7",
+        "level": "2",
+        "topics": [
+          {
+            "title": "isolamento da incógnita",
+            "content": "Aprofundamento sobre isolamento da incógnita."
+          },
+          {
+            "title": "operações inversas",
+            "content": "Aprofundamento sobre operações inversas."
+          },
+          {
+            "title": "checagem",
+            "content": "Aprofundamento sobre checagem."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "equações",
+            "definition": "Igualdades matemáticas com termos desconhecidos a serem determinados."
+          },
+          {
+            "word": "verificação",
+            "definition": "Conferência do resultado obtido substituindo o valor encontrado na expressão original."
+          }
+        ],
+        "tags": [
+          "equações",
+          "resolução",
+          "verificação"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_033",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Problemas com equações e inequações",
+        "contentText": "Situações-problema envolvendo equações e inequações com interpretação de resultados.",
+        "categoryId": "fdf4484c-b041-472a-b5b8-a1aa334af0db",
+        "grade": "7",
+        "level": "3",
+        "topics": [
+          {
+            "title": "modelagem",
+            "content": "Aprofundamento sobre modelagem."
+          },
+          {
+            "title": "conjunto solução",
+            "content": "Aprofundamento sobre conjunto solução."
+          },
+          {
+            "title": "aplicações",
+            "content": "Aprofundamento sobre aplicações."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "inequações",
+            "definition": "Sentenças matemáticas com símbolos de desigualdade."
+          },
+          {
+            "word": "interpretação",
+            "definition": "Compreensão do sentido de um texto a partir de informações explícitas e implícitas."
+          },
+          {
+            "word": "modelagem",
+            "definition": "Tradução de situações reais para linguagem matemática."
+          }
+        ],
+        "tags": [
+          "inequações",
+          "problemas",
+          "interpretação"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_034",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Reforço: manipulação algébrica básica",
+        "contentText": "Reforço de regras operatórias em expressões algébricas simples.",
+        "categoryId": "fdf4484c-b041-472a-b5b8-a1aa334af0db",
+        "grade": "7",
+        "level": "reforco",
+        "topics": [
+          {
+            "title": "termos semelhantes",
+            "content": "Aprofundamento sobre termos semelhantes."
+          },
+          {
+            "title": "redução",
+            "content": "Aprofundamento sobre redução."
+          },
+          {
+            "title": "operações algébricas",
+            "content": "Aprofundamento sobre operações algébricas."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "álgebra",
+            "definition": "Área da matemática que utiliza símbolos para representar valores e relações."
+          },
+          {
+            "word": "simplificação",
+            "definition": "Redução de uma fração para outra equivalente com termos menores."
+          }
+        ],
+        "tags": [
+          "álgebra",
+          "simplificação",
+          "termos"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_035",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Reforço: validação de soluções",
+        "contentText": "Estratégias para verificar soluções e identificar erros frequentes em resolução de equações.",
+        "categoryId": "fdf4484c-b041-472a-b5b8-a1aa334af0db",
+        "grade": "7",
+        "level": "reforco",
+        "topics": [
+          {
+            "title": "substituição",
+            "content": "Aprofundamento sobre substituição."
+          },
+          {
+            "title": "conferência",
+            "content": "Aprofundamento sobre conferência."
+          },
+          {
+            "title": "análise de erro",
+            "content": "Aprofundamento sobre análise de erro."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "equações",
+            "definition": "Igualdades matemáticas com termos desconhecidos a serem determinados."
+          },
+          {
+            "word": "verificação",
+            "definition": "Conferência do resultado obtido substituindo o valor encontrado na expressão original."
+          }
+        ],
+        "tags": [
+          "equações",
+          "verificação",
+          "erro-comum"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_036",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Reforço: tradução de texto para expressão matemática",
+        "contentText": "Conversão de enunciados verbais em expressões, equações e inequações.",
+        "categoryId": "fdf4484c-b041-472a-b5b8-a1aa334af0db",
+        "grade": "7",
+        "level": "reforco",
+        "topics": [
+          {
+            "title": "interpretação verbal",
+            "content": "Aprofundamento sobre interpretação verbal."
+          },
+          {
+            "title": "símbolos",
+            "content": "Aprofundamento sobre símbolos."
+          },
+          {
+            "title": "montagem de sentença",
+            "content": "Aprofundamento sobre montagem de sentença."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "modelagem",
+            "definition": "Tradução de situações reais para linguagem matemática."
+          },
+          {
+            "word": "equações",
+            "definition": "Igualdades matemáticas com termos desconhecidos a serem determinados."
+          }
+        ],
+        "tags": [
+          "modelagem",
+          "problemas",
+          "linguagem-matemática"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_037",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Formação do mundo moderno",
+        "contentText": "Panorama das transformações que marcaram a passagem para a modernidade.",
+        "categoryId": "d6baf101-f2e8-496f-ab18-759963163635",
+        "grade": "7",
+        "level": "1",
+        "topics": [
+          {
+            "title": "mudanças sociais",
+            "content": "Aprofundamento sobre mudanças sociais."
+          },
+          {
+            "title": "expansão comercial",
+            "content": "Aprofundamento sobre expansão comercial."
+          },
+          {
+            "title": "novas ideias",
+            "content": "Aprofundamento sobre novas ideias."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "modernidade",
+            "definition": "Período de transformações econômicas, políticas e culturais a partir da Idade Moderna."
+          },
+          {
+            "word": "transformações",
+            "definition": "Mudanças observadas em processos históricos, sociais ou naturais."
+          },
+          {
+            "word": "história",
+            "definition": "Estudo das ações humanas no tempo e no espaço."
+          }
+        ],
+        "tags": [
+          "modernidade",
+          "transformações",
+          "história"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_038",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Brasil Colonial: economia e sociedade",
+        "contentText": "Relações entre economia colonial e organização social no Brasil.",
+        "categoryId": "d6baf101-f2e8-496f-ab18-759963163635",
+        "grade": "7",
+        "level": "2",
+        "topics": [
+          {
+            "title": "engenho",
+            "content": "Aprofundamento sobre engenho."
+          },
+          {
+            "title": "trabalho",
+            "content": "Aprofundamento sobre trabalho."
+          },
+          {
+            "title": "estratificação social",
+            "content": "Aprofundamento sobre estratificação social."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "brasil-colonial",
+            "definition": "Período em que o território brasileiro esteve sob domínio colonial português."
+          },
+          {
+            "word": "economia",
+            "definition": "Conjunto de atividades de produção, circulação e consumo de bens e serviços."
+          },
+          {
+            "word": "sociedade",
+            "definition": "Conjunto de pessoas organizadas por relações, normas e instituições."
+          }
+        ],
+        "tags": [
+          "brasil-colonial",
+          "economia",
+          "sociedade"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_039",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Iluminismo e movimentos de independência",
+        "contentText": "Ideias iluministas e sua influência em processos de independência e direitos políticos.",
+        "categoryId": "d6baf101-f2e8-496f-ab18-759963163635",
+        "grade": "7",
+        "level": "3",
+        "topics": [
+          {
+            "title": "razão",
+            "content": "Aprofundamento sobre razão."
+          },
+          {
+            "title": "cidadania",
+            "content": "Aprofundamento sobre cidadania."
+          },
+          {
+            "title": "mudança política",
+            "content": "Aprofundamento sobre mudança política."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "iluminismo",
+            "definition": "Movimento intelectual que valorizou razão, ciência e crítica ao absolutismo."
+          },
+          {
+            "word": "independência",
+            "definition": "Processo de autonomia política de um território em relação a outro poder."
+          },
+          {
+            "word": "direitos",
+            "definition": "Garantias e liberdades reconhecidas a indivíduos e grupos."
+          }
+        ],
+        "tags": [
+          "iluminismo",
+          "independência",
+          "direitos"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_040",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Reforço: economia colonial e trabalho",
+        "contentText": "Revisão dos elementos econômicos centrais do período colonial e suas implicações sociais.",
+        "categoryId": "d6baf101-f2e8-496f-ab18-759963163635",
+        "grade": "7",
+        "level": "reforco",
+        "topics": [
+          {
+            "title": "produção açucareira",
+            "content": "Aprofundamento sobre produção açucareira."
+          },
+          {
+            "title": "mão de obra",
+            "content": "Aprofundamento sobre mão de obra."
+          },
+          {
+            "title": "circuitos comerciais",
+            "content": "Aprofundamento sobre circuitos comerciais."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "economia",
+            "definition": "Conjunto de atividades de produção, circulação e consumo de bens e serviços."
+          },
+          {
+            "word": "cronologia",
+            "definition": "Organização de fatos em sequência temporal."
+          }
+        ],
+        "tags": [
+          "economia",
+          "colonização",
+          "trabalho"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_041",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Reforço: leitura crítica de processos históricos",
+        "contentText": "Leitura crítica de processos históricos com foco em relações de causa e consequência.",
+        "categoryId": "d6baf101-f2e8-496f-ab18-759963163635",
+        "grade": "7",
+        "level": "reforco",
+        "topics": [
+          {
+            "title": "causa e consequência",
+            "content": "Aprofundamento sobre causa e consequência."
+          },
+          {
+            "title": "contextualização",
+            "content": "Aprofundamento sobre contextualização."
+          },
+          {
+            "title": "perspectivas",
+            "content": "Aprofundamento sobre perspectivas."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "contexto",
+            "definition": "Conjunto de informações que ajuda a compreender o sentido de uma mensagem."
+          },
+          {
+            "word": "interpretação",
+            "definition": "Compreensão do sentido de um texto a partir de informações explícitas e implícitas."
+          }
+        ],
+        "tags": [
+          "análise",
+          "contexto",
+          "interpretação"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_042",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Reforço: revoluções e mudanças políticas",
+        "contentText": "Consolidação de conceitos sobre revoluções e seus impactos políticos e sociais.",
+        "categoryId": "d6baf101-f2e8-496f-ab18-759963163635",
+        "grade": "7",
+        "level": "reforco",
+        "topics": [
+          {
+            "title": "rupturas",
+            "content": "Aprofundamento sobre rupturas."
+          },
+          {
+            "title": "novas formas de governo",
+            "content": "Aprofundamento sobre novas formas de governo."
+          },
+          {
+            "title": "participação",
+            "content": "Aprofundamento sobre participação."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "transformações",
+            "definition": "Mudanças observadas em processos históricos, sociais ou naturais."
+          },
+          {
+            "word": "cronologia",
+            "definition": "Organização de fatos em sequência temporal."
+          }
+        ],
+        "tags": [
+          "revoluções",
+          "política",
+          "transformações"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_043",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Organização dos ecossistemas",
+        "contentText": "Estrutura de ecossistemas e interações entre componentes vivos e não vivos.",
+        "categoryId": "5dab008b-f19a-4741-872a-36693cdc9159",
+        "grade": "7",
+        "level": "1",
+        "topics": [
+          {
+            "title": "componentes do ecossistema",
+            "content": "Aprofundamento sobre componentes do ecossistema."
+          },
+          {
+            "title": "interações",
+            "content": "Aprofundamento sobre interações."
+          },
+          {
+            "title": "equilíbrio",
+            "content": "Aprofundamento sobre equilíbrio."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "ecossistemas",
+            "definition": "Conjunto de organismos e ambiente físico em interação."
+          },
+          {
+            "word": "fatores-bióticos",
+            "definition": "Componentes vivos de um ecossistema, como plantas, animais e microrganismos."
+          },
+          {
+            "word": "fatores-abióticos",
+            "definition": "Elementos não vivos do ambiente, como água, luz e temperatura."
+          }
+        ],
+        "tags": [
+          "ecossistemas",
+          "fatores-bióticos",
+          "fatores-abióticos"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_044",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Transformações químicas no cotidiano",
+        "contentText": "Identificação de transformações químicas em fenômenos do dia a dia.",
+        "categoryId": "5dab008b-f19a-4741-872a-36693cdc9159",
+        "grade": "7",
+        "level": "2",
+        "topics": [
+          {
+            "title": "evidências de reação",
+            "content": "Aprofundamento sobre evidências de reação."
+          },
+          {
+            "title": "substâncias",
+            "content": "Aprofundamento sobre substâncias."
+          },
+          {
+            "title": "mudanças irreversíveis",
+            "content": "Aprofundamento sobre mudanças irreversíveis."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "transformações",
+            "definition": "Mudanças observadas em processos históricos, sociais ou naturais."
+          },
+          {
+            "word": "química",
+            "definition": "Ciência que estuda a composição, propriedades e transformações da matéria."
+          },
+          {
+            "word": "reações",
+            "definition": "Processos em que substâncias se transformam em outras."
+          }
+        ],
+        "tags": [
+          "transformações",
+          "química",
+          "reações"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_045",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Saúde, prevenção e qualidade de vida",
+        "contentText": "Relação entre prevenção, hábitos de vida e promoção da saúde individual e coletiva.",
+        "categoryId": "5dab008b-f19a-4741-872a-36693cdc9159",
+        "grade": "7",
+        "level": "3",
+        "topics": [
+          {
+            "title": "hábitos saudáveis",
+            "content": "Aprofundamento sobre hábitos saudáveis."
+          },
+          {
+            "title": "vacinação",
+            "content": "Aprofundamento sobre vacinação."
+          },
+          {
+            "title": "ambiente e saúde",
+            "content": "Aprofundamento sobre ambiente e saúde."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "saúde",
+            "definition": "Estado de bem-estar físico, mental e social."
+          },
+          {
+            "word": "prevenção",
+            "definition": "Ações para reduzir riscos e evitar doenças ou problemas."
+          },
+          {
+            "word": "qualidade-de-vida",
+            "definition": "Condição de vida associada a bem-estar e hábitos saudáveis."
+          }
+        ],
+        "tags": [
+          "saúde",
+          "prevenção",
+          "qualidade-de-vida"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_046",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Reforço: cadeia alimentar e teia trófica",
+        "contentText": "Revisão de cadeias e teias alimentares com análise de impactos em ecossistemas.",
+        "categoryId": "5dab008b-f19a-4741-872a-36693cdc9159",
+        "grade": "7",
+        "level": "reforco",
+        "topics": [
+          {
+            "title": "níveis tróficos",
+            "content": "Aprofundamento sobre níveis tróficos."
+          },
+          {
+            "title": "fluxo de energia",
+            "content": "Aprofundamento sobre fluxo de energia."
+          },
+          {
+            "title": "desequilíbrio",
+            "content": "Aprofundamento sobre desequilíbrio."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "cadeia-alimentar",
+            "definition": "Sequência de transferência de energia entre organismos por alimentação."
+          },
+          {
+            "word": "célula",
+            "definition": "Unidade estrutural e funcional básica dos seres vivos."
+          }
+        ],
+        "tags": [
+          "cadeia-alimentar",
+          "teia-trófica",
+          "energia"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_047",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Reforço: evidências de transformação química",
+        "contentText": "Exercícios para reconhecer evidências de transformações químicas em experimentos simples.",
+        "categoryId": "5dab008b-f19a-4741-872a-36693cdc9159",
+        "grade": "7",
+        "level": "reforco",
+        "topics": [
+          {
+            "title": "mudança de cor",
+            "content": "Aprofundamento sobre mudança de cor."
+          },
+          {
+            "title": "liberação de gás",
+            "content": "Aprofundamento sobre liberação de gás."
+          },
+          {
+            "title": "formação de precipitado",
+            "content": "Aprofundamento sobre formação de precipitado."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "química",
+            "definition": "Ciência que estuda a composição, propriedades e transformações da matéria."
+          },
+          {
+            "word": "célula",
+            "definition": "Unidade estrutural e funcional básica dos seres vivos."
+          }
+        ],
+        "tags": [
+          "reação",
+          "evidências",
+          "química"
+        ]
+      }
+    },
+    {
+      "ref": "content_ref_048",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Reforço: hábitos saudáveis e vacinação",
+        "contentText": "Práticas de prevenção e autocuidado para promoção de saúde no contexto escolar.",
+        "categoryId": "5dab008b-f19a-4741-872a-36693cdc9159",
+        "grade": "7",
+        "level": "reforco",
+        "topics": [
+          {
+            "title": "imunização",
+            "content": "Aprofundamento sobre imunização."
+          },
+          {
+            "title": "higiene",
+            "content": "Aprofundamento sobre higiene."
+          },
+          {
+            "title": "rotina saudável",
+            "content": "Aprofundamento sobre rotina saudável."
+          }
+        ],
+        "glossary": [
+          {
+            "word": "prevenção",
+            "definition": "Ações para reduzir riscos e evitar doenças ou problemas."
+          },
+          {
+            "word": "célula",
+            "definition": "Unidade estrutural e funcional básica dos seres vivos."
+          }
+        ],
+        "tags": [
+          "prevenção",
+          "vacinação",
+          "autocuidado"
+        ]
+      }
+    }
+  ],
+  "assessmentPayloads": [
+    {
+      "ref": "assessment_ref_001",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Português 6º - Compreensão textual básica",
+        "description": "Compreensão textual básica",
+        "categoryId": "201b3c62-6367-47c6-8dc7-cc6149014988",
+        "level": "1",
+        "contentId": "<content_id_uuid:content_ref_001>",
+        "minScore": 70,
+        "startDate": "2026-02-12T08:00:00.000Z",
+        "endDate": "2026-12-31T23:59:59.000Z",
+        "isActive": true
+      },
+      "questions": [
+        {
+          "ref": "assessment_ref_001_q1",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_001>",
+          "payload": {
+            "questionText": "A ideia principal de um texto é:",
+            "questionType": "multiple_choice_single",
+            "options": [
+              "detalhe secundário",
+              "mensagem central",
+              "nome do autor",
+              "última frase"
+            ],
+            "correctAnswer": "1",
+            "points": 1,
+            "tags": [
+              "interpretação",
+              "ideia-principal"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_001_q2",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_001>",
+          "payload": {
+            "questionText": "Título e palavras repetidas ajudam a identificar o tema do texto.",
+            "questionType": "true_false",
+            "options": [
+              "true",
+              "false"
+            ],
+            "correctAnswer": "true",
+            "points": 1,
+            "tags": [
+              "leitura",
+              "tema"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_001_q3",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_001>",
+          "payload": {
+            "questionText": "Explique em uma frase o que é ideia principal.",
+            "questionType": "text",
+            "options": null,
+            "correctAnswer": "open-ended",
+            "points": 1,
+            "tags": [
+              "produção-escrita",
+              "síntese"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "assessment_ref_002",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Português 6º - Coesão e conectivos",
+        "description": "Coesão e conectivos",
+        "categoryId": "201b3c62-6367-47c6-8dc7-cc6149014988",
+        "level": "2",
+        "contentId": "<content_id_uuid:content_ref_002>",
+        "minScore": 70,
+        "startDate": "2026-02-12T08:00:00.000Z",
+        "endDate": "2026-12-31T23:59:59.000Z",
+        "isActive": true
+      },
+      "questions": [
+        {
+          "ref": "assessment_ref_002_q1",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_002>",
+          "payload": {
+            "questionText": "Qual conectivo indica oposição?",
+            "questionType": "multiple_choice_single",
+            "options": [
+              "portanto",
+              "além disso",
+              "porém",
+              "porque"
+            ],
+            "correctAnswer": "2",
+            "points": 1,
+            "tags": [
+              "conectivos",
+              "coesão"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_002_q2",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_002>",
+          "payload": {
+            "questionText": "Coesão e coerência possuem o mesmo significado exato.",
+            "questionType": "true_false",
+            "options": [
+              "true",
+              "false"
+            ],
+            "correctAnswer": "false",
+            "points": 1,
+            "tags": [
+              "coesão",
+              "coerência"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_002_q3",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_002>",
+          "payload": {
+            "questionText": "Escreva uma frase com conectivo de conclusão.",
+            "questionType": "text",
+            "options": null,
+            "correctAnswer": "open-ended",
+            "points": 1,
+            "tags": [
+              "escrita",
+              "conclusão"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "assessment_ref_003",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Português 6º - Argumentação inicial",
+        "description": "Argumentação inicial",
+        "categoryId": "201b3c62-6367-47c6-8dc7-cc6149014988",
+        "level": "3",
+        "contentId": "<content_id_uuid:content_ref_003>",
+        "minScore": 70,
+        "startDate": "2026-02-12T08:00:00.000Z",
+        "endDate": "2026-12-31T23:59:59.000Z",
+        "isActive": true
+      },
+      "questions": [
+        {
+          "ref": "assessment_ref_003_q1",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_003>",
+          "payload": {
+            "questionText": "Em texto argumentativo, tese é:",
+            "questionType": "multiple_choice_single",
+            "options": [
+              "opinião defendida",
+              "referência bibliográfica",
+              "data de publicação",
+              "saudação inicial"
+            ],
+            "correctAnswer": "0",
+            "points": 1,
+            "tags": [
+              "tese",
+              "argumentação"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_003_q2",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_003>",
+          "payload": {
+            "questionText": "Argumentos devem sustentar a tese.",
+            "questionType": "true_false",
+            "options": [
+              "true",
+              "false"
+            ],
+            "correctAnswer": "true",
+            "points": 1,
+            "tags": [
+              "argumentos",
+              "coerência"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_003_q3",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_003>",
+          "payload": {
+            "questionText": "Escreva uma tese sobre uso consciente de água na escola.",
+            "questionType": "text",
+            "options": null,
+            "correctAnswer": "open-ended",
+            "points": 1,
+            "tags": [
+              "produção-textual",
+              "opinião"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "assessment_ref_004",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Matemática 6º - Decimais",
+        "description": "Decimais",
+        "categoryId": "fdf4484c-b041-472a-b5b8-a1aa334af0db",
+        "level": "1",
+        "contentId": "<content_id_uuid:content_ref_007>",
+        "minScore": 70,
+        "startDate": "2026-02-12T08:00:00.000Z",
+        "endDate": "2026-12-31T23:59:59.000Z",
+        "isActive": true
+      },
+      "questions": [
+        {
+          "ref": "assessment_ref_004_q1",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_004>",
+          "payload": {
+            "questionText": "2,4 + 1,3 =",
+            "questionType": "multiple_choice_single",
+            "options": [
+              "3,7",
+              "3,1",
+              "2,7",
+              "4,7"
+            ],
+            "correctAnswer": "0",
+            "points": 1,
+            "tags": [
+              "decimais",
+              "adição"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_004_q2",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_004>",
+          "payload": {
+            "questionText": "1,9 é maior que 1,89.",
+            "questionType": "true_false",
+            "options": [
+              "true",
+              "false"
+            ],
+            "correctAnswer": "true",
+            "points": 1,
+            "tags": [
+              "comparação",
+              "decimais"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_004_q3",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_004>",
+          "payload": {
+            "questionText": "Explique por que alinhar vírgulas ajuda em operações com decimais.",
+            "questionType": "text",
+            "options": null,
+            "correctAnswer": "open-ended",
+            "points": 1,
+            "tags": [
+              "valor-posicional",
+              "procedimento"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "assessment_ref_005",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Matemática 6º - Frações",
+        "description": "Frações",
+        "categoryId": "fdf4484c-b041-472a-b5b8-a1aa334af0db",
+        "level": "2",
+        "contentId": "<content_id_uuid:content_ref_008>",
+        "minScore": 70,
+        "startDate": "2026-02-12T08:00:00.000Z",
+        "endDate": "2026-12-31T23:59:59.000Z",
+        "isActive": true
+      },
+      "questions": [
+        {
+          "ref": "assessment_ref_005_q1",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_005>",
+          "payload": {
+            "questionText": "Fração equivalente a 2/4:",
+            "questionType": "multiple_choice_single",
+            "options": [
+              "1/2",
+              "2/3",
+              "3/5",
+              "4/7"
+            ],
+            "correctAnswer": "0",
+            "points": 1,
+            "tags": [
+              "frações",
+              "equivalência"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_005_q2",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_005>",
+          "payload": {
+            "questionText": "3/6 e 1/2 representam o mesmo valor.",
+            "questionType": "true_false",
+            "options": [
+              "true",
+              "false"
+            ],
+            "correctAnswer": "true",
+            "points": 1,
+            "tags": [
+              "frações",
+              "simplificação"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_005_q3",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_005>",
+          "payload": {
+            "questionText": "Descreva como comparar duas frações de mesmo denominador.",
+            "questionType": "text",
+            "options": null,
+            "correctAnswer": "open-ended",
+            "points": 1,
+            "tags": [
+              "comparação",
+              "raciocínio"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "assessment_ref_006",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Matemática 6º - Expressões numéricas",
+        "description": "Expressões numéricas",
+        "categoryId": "fdf4484c-b041-472a-b5b8-a1aa334af0db",
+        "level": "3",
+        "contentId": "<content_id_uuid:content_ref_009>",
+        "minScore": 70,
+        "startDate": "2026-02-12T08:00:00.000Z",
+        "endDate": "2026-12-31T23:59:59.000Z",
+        "isActive": true
+      },
+      "questions": [
+        {
+          "ref": "assessment_ref_006_q1",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_006>",
+          "payload": {
+            "questionText": "10 - (2 + 3) =",
+            "questionType": "multiple_choice_single",
+            "options": [
+              "15",
+              "5",
+              "8",
+              "10"
+            ],
+            "correctAnswer": "1",
+            "points": 1,
+            "tags": [
+              "expressões",
+              "ordem-de-operações"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_006_q2",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_006>",
+          "payload": {
+            "questionText": "Em expressões numéricas, parênteses devem ser resolvidos antes.",
+            "questionType": "true_false",
+            "options": [
+              "true",
+              "false"
+            ],
+            "correctAnswer": "true",
+            "points": 1,
+            "tags": [
+              "prioridade",
+              "procedimento"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_006_q3",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_006>",
+          "payload": {
+            "questionText": "Escreva uma expressão com duas operações e mostre o resultado.",
+            "questionType": "text",
+            "options": null,
+            "correctAnswer": "open-ended",
+            "points": 1,
+            "tags": [
+              "expressões",
+              "resolução"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "assessment_ref_007",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "História 6º - Cronologia",
+        "description": "Cronologia",
+        "categoryId": "d6baf101-f2e8-496f-ab18-759963163635",
+        "level": "1",
+        "contentId": "<content_id_uuid:content_ref_013>",
+        "minScore": 70,
+        "startDate": "2026-02-12T08:00:00.000Z",
+        "endDate": "2026-12-31T23:59:59.000Z",
+        "isActive": true
+      },
+      "questions": [
+        {
+          "ref": "assessment_ref_007_q1",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_007>",
+          "payload": {
+            "questionText": "Século XXI corresponde a:",
+            "questionType": "multiple_choice_single",
+            "options": [
+              "1901-2000",
+              "2001-2100",
+              "1801-1900",
+              "2101-2200"
+            ],
+            "correctAnswer": "1",
+            "points": 1,
+            "tags": [
+              "cronologia",
+              "século"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_007_q2",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_007>",
+          "payload": {
+            "questionText": "Cronologia organiza fatos em ordem temporal.",
+            "questionType": "true_false",
+            "options": [
+              "true",
+              "false"
+            ],
+            "correctAnswer": "true",
+            "points": 1,
+            "tags": [
+              "tempo-histórico",
+              "ordem"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_007_q3",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_007>",
+          "payload": {
+            "questionText": "Explique em uma frase o que é linha do tempo.",
+            "questionType": "text",
+            "options": null,
+            "correctAnswer": "open-ended",
+            "points": 1,
+            "tags": [
+              "linha-do-tempo",
+              "conceito"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "assessment_ref_008",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "História 6º - Fontes históricas",
+        "description": "Fontes históricas",
+        "categoryId": "d6baf101-f2e8-496f-ab18-759963163635",
+        "level": "2",
+        "contentId": "<content_id_uuid:content_ref_014>",
+        "minScore": 70,
+        "startDate": "2026-02-12T08:00:00.000Z",
+        "endDate": "2026-12-31T23:59:59.000Z",
+        "isActive": true
+      },
+      "questions": [
+        {
+          "ref": "assessment_ref_008_q1",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_008>",
+          "payload": {
+            "questionText": "Exemplo de fonte histórica escrita:",
+            "questionType": "multiple_choice_single",
+            "options": [
+              "jornal antigo",
+              "raio-x",
+              "termômetro",
+              "satélite"
+            ],
+            "correctAnswer": "0",
+            "points": 1,
+            "tags": [
+              "fontes",
+              "documentos"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_008_q2",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_008>",
+          "payload": {
+            "questionText": "Fotografias também podem ser fontes históricas.",
+            "questionType": "true_false",
+            "options": [
+              "true",
+              "false"
+            ],
+            "correctAnswer": "true",
+            "points": 1,
+            "tags": [
+              "fontes-visuais",
+              "memória"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_008_q3",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_008>",
+          "payload": {
+            "questionText": "Cite uma fonte histórica e explique o que ela pode revelar.",
+            "questionType": "text",
+            "options": null,
+            "correctAnswer": "open-ended",
+            "points": 1,
+            "tags": [
+              "análise",
+              "interpretação"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "assessment_ref_009",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "História 6º - Povos antigos",
+        "description": "Povos antigos",
+        "categoryId": "d6baf101-f2e8-496f-ab18-759963163635",
+        "level": "3",
+        "contentId": "<content_id_uuid:content_ref_015>",
+        "minScore": 70,
+        "startDate": "2026-02-12T08:00:00.000Z",
+        "endDate": "2026-12-31T23:59:59.000Z",
+        "isActive": true
+      },
+      "questions": [
+        {
+          "ref": "assessment_ref_009_q1",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_009>",
+          "payload": {
+            "questionText": "Civilizações antigas costumavam se desenvolver próximas a:",
+            "questionType": "multiple_choice_single",
+            "options": [
+              "desertos sem água",
+              "rios",
+              "montanhas nevadas",
+              "ilhas vulcânicas"
+            ],
+            "correctAnswer": "1",
+            "points": 1,
+            "tags": [
+              "antiguidade",
+              "território"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_009_q2",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_009>",
+          "payload": {
+            "questionText": "A organização social muda ao longo do tempo histórico.",
+            "questionType": "true_false",
+            "options": [
+              "true",
+              "false"
+            ],
+            "correctAnswer": "true",
+            "points": 1,
+            "tags": [
+              "mudança",
+              "sociedade"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_009_q3",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_009>",
+          "payload": {
+            "questionText": "Escreva uma diferença entre a vida antiga e a atual.",
+            "questionType": "text",
+            "options": null,
+            "correctAnswer": "open-ended",
+            "points": 1,
+            "tags": [
+              "comparação-histórica",
+              "cotidiano"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "assessment_ref_010",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Ciências 6º - Célula",
+        "description": "Célula",
+        "categoryId": "5dab008b-f19a-4741-872a-36693cdc9159",
+        "level": "1",
+        "contentId": "<content_id_uuid:content_ref_019>",
+        "minScore": 70,
+        "startDate": "2026-02-12T08:00:00.000Z",
+        "endDate": "2026-12-31T23:59:59.000Z",
+        "isActive": true
+      },
+      "questions": [
+        {
+          "ref": "assessment_ref_010_q1",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_010>",
+          "payload": {
+            "questionText": "Unidade básica dos seres vivos:",
+            "questionType": "multiple_choice_single",
+            "options": [
+              "átomo",
+              "célula",
+              "tecido",
+              "órgão"
+            ],
+            "correctAnswer": "1",
+            "points": 1,
+            "tags": [
+              "célula",
+              "seres-vivos"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_010_q2",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_010>",
+          "payload": {
+            "questionText": "Órgãos são formados por tecidos.",
+            "questionType": "true_false",
+            "options": [
+              "true",
+              "false"
+            ],
+            "correctAnswer": "true",
+            "points": 1,
+            "tags": [
+              "organização-biológica",
+              "tecidos"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_010_q3",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_010>",
+          "payload": {
+            "questionText": "Cite uma função da membrana celular.",
+            "questionType": "text",
+            "options": null,
+            "correctAnswer": "open-ended",
+            "points": 1,
+            "tags": [
+              "organelas",
+              "função"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "assessment_ref_011",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Ciências 6º - Misturas",
+        "description": "Misturas",
+        "categoryId": "5dab008b-f19a-4741-872a-36693cdc9159",
+        "level": "2",
+        "contentId": "<content_id_uuid:content_ref_020>",
+        "minScore": 70,
+        "startDate": "2026-02-12T08:00:00.000Z",
+        "endDate": "2026-12-31T23:59:59.000Z",
+        "isActive": true
+      },
+      "questions": [
+        {
+          "ref": "assessment_ref_011_q1",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_011>",
+          "payload": {
+            "questionText": "Método para separar areia e água:",
+            "questionType": "multiple_choice_single",
+            "options": [
+              "filtração",
+              "fusão",
+              "sublimação",
+              "condensação"
+            ],
+            "correctAnswer": "0",
+            "points": 1,
+            "tags": [
+              "misturas",
+              "separação"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_011_q2",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_011>",
+          "payload": {
+            "questionText": "Mistura homogênea apresenta uma fase visível.",
+            "questionType": "true_false",
+            "options": [
+              "true",
+              "false"
+            ],
+            "correctAnswer": "true",
+            "points": 1,
+            "tags": [
+              "matéria",
+              "fases"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_011_q3",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_011>",
+          "payload": {
+            "questionText": "Dê um exemplo de mistura heterogênea.",
+            "questionType": "text",
+            "options": null,
+            "correctAnswer": "open-ended",
+            "points": 1,
+            "tags": [
+              "misturas",
+              "exemplos"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "assessment_ref_012",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Ciências 6º - Ecossistemas",
+        "description": "Ecossistemas",
+        "categoryId": "5dab008b-f19a-4741-872a-36693cdc9159",
+        "level": "3",
+        "contentId": "<content_id_uuid:content_ref_021>",
+        "minScore": 70,
+        "startDate": "2026-02-12T08:00:00.000Z",
+        "endDate": "2026-12-31T23:59:59.000Z",
+        "isActive": true
+      },
+      "questions": [
+        {
+          "ref": "assessment_ref_012_q1",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_012>",
+          "payload": {
+            "questionText": "Produtores na cadeia alimentar são:",
+            "questionType": "multiple_choice_single",
+            "options": [
+              "plantas e algas",
+              "fungos",
+              "carnívoros",
+              "herbívoros"
+            ],
+            "correctAnswer": "0",
+            "points": 1,
+            "tags": [
+              "cadeia-alimentar",
+              "produtores"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_012_q2",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_012>",
+          "payload": {
+            "questionText": "Alterar uma espécie pode afetar o equilíbrio do ecossistema.",
+            "questionType": "true_false",
+            "options": [
+              "true",
+              "false"
+            ],
+            "correctAnswer": "true",
+            "points": 1,
+            "tags": [
+              "equilíbrio",
+              "ecossistema"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_012_q3",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_012>",
+          "payload": {
+            "questionText": "Explique em uma frase o que é cadeia alimentar.",
+            "questionType": "text",
+            "options": null,
+            "correctAnswer": "open-ended",
+            "points": 1,
+            "tags": [
+              "ecologia",
+              "conceito"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "assessment_ref_013",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Português 7º - Inferência textual",
+        "description": "Inferência textual",
+        "categoryId": "201b3c62-6367-47c6-8dc7-cc6149014988",
+        "level": "1",
+        "contentId": "<content_id_uuid:content_ref_025>",
+        "minScore": 70,
+        "startDate": "2026-02-12T08:00:00.000Z",
+        "endDate": "2026-12-31T23:59:59.000Z",
+        "isActive": true
+      },
+      "questions": [
+        {
+          "ref": "assessment_ref_013_q1",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_013>",
+          "payload": {
+            "questionText": "Inferir em leitura é:",
+            "questionType": "multiple_choice_single",
+            "options": [
+              "copiar frases",
+              "deduzir informações implícitas",
+              "decorar palavras",
+              "ignorar contexto"
+            ],
+            "correctAnswer": "1",
+            "points": 1,
+            "tags": [
+              "inferência",
+              "interpretação"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_013_q2",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_013>",
+          "payload": {
+            "questionText": "Inferência depende de pistas no texto e do conhecimento prévio.",
+            "questionType": "true_false",
+            "options": [
+              "true",
+              "false"
+            ],
+            "correctAnswer": "true",
+            "points": 1,
+            "tags": [
+              "leitura",
+              "contexto"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_013_q3",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_013>",
+          "payload": {
+            "questionText": "Escreva uma inferência possível a partir de um texto sobre chuva intensa.",
+            "questionType": "text",
+            "options": null,
+            "correctAnswer": "open-ended",
+            "points": 1,
+            "tags": [
+              "produção",
+              "compreensão"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "assessment_ref_014",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Português 7º - Estrutura argumentativa",
+        "description": "Estrutura argumentativa",
+        "categoryId": "201b3c62-6367-47c6-8dc7-cc6149014988",
+        "level": "2",
+        "contentId": "<content_id_uuid:content_ref_026>",
+        "minScore": 70,
+        "startDate": "2026-02-12T08:00:00.000Z",
+        "endDate": "2026-12-31T23:59:59.000Z",
+        "isActive": true
+      },
+      "questions": [
+        {
+          "ref": "assessment_ref_014_q1",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_014>",
+          "payload": {
+            "questionText": "Qual opção representa argumento?",
+            "questionType": "multiple_choice_single",
+            "options": [
+              "Eu concordo porque...",
+              "Meu nome é...",
+              "Data de entrega",
+              "Fim"
+            ],
+            "correctAnswer": "0",
+            "points": 1,
+            "tags": [
+              "argumentação",
+              "estrutura"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_014_q2",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_014>",
+          "payload": {
+            "questionText": "Todo texto argumentativo precisa ter um ponto de vista.",
+            "questionType": "true_false",
+            "options": [
+              "true",
+              "false"
+            ],
+            "correctAnswer": "true",
+            "points": 1,
+            "tags": [
+              "tese",
+              "opinião"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_014_q3",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_014>",
+          "payload": {
+            "questionText": "Escreva um argumento curto defendendo leitura diária.",
+            "questionType": "text",
+            "options": null,
+            "correctAnswer": "open-ended",
+            "points": 1,
+            "tags": [
+              "escrita",
+              "persuasão"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "assessment_ref_015",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Português 7º - Revisão linguística",
+        "description": "Revisão linguística",
+        "categoryId": "201b3c62-6367-47c6-8dc7-cc6149014988",
+        "level": "3",
+        "contentId": "<content_id_uuid:content_ref_027>",
+        "minScore": 70,
+        "startDate": "2026-02-12T08:00:00.000Z",
+        "endDate": "2026-12-31T23:59:59.000Z",
+        "isActive": true
+      },
+      "questions": [
+        {
+          "ref": "assessment_ref_015_q1",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_015>",
+          "payload": {
+            "questionText": "Frase com pontuação adequada:",
+            "questionType": "multiple_choice_single",
+            "options": [
+              "Vamos estudar agora.",
+              "Vamos estudar agora",
+              "Vamos estudar, agora,",
+              "Vamos estudar agora,,"
+            ],
+            "correctAnswer": "0",
+            "points": 1,
+            "tags": [
+              "pontuação",
+              "norma-padrão"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_015_q2",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_015>",
+          "payload": {
+            "questionText": "Revisão textual inclui ortografia e clareza de ideias.",
+            "questionType": "true_false",
+            "options": [
+              "true",
+              "false"
+            ],
+            "correctAnswer": "true",
+            "points": 1,
+            "tags": [
+              "revisão",
+              "clareza"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_015_q3",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_015>",
+          "payload": {
+            "questionText": "Reescreva uma frase simples melhorando a clareza.",
+            "questionType": "text",
+            "options": null,
+            "correctAnswer": "open-ended",
+            "points": 1,
+            "tags": [
+              "reescrita",
+              "coerência"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "assessment_ref_016",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Matemática 7º - Introdução à álgebra",
+        "description": "Introdução à álgebra",
+        "categoryId": "fdf4484c-b041-472a-b5b8-a1aa334af0db",
+        "level": "1",
+        "contentId": "<content_id_uuid:content_ref_031>",
+        "minScore": 70,
+        "startDate": "2026-02-12T08:00:00.000Z",
+        "endDate": "2026-12-31T23:59:59.000Z",
+        "isActive": true
+      },
+      "questions": [
+        {
+          "ref": "assessment_ref_016_q1",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_016>",
+          "payload": {
+            "questionText": "Em x + 3, x representa:",
+            "questionType": "multiple_choice_single",
+            "options": [
+              "constante fixa",
+              "variável",
+              "fração imprópria",
+              "porcentagem"
+            ],
+            "correctAnswer": "1",
+            "points": 1,
+            "tags": [
+              "álgebra",
+              "variável"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_016_q2",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_016>",
+          "payload": {
+            "questionText": "Uma variável pode assumir diferentes valores.",
+            "questionType": "true_false",
+            "options": [
+              "true",
+              "false"
+            ],
+            "correctAnswer": "true",
+            "points": 1,
+            "tags": [
+              "conceitos",
+              "álgebra"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_016_q3",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_016>",
+          "payload": {
+            "questionText": "Escreva uma expressão algébrica para “o dobro de um número”.",
+            "questionType": "text",
+            "options": null,
+            "correctAnswer": "open-ended",
+            "points": 1,
+            "tags": [
+              "modelagem",
+              "expressão"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "assessment_ref_017",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Matemática 7º - Equações do 1º grau",
+        "description": "Equações do 1º grau",
+        "categoryId": "fdf4484c-b041-472a-b5b8-a1aa334af0db",
+        "level": "2",
+        "contentId": "<content_id_uuid:content_ref_032>",
+        "minScore": 70,
+        "startDate": "2026-02-12T08:00:00.000Z",
+        "endDate": "2026-12-31T23:59:59.000Z",
+        "isActive": true
+      },
+      "questions": [
+        {
+          "ref": "assessment_ref_017_q1",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_017>",
+          "payload": {
+            "questionText": "Resolver x - 5 = 9:",
+            "questionType": "multiple_choice_single",
+            "options": [
+              "x=4",
+              "x=14",
+              "x=9",
+              "x=-4"
+            ],
+            "correctAnswer": "1",
+            "points": 1,
+            "tags": [
+              "equações",
+              "resolução"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_017_q2",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_017>",
+          "payload": {
+            "questionText": "Se x + 2 = 7, então x = 5.",
+            "questionType": "true_false",
+            "options": [
+              "true",
+              "false"
+            ],
+            "correctAnswer": "true",
+            "points": 1,
+            "tags": [
+              "equações",
+              "verificação"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_017_q3",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_017>",
+          "payload": {
+            "questionText": "Monte uma equação para “um número somado com 8 dá 20”.",
+            "questionType": "text",
+            "options": null,
+            "correctAnswer": "open-ended",
+            "points": 1,
+            "tags": [
+              "modelagem",
+              "linguagem-matemática"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "assessment_ref_018",
+      "authUserId": "8fe3008f-7784-428d-ac7c-454464cc0315",
+      "payload": {
+        "title": "Matemática 7º - Inequações e problemas",
+        "description": "Inequações e problemas",
+        "categoryId": "fdf4484c-b041-472a-b5b8-a1aa334af0db",
+        "level": "3",
+        "contentId": "<content_id_uuid:content_ref_033>",
+        "minScore": 70,
+        "startDate": "2026-02-12T08:00:00.000Z",
+        "endDate": "2026-12-31T23:59:59.000Z",
+        "isActive": true
+      },
+      "questions": [
+        {
+          "ref": "assessment_ref_018_q1",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_018>",
+          "payload": {
+            "questionText": "x + 4 > 10 implica:",
+            "questionType": "multiple_choice_single",
+            "options": [
+              "x > 6",
+              "x < 6",
+              "x = 6",
+              "x >= 4"
+            ],
+            "correctAnswer": "0",
+            "points": 1,
+            "tags": [
+              "inequações",
+              "conjunto-solução"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_018_q2",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_018>",
+          "payload": {
+            "questionText": "Inequações podem ter mais de uma solução.",
+            "questionType": "true_false",
+            "options": [
+              "true",
+              "false"
+            ],
+            "correctAnswer": "true",
+            "points": 1,
+            "tags": [
+              "inequações",
+              "interpretação"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_018_q3",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_018>",
+          "payload": {
+            "questionText": "Dê um exemplo de situação cotidiana modelada por inequação.",
+            "questionType": "text",
+            "options": null,
+            "correctAnswer": "open-ended",
+            "points": 1,
+            "tags": [
+              "problemas",
+              "modelagem"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "assessment_ref_019",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "História 7º - Mundo moderno",
+        "description": "Mundo moderno",
+        "categoryId": "d6baf101-f2e8-496f-ab18-759963163635",
+        "level": "1",
+        "contentId": "<content_id_uuid:content_ref_037>",
+        "minScore": 70,
+        "startDate": "2026-02-12T08:00:00.000Z",
+        "endDate": "2026-12-31T23:59:59.000Z",
+        "isActive": true
+      },
+      "questions": [
+        {
+          "ref": "assessment_ref_019_q1",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_019>",
+          "payload": {
+            "questionText": "Uma característica da modernidade é:",
+            "questionType": "multiple_choice_single",
+            "options": [
+              "ausência de comércio",
+              "expansão das trocas e mudanças políticas",
+              "fim das cidades",
+              "inexistência de conflitos"
+            ],
+            "correctAnswer": "1",
+            "points": 1,
+            "tags": [
+              "modernidade",
+              "transformações"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_019_q2",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_019>",
+          "payload": {
+            "questionText": "Processos históricos podem ocorrer de forma gradual e desigual.",
+            "questionType": "true_false",
+            "options": [
+              "true",
+              "false"
+            ],
+            "correctAnswer": "true",
+            "points": 1,
+            "tags": [
+              "processos-históricos",
+              "temporalidade"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_019_q3",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_019>",
+          "payload": {
+            "questionText": "Explique em uma frase o que significa transformação histórica.",
+            "questionType": "text",
+            "options": null,
+            "correctAnswer": "open-ended",
+            "points": 1,
+            "tags": [
+              "conceito",
+              "história"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "assessment_ref_020",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "História 7º - Brasil Colonial",
+        "description": "Brasil Colonial",
+        "categoryId": "d6baf101-f2e8-496f-ab18-759963163635",
+        "level": "2",
+        "contentId": "<content_id_uuid:content_ref_038>",
+        "minScore": 70,
+        "startDate": "2026-02-12T08:00:00.000Z",
+        "endDate": "2026-12-31T23:59:59.000Z",
+        "isActive": true
+      },
+      "questions": [
+        {
+          "ref": "assessment_ref_020_q1",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_020>",
+          "payload": {
+            "questionText": "No período colonial, o engenho estava ligado principalmente a:",
+            "questionType": "multiple_choice_single",
+            "options": [
+              "extração de ouro no século XX",
+              "produção de açúcar",
+              "indústria automobilística",
+              "informática"
+            ],
+            "correctAnswer": "1",
+            "points": 1,
+            "tags": [
+              "brasil-colonial",
+              "economia"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_020_q2",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_020>",
+          "payload": {
+            "questionText": "O trabalho compulsório foi parte da estrutura colonial.",
+            "questionType": "true_false",
+            "options": [
+              "true",
+              "false"
+            ],
+            "correctAnswer": "true",
+            "points": 1,
+            "tags": [
+              "trabalho",
+              "sociedade"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_020_q3",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_020>",
+          "payload": {
+            "questionText": "Cite uma consequência social do modelo econômico colonial.",
+            "questionType": "text",
+            "options": null,
+            "correctAnswer": "open-ended",
+            "points": 1,
+            "tags": [
+              "impactos-sociais",
+              "análise"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "assessment_ref_021",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "História 7º - Iluminismo e independências",
+        "description": "Iluminismo e independências",
+        "categoryId": "d6baf101-f2e8-496f-ab18-759963163635",
+        "level": "3",
+        "contentId": "<content_id_uuid:content_ref_039>",
+        "minScore": 70,
+        "startDate": "2026-02-12T08:00:00.000Z",
+        "endDate": "2026-12-31T23:59:59.000Z",
+        "isActive": true
+      },
+      "questions": [
+        {
+          "ref": "assessment_ref_021_q1",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_021>",
+          "payload": {
+            "questionText": "O Iluminismo defendia:",
+            "questionType": "multiple_choice_single",
+            "options": [
+              "razão e crítica",
+              "censura absoluta",
+              "rejeição da ciência",
+              "imobilidade social"
+            ],
+            "correctAnswer": "0",
+            "points": 1,
+            "tags": [
+              "iluminismo",
+              "ideias"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_021_q2",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_021>",
+          "payload": {
+            "questionText": "Ideias iluministas influenciaram debates sobre direitos e governo.",
+            "questionType": "true_false",
+            "options": [
+              "true",
+              "false"
+            ],
+            "correctAnswer": "true",
+            "points": 1,
+            "tags": [
+              "direitos",
+              "política"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_021_q3",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_021>",
+          "payload": {
+            "questionText": "Relacione Iluminismo com movimentos de independência em uma frase.",
+            "questionType": "text",
+            "options": null,
+            "correctAnswer": "open-ended",
+            "points": 1,
+            "tags": [
+              "independência",
+              "contexto-histórico"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "assessment_ref_022",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Ciências 7º - Ecossistemas",
+        "description": "Ecossistemas",
+        "categoryId": "5dab008b-f19a-4741-872a-36693cdc9159",
+        "level": "1",
+        "contentId": "<content_id_uuid:content_ref_043>",
+        "minScore": 70,
+        "startDate": "2026-02-12T08:00:00.000Z",
+        "endDate": "2026-12-31T23:59:59.000Z",
+        "isActive": true
+      },
+      "questions": [
+        {
+          "ref": "assessment_ref_022_q1",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_022>",
+          "payload": {
+            "questionText": "Exemplo de fator biótico:",
+            "questionType": "multiple_choice_single",
+            "options": [
+              "temperatura",
+              "água",
+              "planta",
+              "luz solar"
+            ],
+            "correctAnswer": "2",
+            "points": 1,
+            "tags": [
+              "ecossistemas",
+              "fatores-bióticos"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_022_q2",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_022>",
+          "payload": {
+            "questionText": "Fatores abióticos influenciam os seres vivos.",
+            "questionType": "true_false",
+            "options": [
+              "true",
+              "false"
+            ],
+            "correctAnswer": "true",
+            "points": 1,
+            "tags": [
+              "fatores-abióticos",
+              "ambiente"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_022_q3",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_022>",
+          "payload": {
+            "questionText": "Explique em uma frase a relação entre ser vivo e ambiente.",
+            "questionType": "text",
+            "options": null,
+            "correctAnswer": "open-ended",
+            "points": 1,
+            "tags": [
+              "ecologia",
+              "interação"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "assessment_ref_023",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Ciências 7º - Transformações químicas",
+        "description": "Transformações químicas",
+        "categoryId": "5dab008b-f19a-4741-872a-36693cdc9159",
+        "level": "2",
+        "contentId": "<content_id_uuid:content_ref_044>",
+        "minScore": 70,
+        "startDate": "2026-02-12T08:00:00.000Z",
+        "endDate": "2026-12-31T23:59:59.000Z",
+        "isActive": true
+      },
+      "questions": [
+        {
+          "ref": "assessment_ref_023_q1",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_023>",
+          "payload": {
+            "questionText": "Exemplo de transformação química:",
+            "questionType": "multiple_choice_single",
+            "options": [
+              "derretimento do gelo",
+              "evaporação da água",
+              "ferrugem no ferro",
+              "quebra de vidro"
+            ],
+            "correctAnswer": "2",
+            "points": 1,
+            "tags": [
+              "química",
+              "transformações"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_023_q2",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_023>",
+          "payload": {
+            "questionText": "Nem toda transformação observada é física; algumas são químicas.",
+            "questionType": "true_false",
+            "options": [
+              "true",
+              "false"
+            ],
+            "correctAnswer": "true",
+            "points": 1,
+            "tags": [
+              "reação-química",
+              "evidências"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_023_q3",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_023>",
+          "payload": {
+            "questionText": "Cite um indício de reação química observado no dia a dia.",
+            "questionType": "text",
+            "options": null,
+            "correctAnswer": "open-ended",
+            "points": 1,
+            "tags": [
+              "observação",
+              "evidências"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "assessment_ref_024",
+      "authUserId": "b190d2fd-153d-4ca9-a00f-69d0824700da",
+      "payload": {
+        "title": "Ciências 7º - Saúde e prevenção",
+        "description": "Saúde e prevenção",
+        "categoryId": "5dab008b-f19a-4741-872a-36693cdc9159",
+        "level": "3",
+        "contentId": "<content_id_uuid:content_ref_045>",
+        "minScore": 70,
+        "startDate": "2026-02-12T08:00:00.000Z",
+        "endDate": "2026-12-31T23:59:59.000Z",
+        "isActive": true
+      },
+      "questions": [
+        {
+          "ref": "assessment_ref_024_q1",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_024>",
+          "payload": {
+            "questionText": "Prática de prevenção em saúde:",
+            "questionType": "multiple_choice_single",
+            "options": [
+              "ignorar vacinas",
+              "higiene das mãos",
+              "automedicação sem orientação",
+              "sedentarismo extremo"
+            ],
+            "correctAnswer": "1",
+            "points": 1,
+            "tags": [
+              "saúde",
+              "prevenção"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_024_q2",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_024>",
+          "payload": {
+            "questionText": "Hábitos saudáveis ajudam na qualidade de vida.",
+            "questionType": "true_false",
+            "options": [
+              "true",
+              "false"
+            ],
+            "correctAnswer": "true",
+            "points": 1,
+            "tags": [
+              "qualidade-de-vida",
+              "hábitos"
+            ]
+          }
+        },
+        {
+          "ref": "assessment_ref_024_q3",
+          "assessmentId": "<assessment_id_uuid:assessment_ref_024>",
+          "payload": {
+            "questionText": "Escreva uma ação simples de prevenção para ambiente escolar.",
+            "questionType": "text",
+            "options": null,
+            "correctAnswer": "open-ended",
+            "points": 1,
+            "tags": [
+              "autocuidado",
+              "escola"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

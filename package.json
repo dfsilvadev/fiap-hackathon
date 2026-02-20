@@ -38,6 +38,7 @@
     "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.13.0",
+    "tsx": "^4.19.2",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -61,12 +62,11 @@
     "prisma": "^7.1.0",
     "supertest": "^7.0.0",
     "tsc-alias": "^1.8.10",
-    "tsx": "^4.19.2",
     "typescript": "^5.6.3",
     "vitest": "^2.1.4"
   },
   "prisma": {
-    "seed": "tsx prisma/seed.ts"
+    "seed": "node --import tsx prisma/seed.ts"
   },
   "lint-staged": {
     "src/**/*.ts": [

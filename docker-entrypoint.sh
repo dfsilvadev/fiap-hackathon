@@ -3,7 +3,7 @@ set -e
 
 echo "[entrypoint] Starting..."
 
-if [ "$NODE_ENV" = "production" ]; then
+if [ "${RUN_DB_INIT:-true}" = "true" ]; then
   if [ -x "node_modules/.bin/prisma" ] || command -v npx >/dev/null 2>&1; then
     echo "[entrypoint] Applying migrations..."
     npx prisma migrate deploy

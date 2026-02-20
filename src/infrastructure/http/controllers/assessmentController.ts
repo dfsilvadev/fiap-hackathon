@@ -1,14 +1,14 @@
-import type { Request, Response, NextFunction } from "express";
-import { prisma } from "@infrastructure/persistence/prisma.js";
 import { AssessmentService } from "@application/assessment/assessmentService.js";
 import type {
   CreateAssessmentInput,
-  UpdateAssessmentInput,
-  ListAssessmentsFilters,
   CreateQuestionInput,
-  UpdateQuestionInput,
+  ListAssessmentsFilters,
   SubmitAssessmentInput,
+  UpdateAssessmentInput,
+  UpdateQuestionInput,
 } from "@application/assessment/types.js";
+import { prisma } from "@infrastructure/persistence/prisma.js";
+import type { NextFunction, Request, Response } from "express";
 
 const assessmentService = new AssessmentService(prisma);
 
@@ -61,6 +61,7 @@ export async function listAssessments(
     const query = req.query as Record<string, string | undefined>;
     const filters: ListAssessmentsFilters = {
       categoryId: query.categoryId,
+      grade: query.grade,
       level: query.level,
       page: query.page != null ? Number(query.page) : undefined,
       limit: query.limit != null ? Number(query.limit) : undefined,

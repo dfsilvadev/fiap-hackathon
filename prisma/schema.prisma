@@ -171,6 +171,7 @@ model Assessment {
   title       String
   description String?
   categoryId  String    @map("category_id")
+  grade       String?
   level       String
   contentId   String?   @map("content_id")
   teacherId   String    @map("teacher_id")
