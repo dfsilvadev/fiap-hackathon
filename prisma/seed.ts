@@ -1,8 +1,8 @@
+import { PrismaPg } from "@prisma/adapter-pg";
+import bcrypt from "bcrypt";
 import "dotenv/config";
 import fs from "node:fs";
 import { PrismaClient } from "../src/generated/prisma/client.js";
-import { PrismaPg } from "@prisma/adapter-pg";
-import bcrypt from "bcrypt";
 
 let connectionString = process.env.DATABASE_URL ?? "";
 if (!connectionString) {
@@ -17,13 +17,7 @@ const prisma = new PrismaClient({ adapter });
 
 const ROLES = ["coordinator", "teacher", "student"] as const;
 
-const CATEGORIES = [
-  "Português",
-  "Matemática",
-  "Ciências",
-  "História",
-  "Geografia",
-] as const;
+const CATEGORIES = ["Português", "Matemática", "Ciências", "História", "Geografia"] as const;
 
 const DEFAULT_ADMIN_EMAIL = "admin@example.com";
 const DEFAULT_ADMIN_PASSWORD = "Admin@123";
@@ -98,9 +92,7 @@ async function main(): Promise<void> {
           categoryId: firstCategoryId,
         },
       });
-      process.stdout.write(
-        `User created: ${TEACHER_EMAIL} (password: ${TEACHER_PASSWORD})\n`
-      );
+      process.stdout.write(`User created: ${TEACHER_EMAIL} (password: ${TEACHER_PASSWORD})\n`);
     }
   }
 
@@ -137,9 +129,7 @@ async function main(): Promise<void> {
           update: {},
         });
       }
-      process.stdout.write(
-        `User created: ${STUDENT_EMAIL} (password: ${STUDENT_PASSWORD})\n`
-      );
+      process.stdout.write(`User created: ${STUDENT_EMAIL} (password: ${STUDENT_PASSWORD})\n`);
     }
   }
 
@@ -171,8 +161,7 @@ async function main(): Promise<void> {
       const level1 = await prisma.content.create({
         data: {
           title: "Introdução ao tema (Nível 1)",
-          contentText:
-            "Conteúdo introdutório para o aluno começar a se familiarizar com o tema.",
+          contentText: "Conteúdo introdutório para o aluno começar a se familiarizar com o tema.",
           categoryId: firstCategoryId,
           grade,
           level: "1",
@@ -185,8 +174,7 @@ async function main(): Promise<void> {
       const level2 = await prisma.content.create({
         data: {
           title: "Aprofundamento do tema (Nível 2)",
-          contentText:
-            "Conteúdo intermediário para aprofundar o conhecimento do aluno.",
+          contentText: "Conteúdo intermediário para aprofundar o conhecimento do aluno.",
           categoryId: firstCategoryId,
           grade,
           level: "2",
@@ -199,8 +187,7 @@ async function main(): Promise<void> {
       const level3 = await prisma.content.create({
         data: {
           title: "Desafios avançados (Nível 3)",
-          contentText:
-            "Conteúdo avançado com desafios para consolidar o aprendizado.",
+          contentText: "Conteúdo avançado com desafios para consolidar o aprendizado.",
           categoryId: firstCategoryId,
           grade,
           level: "3",
@@ -239,43 +226,35 @@ async function main(): Promise<void> {
         },
       });
 
-      level1ContentId =
-        contents.find((c) => c.level === "1")?.id ?? null;
-      level2ContentId =
-        contents.find((c) => c.level === "2")?.id ?? null;
-      level3ContentId =
-        contents.find((c) => c.level === "3")?.id ?? null;
-      reforcoContentId =
-        contents.find((c) => c.level === "reforco")?.id ?? null;
+      level1ContentId = contents.find((c) => c.level === "1")?.id ?? null;
+      level2ContentId = contents.find((c) => c.level === "2")?.id ?? null;
+      level3ContentId = contents.find((c) => c.level === "3")?.id ?? null;
+      reforcoContentId = contents.find((c) => c.level === "reforco")?.id ?? null;
     }
 
     // Conteúdos adicionais de reforço para diferentes tópicos (idempotente por título)
     const reforcoSeeds = [
       {
         title: "Reforço de Frações",
-        contentText:
-          "Atividades de reforço focadas em frações e operações básicas.",
+        contentText: "Atividades de reforço focadas em frações e operações básicas.",
         topics: ["frações", "operações"],
         tags: ["fracoes", "operacoes"],
       },
       {
         title: "Reforço de Geografia",
-        contentText:
-          "Conteúdo de reforço para leitura e interpretação de mapas.",
+        contentText: "Conteúdo de reforço para leitura e interpretação de mapas.",
         topics: ["mapas", "orientação"],
         tags: ["geografia", "mapas"],
       },
       {
         title: "Reforço de História",
-        contentText:
-          "Linha do tempo e exercícios de revisão de eventos históricos.",
+        contentText: "Linha do tempo e exercícios de revisão de eventos históricos.",
         topics: ["linha do tempo", "eventos"],
         tags: ["historia", "linha-do-tempo"],
       },
       {
         title: "Reforço de Gramática",
-        contentText:
-          "Exercícios de ortografia e gramática para fixação de regras.",
+        contentText: "Exercícios de ortografia e gramática para fixação de regras.",
         topics: ["ortografia", "gramática"],
         tags: ["gramatica", "ortografia"],
       },
@@ -356,6 +335,7 @@ async function main(): Promise<void> {
       type AssessmentSeed = {
         title: string;
         description: string;
+        grade: string;
         level: string;
         mainContentId: string | null;
         questions: Array<{
@@ -371,8 +351,8 @@ async function main(): Promise<void> {
       const assessmentSeeds: AssessmentSeed[] = [
         {
           title: "Avaliação diagnóstica - Nível 1",
-          description:
-            "Avaliação simples para medir o entendimento inicial do aluno.",
+          description: "Avaliação simples para medir o entendimento inicial do aluno.",
+          grade: "7",
           level: "1",
           mainContentId: level1ContentId,
           questions: [
@@ -404,12 +384,12 @@ async function main(): Promise<void> {
         {
           title: "Avaliação de Frações",
           description: "Avaliação focada em frações e operações básicas.",
+          grade: "7",
           level: "1",
           mainContentId: level1ContentId,
           questions: [
             {
-              questionText:
-                "Qual fração representa metade de uma pizza dividida em 8 pedaços?",
+              questionText: "Qual fração representa metade de uma pizza dividida em 8 pedaços?",
               questionType: "multiple_choice_single",
               options: ["2/8", "3/8", "4/8", "5/8"],
               correctAnswer: "2", // 4/8
@@ -417,8 +397,7 @@ async function main(): Promise<void> {
               tags: ["fracoes", "operacoes"],
             },
             {
-              questionText:
-                "Explique com suas palavras o que significa somar duas frações.",
+              questionText: "Explique com suas palavras o que significa somar duas frações.",
               questionType: "open",
               options: null,
               correctAnswer: "",
@@ -430,12 +409,12 @@ async function main(): Promise<void> {
         {
           title: "Avaliação de Geografia",
           description: "Avaliação sobre leitura e interpretação de mapas.",
+          grade: "7",
           level: "1",
           mainContentId: level1ContentId,
           questions: [
             {
-              questionText:
-                "O que a legenda de um mapa nos ajuda a entender?",
+              questionText: "O que a legenda de um mapa nos ajuda a entender?",
               questionType: "open",
               options: null,
               correctAnswer: "",
@@ -443,15 +422,9 @@ async function main(): Promise<void> {
               tags: ["geografia", "mapas"],
             },
             {
-              questionText:
-                "Em um mapa, o símbolo de uma estrela geralmente representa:",
+              questionText: "Em um mapa, o símbolo de uma estrela geralmente representa:",
               questionType: "multiple_choice_single",
-              options: [
-                "Uma floresta",
-                "A capital",
-                "Uma montanha",
-                "Um rio importante",
-              ],
+              options: ["Uma floresta", "A capital", "Uma montanha", "Um rio importante"],
               correctAnswer: "1",
               points: 1,
               tags: ["geografia"],
@@ -460,14 +433,13 @@ async function main(): Promise<void> {
         },
         {
           title: "Avaliação de História",
-          description:
-            "Avaliação sobre linha do tempo e sequência de eventos históricos.",
+          description: "Avaliação sobre linha do tempo e sequência de eventos históricos.",
+          grade: "7",
           level: "1",
           mainContentId: level1ContentId,
           questions: [
             {
-              questionText:
-                "Por que organizar eventos em uma linha do tempo é importante?",
+              questionText: "Por que organizar eventos em uma linha do tempo é importante?",
               questionType: "open",
               options: null,
               correctAnswer: "",
@@ -488,6 +460,7 @@ async function main(): Promise<void> {
         {
           title: "Avaliação de Gramática",
           description: "Avaliação sobre ortografia e regras gramaticais.",
+          grade: "7",
           level: "1",
           mainContentId: level1ContentId,
           questions: [
@@ -506,8 +479,7 @@ async function main(): Promise<void> {
               tags: ["gramatica", "ortografia"],
             },
             {
-              questionText:
-                "Explique com suas palavras o que é um sujeito na frase.",
+              questionText: "Explique com suas palavras o que é um sujeito na frase.",
               questionType: "open",
               options: null,
               correctAnswer: "",
@@ -523,6 +495,7 @@ async function main(): Promise<void> {
           where: {
             title: seed.title,
             categoryId: firstCategoryId,
+            grade: seed.grade,
             level: seed.level,
           },
         });
@@ -534,6 +507,7 @@ async function main(): Promise<void> {
             title: seed.title,
             description: seed.description,
             categoryId: firstCategoryId,
+            grade: seed.grade,
             level: seed.level,
             contentId: seed.mainContentId,
             teacherId: teacherUser.id,
@@ -587,8 +561,7 @@ async function main(): Promise<void> {
         data: {
           studentId: studentUser.id,
           contentId: content.id,
-          reason:
-            "Seed: recomendação inicial para teste da tela de recomendações.",
+          reason: "Seed: recomendação inicial para teste da tela de recomendações.",
           sourceType: "seed",
           sourceId: null,
           status: "pending",

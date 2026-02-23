@@ -12,7 +12,11 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-hackathon}"]
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-hackathon}",
+        ]
       interval: 3s
       timeout: 3s
       retries: 10
@@ -30,14 +34,17 @@ services:
     ports:
       - "${API_PORT:-3001}:3000"
     environment:
-      NODE_ENV: production
+      NODE_ENV: ${NODE_ENV:-development}
       PORT: 3000
       DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-hackathon}?schema=public
       JWT_SECRET: ${JWT_SECRET}
       JWT_ACCESS_EXPIRES_IN: ${JWT_ACCESS_EXPIRES_IN:-24h}
       JWT_REFRESH_EXPIRES_IN: ${JWT_REFRESH_EXPIRES_IN:-7d}
+      ENABLE_HELMET: ${ENABLE_HELMET:-}
+      ENABLE_RATE_LIMIT: ${ENABLE_RATE_LIMIT:-}
       RATE_LIMIT_WINDOW_MS: ${RATE_LIMIT_WINDOW_MS:-900000}
-      RATE_LIMIT_MAX: ${RATE_LIMIT_MAX:-100}
+      RATE_LIMIT_MAX: ${RATE_LIMIT_MAX:-1000}
+      RUN_DB_INIT: ${RUN_DB_INIT:-true}
     depends_on:
       db:
         condition: service_healthy

@@ -1,6 +1,7 @@
 import { ProgressService } from "@application/progress/progressService.js";
 import { RecommendationService } from "@application/recommendation/recommendationService.js";
 import { isTrilhaLevel } from "@shared/constants/contentLevels.js";
+import { isGrade } from "@shared/constants/grades.js";
 import { AppError } from "@shared/errors/AppError.js";
 import type { Prisma, PrismaClient } from "../../generated/prisma/client.js";
 import type {
@@ -64,11 +65,36 @@ export class AssessmentService {
     if (!isTrilhaLevel(input.level)) {
       throw new AppError("Invalid level; use 1, 2 or 3", 400, "VALIDATION_ERROR");
     }
+    if (!isGrade(input.grade)) {
+      throw new AppError("Invalid grade", 400, "VALIDATION_ERROR");
+    }
 
     const category = await this.prisma.category.findUnique({
       where: { id: input.categoryId },
     });
     if (!category) throw new AppError("Category not found", 404, "NOT_FOUND");
+
+    if (input.contentId) {
+      const content = await this.prisma.content.findUnique({
+        where: { id: input.contentId },
+        select: { id: true, categoryId: true, grade: true },
+      });
+      if (!content) throw new AppError("Content not found", 404, "NOT_FOUND");
+      if (content.categoryId !== input.categoryId) {
+        throw new AppError(
+          "contentId must belong to the same category as the assessment",
+          400,
+          "VALIDATION_ERROR"
+        );
+      }
+      if (content.grade !== input.grade) {
+        throw new AppError(
+          "contentId must belong to the same grade as the assessment",
+          400,
+          "VALIDATION_ERROR"
+        );
+      }
+    }
 
     const startDate = new Date(input.startDate);
     const endDate = input.endDate ? new Date(input.endDate) : null;
@@ -83,11 +109,14 @@ export class AssessmentService {
         title: input.title,
         description: input.description ?? null,
         categoryId: input.categoryId,
+        grade: input.grade,
         level: input.level,
+        contentId: input.contentId,
         teacherId: userId,
         minScore: input.minScore ?? 70,
         startDate,
         endDate,
+        isActive: input.isActive,
       },
     });
     return { id: assessment.id, title: assessment.title };
@@ -121,6 +150,7 @@ export class AssessmentService {
 
     const where: Prisma.AssessmentWhereInput = {};
     if (filters.categoryId) where.categoryId = filters.categoryId;
+    if (filters.grade) where.grade = filters.grade;
     if (filters.level) where.level = filters.level;
 
     if (role === "teacher") {
@@ -302,6 +332,7 @@ export class AssessmentService {
         const assessments = await this.prisma.assessment.findMany({
           where: {
             categoryId: row.categoryId,
+            grade: student.currentGrade,
             level: levelStr,
             isActive: true,
             startDate: { lte: now },
@@ -346,6 +377,9 @@ export class AssessmentService {
     });
     if (!assessment) throw new AppError("Assessment not found", 404, "NOT_FOUND");
     if (!assessment.isActive) throw new AppError("Assessment is not available", 403, "FORBIDDEN");
+    if (assessment.grade !== student.currentGrade) {
+      throw new AppError("Assessment is not for your grade", 403, "FORBIDDEN");
+    }
     const now = new Date();
     const startDate = new Date(assessment.startDate);
     const endDate = assessment.endDate ? new Date(assessment.endDate) : null;
@@ -380,7 +414,9 @@ export class AssessmentService {
       description: assessment.description,
       categoryId: assessment.categoryId,
       category: assessment.category,
+      grade: assessment.grade,
       level: assessment.level,
+      contentId: assessment.contentId,
       minScore: Number(assessment.minScore),
       startDate: assessment.startDate,
       endDate: assessment.endDate,
@@ -415,6 +451,9 @@ export class AssessmentService {
     });
     if (!assessment) throw new AppError("Assessment not found", 404, "NOT_FOUND");
     if (!assessment.isActive) throw new AppError("Assessment is not available", 403, "FORBIDDEN");
+    if (assessment.grade !== student.currentGrade) {
+      throw new AppError("Assessment is not for your grade", 403, "FORBIDDEN");
+    }
     const startDate = new Date(assessment.startDate);
     const endDate = assessment.endDate ? new Date(assessment.endDate) : null;
     const now = new Date();
@@ -565,7 +604,9 @@ export class AssessmentService {
         title: assessment.title,
         description: assessment.description,
         category: assessment.category,
+        grade: assessment.grade,
         level: assessment.level,
+        contentId: assessment.contentId,
       },
       questions: assessment.questions.map((q) => {
         const sa = answerByQuestionId.get(q.id);
@@ -609,7 +650,9 @@ export class AssessmentService {
     title: string;
     description: string | null;
     categoryId: string;
+    grade: string | null;
     level: string;
+    contentId: string | null;
     teacherId: string;
     minScore: unknown;
     startDate: Date;
@@ -635,7 +678,9 @@ export class AssessmentService {
       description: a.description,
       categoryId: a.categoryId,
       category: a.category,
+      grade: a.grade,
       level: a.level,
+      contentId: a.contentId,
       teacherId: a.teacherId,
       minScore: Number(a.minScore),
       startDate: a.startDate,
@@ -660,7 +705,9 @@ export class AssessmentService {
     title: string;
     description: string | null;
     categoryId: string;
+    grade: string | null;
     level: string;
+    contentId: string | null;
     minScore: unknown;
     startDate: Date;
     endDate: Date | null;
@@ -672,7 +719,9 @@ export class AssessmentService {
       description: a.description,
       categoryId: a.categoryId,
       category: a.category,
+      grade: a.grade,
       level: a.level,
+      contentId: a.contentId,
       minScore: Number(a.minScore),
       startDate: a.startDate,
       endDate: a.endDate,
